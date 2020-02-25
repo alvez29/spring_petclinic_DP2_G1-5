@@ -1,5 +1,7 @@
 # Spring PetClinic Sample Application 
 
+[![Join the chat at https://gitter.im/spring_petclinic_DP2_G1-5/community](https://badges.gitter.im/spring_petclinic_DP2_G1-5/community.svg)](https://gitter.im/spring_petclinic_DP2_G1-5/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is a fork of https://github.com/spring-projects/spring-petclinic to be used for the DP2 course. The main changes that have been performed were:
 - Trimming several parts of the application to keep the example low
 - Reorganize some parts of the code according to best practices introduced in the course
