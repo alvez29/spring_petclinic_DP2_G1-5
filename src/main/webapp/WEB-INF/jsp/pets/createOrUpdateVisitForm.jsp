@@ -16,7 +16,7 @@
     <jsp:body>
         <h2><c:if test="${visit['new']}">New </c:if>Visit</h2>
 
-        <b>Pet</b>
+        <b>Dog</b>
         <table class="table table-striped">
             <thead>
             <tr>
