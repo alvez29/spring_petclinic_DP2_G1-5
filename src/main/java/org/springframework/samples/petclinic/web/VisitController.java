@@ -15,6 +15,9 @@
  */
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -25,6 +28,7 @@ import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -88,6 +92,16 @@ public class VisitController {
 	public String showVisits(@PathVariable int petId, Map<String, Object> model) {
 		model.put("visits", this.petService.findPetById(petId).getVisits());
 		return "visitList";
+	}
+	
+	@ModelAttribute("checkOptions")
+	public List <String> checkOptions(){
+		List <String> checkOptions = new ArrayList<String>();
+		checkOptions.add("-");
+		checkOptions.add("PASSED");
+		checkOptions.add("NOT PASSED");
+		return checkOptions;
+
 	}
 
 }
