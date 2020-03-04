@@ -15,7 +15,9 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -24,6 +26,7 @@ import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
+import org.springframework.samples.petclinic.service.exceptions.ClinicNotAuthorisedException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,9 +58,24 @@ public class PetService {
 		return petRepository.findPetTypes();
 	}
 	
-	@Transactional
-	public void saveVisit(Visit visit) throws DataAccessException {
-		visitRepository.save(visit);
+	@Transactional(rollbackFor = ClinicNotAuthorisedException.class)
+	public void saveVisit(Visit visit) throws DataAccessException, ClinicNotAuthorisedException {
+		List<String> authorisedClinics = new ArrayList<String>();
+		authorisedClinics.add("Boyton Vet");
+		authorisedClinics.add("Canin Vet");
+		authorisedClinics.add("Sunrise Pet Clinic");
+		authorisedClinics.add("Pet Health Center");
+		authorisedClinics.add("Midlands Veterinary");
+		authorisedClinics.add("Frankford Animal Clinic");
+		authorisedClinics.add("Dog And Cat Hospital");
+		
+		Boolean isNotCheck = visit.getCompetitionCheck().contentEquals("-");
+		if(isNotCheck || authorisedClinics.contains(visit.getClinic())) {
+			visitRepository.save(visit);
+		} else {
+			throw new ClinicNotAuthorisedException();
+		}
+		
 	}
 
 	@Transactional(readOnly = true)

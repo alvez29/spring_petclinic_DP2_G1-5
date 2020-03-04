@@ -23,6 +23,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
+
 import java.time.LocalDate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,7 +41,7 @@ public class Visit extends BaseEntity {
 	/**
 	 * Holds value of property date.
 	 */
-	@Column(name = "visit_date")        
+	@Column(name = "visit_date")    
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate date;
 
