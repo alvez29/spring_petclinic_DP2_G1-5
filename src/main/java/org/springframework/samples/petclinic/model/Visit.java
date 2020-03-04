@@ -56,6 +56,14 @@ public class Visit extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "pet_id")
 	private Pet pet;
+	
+	@Column(name = "clinic")
+	@NotEmpty
+	private String clinic;
+	
+	@Column(name = "competition_check")
+	@NotEmpty
+	private String competitionCheck;
 
 	/**
 	 * Creates a new instance of Visit for the current date
@@ -111,5 +119,21 @@ public class Visit extends BaseEntity {
 	public void setPet(Pet pet) {
 		this.pet = pet;
 	}
+	
+	public String getClinic() {
+		return this.clinic;
+	}
+	
+	public void setClinic(String clinic) {
+		this.clinic = clinic;
+	}
 
+	public String getCompetitionCheck() {
+		return this.competitionCheck;
+	}
+	
+	public void setCompetitionCheck(String competitionCheck) {
+		this.competitionCheck = competitionCheck;
+	}
+	
 }
