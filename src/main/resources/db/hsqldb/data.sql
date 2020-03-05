@@ -78,3 +78,7 @@ INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VA
 INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (3, 8, '2013-01-03', 'neutered','Boyton vet','NOT PASSED');
 INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (4, 7, '2013-01-04', 'spayed', 'Boyton vet', 'PASSED');
 
+INSERT INTO sponsor(id,name,money,url) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com');
+INSERT INTO sponsor(id,name,money,url) VALUES (2,'Affinity', 3000.0, 'www.affinity.com');
+INSERT INTO sponsor(id,name,money,url) VALUES (3,'Pedigree', 7500.0, 'www.pedigree.com');
+
