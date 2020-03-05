@@ -20,8 +20,9 @@ CREATE TABLE IF NOT EXISTS vet_specialties (
 ) engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS sponsor (
-  name VARCHAR(30)
-  money DOUBLE(10000)
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30),
+  money DOUBLE(10000),
   url VARCHAR(50)
 ) engine=InnoDB;
 

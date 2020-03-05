@@ -62,3 +62,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+INSERT INTO sponsor(id,name,money,url) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com');
+INSERT INTO sponsor(id,name,money,url) VALUES (2,'Affinity', 3000.0, 'www.affinity.com');
+INSERT INTO sponsor(id,name,money,url) VALUES (3,'Pedigree', 7500.0, 'www.pedigree.com');
+
