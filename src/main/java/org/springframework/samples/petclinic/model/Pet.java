@@ -19,6 +19,8 @@ import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.PastOrPresent;
 
 /**
  * Simple business object representing a pet.
@@ -50,6 +53,8 @@ public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")        
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@PastOrPresent
+	@NotNull
 	private LocalDate birthDate;
 
 	@ManyToOne
