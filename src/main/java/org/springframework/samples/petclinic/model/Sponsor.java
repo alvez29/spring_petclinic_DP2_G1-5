@@ -3,6 +3,9 @@ package org.springframework.samples.petclinic.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -30,6 +33,10 @@ public class Sponsor extends NamedEntity{
 	@Column(name = "url")
 	@URL
 	private String url;
+	
+	@ManyToOne
+	@JoinColumn(name = "tournament_id")
+	private Tournament tournament;
 
 	public String getName() {
 		return name;
@@ -54,6 +61,15 @@ public class Sponsor extends NamedEntity{
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public Tournament getTournament() {
+		return tournament;
+	}
+
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
+	}
+	
 	
 	
 	

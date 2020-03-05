@@ -19,13 +19,6 @@ CREATE TABLE IF NOT EXISTS vet_specialties (
   UNIQUE (vet_id,specialty_id)
 ) engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS sponsor (
-  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(30),
-  money DOUBLE(10000),
-  url VARCHAR(50)
-) engine=InnoDB;
-
 CREATE TABLE IF NOT EXISTS types (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(80),
@@ -51,6 +44,7 @@ CREATE TABLE IF NOT EXISTS pets (
   INDEX(name),
   FOREIGN KEY (owner_id) REFERENCES owners(id),
   FOREIGN KEY (type_id) REFERENCES types(id)
+   FOREIGN KEY (tournament_id) REFERENCES tournament_pets(tournament_id)
 ) engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS visits (
@@ -59,4 +53,23 @@ CREATE TABLE IF NOT EXISTS visits (
   visit_date DATE,
   description VARCHAR(255),
   FOREIGN KEY (pet_id) REFERENCES pets(id)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS sponsor (
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30),
+  money DOUBLE(10000),
+  url VARCHAR(50)
+  FOREIGN KEY (tournament_id) REFERENCES tournament(id)
+) engine=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS tournament (
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30),
+  date DATE,
+  status VARCHAR(10),
+  reward_money DOUBLE(10000),
+  capacity INT(4),
+  FOREIGN KEY (pet_id) REFERENCES tournament_pets(pet_id)
 ) engine=InnoDB;
