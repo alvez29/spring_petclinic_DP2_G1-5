@@ -60,20 +60,23 @@ public class Tournament extends NamedEntity{
 	private List<Sponsor> sponsors;
 	
 	@Transient
-	public Money getFirstClassified() {
-		Money money = Money.of(this.rewardMoney*0.5, "€");
+	public Double getFirstClassified() {
+		//Money money = Money.of(this.rewardMoney*0.5, "EUR");
+		Double money = this.rewardMoney*0.5;
 		return money;
 	}
 	
 	@Transient
-	public Money getSecondClassified() {
-		Money money = Money.of(this.rewardMoney*0.35, "€");
+	public Double getSecondClassified() {
+		//Money money = Money.of(this.rewardMoney*0.35, "EUR");
+		Double money = this.rewardMoney*0.35;
 		return money;
 	}
 	
 	@Transient
-	public Money getThirdClassified() {
-		Money money = Money.of(this.rewardMoney*0.15, "€");
+	public Double getThirdClassified() {
+		//Money money = Money.of(this.rewardMoney*0.15, "EUR");
+		Double money = this.rewardMoney*0.15;
 		return money;
 	}
 }
