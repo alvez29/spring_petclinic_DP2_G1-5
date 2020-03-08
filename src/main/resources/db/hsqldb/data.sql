@@ -78,13 +78,13 @@ INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VA
 INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (3, 8, '2013-01-03', 'neutered','Boyton vet','NOT PASSED');
 INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (4, 7, '2013-01-04', 'spayed', 'Boyton vet', 'PASSED');
 
-INSERT INTO tournaments(id,name,date,status,reward_money,capacity) VALUES (1,'Tournament Test','2020-06-08','PENDING', 7500.00 ,800);
+INSERT INTO tournaments(id,name,date,status,reward_money,capacity,type_id) VALUES (1,'Tournament Test','2020-06-08','PENDING', 7500.00 ,800,1);
 
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (3,'Pedigree', 7500.0, 'www.pedigree.com',1);
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,1);
-INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,2);
-INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,3);
-INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,4);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,7);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,13);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,8);

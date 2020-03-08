@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -48,6 +50,10 @@ public class Tournament extends NamedEntity{
 	@Column(name = "capacity")
 	@Min(value = 0)
 	private Integer capacity;
+	
+	@ManyToOne
+	@JoinColumn(name = "type_id")
+	private PetType breedRestriction;
 	
 	@ManyToMany
 	@JoinTable(

@@ -23,6 +23,10 @@
 			<td><c:out value="${tournament.capacity}" /> spectators</td>
 		</tr>
 		<tr>
+			<th>Breed Restriction</th>
+			<td><c:out value="${tournament.breedRestriction.name}" /></td>
+		</tr>
+		<tr>
 			<th>First Prize</th>
 			<td><c:out value="${tournament.firstClassified}" /> EUR</td>
 		</tr>

@@ -71,5 +71,6 @@ CREATE TABLE IF NOT EXISTS tournament (
   status VARCHAR(10),
   reward_money DOUBLE(10000),
   capacity INT(4),
+  FOREIGN KEY(type_id) REFERENCES types(id)
   FOREIGN KEY (pet_id) REFERENCES tournament_pets(pet_id)
 ) engine=InnoDB;
