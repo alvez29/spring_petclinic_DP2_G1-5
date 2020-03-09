@@ -68,7 +68,7 @@ INSERT IGNORE INTO visits VALUES (3, 8, '2009-06-04', 'neutered','Boyton vet','N
 INSERT IGNORE INTO visits VALUES (4, 7, '2008-09-04', 'spayed','Boyton vet','PASSED');
 
 
-INSERT IGNORE INTO tournaments VALUES (1,'Tournament Test','2020-06-08','PENDING', 7500.00 ,800,1);
+INSERT IGNORE INTO tournaments VALUES (1,'Race Test','2020-06-08','PENDING', 7500.00 ,800,1);
 
 INSERT IGNORE INTO sponsor VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
 INSERT IGNORE INTO sponsor VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);

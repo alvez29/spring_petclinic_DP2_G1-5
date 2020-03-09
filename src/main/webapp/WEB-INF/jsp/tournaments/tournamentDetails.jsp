@@ -38,6 +38,18 @@
 			<th>Third Prize</th>
 			<td><c:out value="${tournament.thirdClassified}" /> EUR</td>
 		</tr>
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Race'}">
+		<tr>
+			<th>Canodrome</th>
+			<td><c:out value="${tournament.canodrome}"/></td>
+		</tr>
+		</c:if>
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Beauty'}">
+		<tr>
+			<th>Place</th>
+			<td><c:out value="${tournament.place}"/></td>
+		</tr>
+		</c:if>
 	</table>
 
 
