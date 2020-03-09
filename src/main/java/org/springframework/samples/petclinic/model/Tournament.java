@@ -7,6 +7,8 @@ import java.util.List;
 import javax.money.format.MonetaryParseException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -30,6 +32,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "tournaments")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tournament extends NamedEntity{
 
 	@Column(name = "name")

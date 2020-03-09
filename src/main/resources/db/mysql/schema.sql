@@ -64,13 +64,14 @@ CREATE TABLE IF NOT EXISTS sponsor (
 ) engine=InnoDB;
 
 
-CREATE TABLE IF NOT EXISTS tournament (
+CREATE TABLE IF NOT EXISTS tournaments (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
   date DATE,
   status VARCHAR(10),
   reward_money DOUBLE(10000),
   capacity INT(4),
-  FOREIGN KEY(type_id) REFERENCES types(id)
+  FOREIGN KEY (type_id) REFERENCES types(id)
   FOREIGN KEY (pet_id) REFERENCES tournament_pets(pet_id)
 ) engine=InnoDB;
+
