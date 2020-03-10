@@ -78,7 +78,7 @@ INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VA
 INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (3, 8, '2013-01-03', 'neutered','Boyton vet','NOT PASSED');
 INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (4, 7, '2013-01-04', 'spayed', 'Boyton vet', 'PASSED');
 
-INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',1,'Tournament Test','2020-06-08','PENDING', 7500.00 ,800,1,'Oxford Canodrome');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',1,'Race Test','2020-06-08','PENDING', 7500.00 ,800,1,'Oxford Canodrome');
 
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',2,'Beauty ConTEST','2020-06-08','PENDING', 7500.00,800,1,'mi casa');
 

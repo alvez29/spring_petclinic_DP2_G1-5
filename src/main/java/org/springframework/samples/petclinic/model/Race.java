@@ -16,7 +16,7 @@ import lombok.Setter;
 public class Race extends Tournament{
 
 	@Column(name = "canodrome")
-	private String canodorme;
+	private String canodrome;
 	
 	
 }
