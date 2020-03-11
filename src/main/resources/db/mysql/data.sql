@@ -66,3 +66,16 @@ INSERT IGNORE INTO visits VALUES (1, 7, '2010-03-04', 'rabies shot','canin vet',
 INSERT IGNORE INTO visits VALUES (2, 8, '2011-03-04', 'rabies shot', 'canin vet','-');
 INSERT IGNORE INTO visits VALUES (3, 8, '2009-06-04', 'neutered','Boyton vet','NOT PASSED');
 INSERT IGNORE INTO visits VALUES (4, 7, '2008-09-04', 'spayed','Boyton vet','PASSED');
+
+
+INSERT IGNORE INTO tournaments VALUES (1,'Race Test','2020-06-08','PENDING', 7500.00 ,800,1);
+
+INSERT IGNORE INTO sponsor VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
+INSERT IGNORE INTO sponsor VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);
+INSERT IGNORE INTO sponsor VALUES (3,'Pedigree', 7500.0, 'www.pedigree.com',1);
+
+INSERT IGNORE INTO tournament_pets VALUES (1,1);
+INSERT IGNORE INTO tournament_pets VALUES (1,7);
+INSERT IGNORE INTO tournament_pets VALUES (1,13);
+INSERT IGNORE INTO tournament_pets VALUES (1,8);
+
