@@ -82,6 +82,8 @@ INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,
 
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',2,'Beauty ConTEST','2020-06-08','PENDING', 7500.00,800,1,'mi casa');
 
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',3,'Hability Test','2020-06-09','PENDING',7500.00,800,1,'Cleveland Park Stadium');
+
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (3,'Pedigree', 7500.0, 'www.pedigree.com',1);

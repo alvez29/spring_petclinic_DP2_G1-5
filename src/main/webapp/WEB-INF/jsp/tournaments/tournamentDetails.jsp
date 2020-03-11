@@ -50,6 +50,15 @@
 			<td><c:out value="${tournament.place}"/></td>
 		</tr>
 		</c:if>
+		
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
+		<tr>
+			<th>Circuit</th>
+			<td><c:out value="${tournament.circuit}"/></td>
+		</tr>
+		</c:if>
+		
+		
 	</table>
 
 
