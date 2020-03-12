@@ -45,7 +45,7 @@
                 <petclinic:inputField label="Capacity" name="capacity"/>
                 <petclinic:selectField label="Breed Restriction" name="breedRestriction" size="5" names="${types}"/>
               	<petclinic:inputField label="Reward Money" name="rewardMoney"/>
-                <petclinic:inputField label="Canodrome" name="Canodrome"/>
+                <petclinic:inputField label="Canodrome" name="canodrome"/>
             </div>
 
             <div class="form-group">
