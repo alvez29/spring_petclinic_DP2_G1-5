@@ -47,11 +47,13 @@ public class Tournament extends NamedEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate date;
 	
+	@Min(value = 1)
 	@Column(name = "reward_money")
 	private Double rewardMoney;
 	
 	@Column(name = "capacity")
 	@Min(value = 0)
+	@NotNull
 	private Integer capacity;
 	
 	@ManyToOne
