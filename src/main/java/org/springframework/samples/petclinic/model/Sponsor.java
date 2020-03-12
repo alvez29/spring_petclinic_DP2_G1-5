@@ -21,7 +21,6 @@ public class Sponsor extends NamedEntity{
 	//dinero
 	//url
 	
-	//@Id
 	@Column(name = "name")
 	@NotEmpty
 	private String name;
