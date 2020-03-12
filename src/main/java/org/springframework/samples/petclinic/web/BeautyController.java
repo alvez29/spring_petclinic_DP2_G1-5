@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beauty;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.BeautyService;
+import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,6 +26,11 @@ public class BeautyController {
 	
 	private static final String VIEWS_BEAUTY_CREATE_OR_UPDATE_FORM = "tournaments/createOrUpdateBeautyForm";
 
+	@InitBinder("beauty")
+	public void initRaceBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(new BeautyValidator());
+	}
+	
 	@Autowired
 	public BeautyController(BeautyService beautyService) {
 		this.beautyService = beautyService;
@@ -46,8 +54,14 @@ public class BeautyController {
 			model.put("beauty", beauty);
 			return VIEWS_BEAUTY_CREATE_OR_UPDATE_FORM;
 		}else {
-			beauty.setStatus("PENDING");
-			this.beautyService.saveBeauty(beauty);
+			try {
+				beauty.setStatus("PENDING");
+				this.beautyService.saveBeauty(beauty);
+			} catch (ReservedDateExeception ex) {
+				result.rejectValue("date", "This date is reserved","This date is reserved");
+				return VIEWS_BEAUTY_CREATE_OR_UPDATE_FORM;
+			}
+			
 			return "redirect:/tournaments";
 		}
 	}
