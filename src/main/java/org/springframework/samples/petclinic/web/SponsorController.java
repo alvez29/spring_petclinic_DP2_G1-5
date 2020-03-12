@@ -58,13 +58,13 @@ public class SponsorController {
 			return VIEWS_SPONSORS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-	     //   try{
+			try{
 	       	tournament.addSponsor(sponsor);
 	        	this.sponsorService.saveSponsor(sponsor);
-	      //  }catch(DuplicatedSponsorNameException ex){
-	        //    result.rejectValue("name", "duplicate", "already exists");
-	        //    return VIEWS_SPONSORS_CREATE_OR_UPDATE_FORM;
-	     //   }
+	        }catch(DuplicatedSponsorNameException ex){
+	        	result.rejectValue("name", "duplicate", "already exists");
+	        	return VIEWS_SPONSORS_CREATE_OR_UPDATE_FORM;
+	        }
 	        return "redirect:/tournaments/{tournamentId}";
 		}
 	}
