@@ -32,7 +32,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "tournaments")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tournament extends NamedEntity{
 
 	@Column(name = "name")
