@@ -20,8 +20,6 @@ public class JudgeController {
 	@Autowired
 	private JudgeService judgeService;
 	
-	private static final String	VIEWS_JUDGE_CREATE_OR_UPDATE_FORM	= "judge/new";
-	
 	@Autowired
 	public JudgeController(final JudgeService service) {
 		this.judgeService = service;
@@ -29,16 +27,16 @@ public class JudgeController {
 	
 	@GetMapping("/judge")
 	public String judgeList(ModelMap model) {
-		String view = "judge/list";
+		String view = "judge/judgeList";
 		Iterable<Judge> judges = judgeService.findAll();
 		model.addAttribute("judges", judges);
 		return view;
 	}
 	
 	@GetMapping("/judge/{judgeId}")
-	public String showJudge(@PathVariable("judgetId") int judgeId, ModelMap model) {
+	public String showJudge(@PathVariable("judgeId") int judgeId, ModelMap model) {
 		Optional<Judge> judge = this.judgeService.findJudgeById(judgeId);
-		String vista = "judge/show";
+		String vista = "judge/judgeDetails";
 		model.addAttribute("judge", judge.get());
 		return vista;
 	}
@@ -47,15 +45,17 @@ public class JudgeController {
 	public String initCreationForm(final ModelMap model) {
 		Judge judge = new Judge();
 		model.put("judge", judge);
-		return JudgeController.VIEWS_JUDGE_CREATE_OR_UPDATE_FORM;
+		return "judge/createOrUpdateJudgeForm";
 	}
 	
 	@PostMapping(value = "/judge/new")
 	public String processCreationForm(@Valid final Judge judge, final BindingResult result, final ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("judge", judge);
-			return JudgeController.VIEWS_JUDGE_CREATE_OR_UPDATE_FORM;
+			return "judge/createOrUpdateJudgeForm";
+		} else {
+			this.judgeService.saveJudge(judge);
+			return "redirect:/judge";
 		}
-		return "redirect:/tournaments";
 	}
 }

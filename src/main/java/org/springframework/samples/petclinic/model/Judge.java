@@ -21,14 +21,6 @@ import lombok.Setter;
 @Table(name = "judges")
 public class Judge extends Person {
 	
-	@Column(name = "first_name")
-	@NotEmpty
-	private String firstName;
-
-	@Column(name = "last_name")
-	@NotEmpty
-	private String lastName;
-	
 	@Column(name = "contact")
 	@NotEmpty
 	private String contact;

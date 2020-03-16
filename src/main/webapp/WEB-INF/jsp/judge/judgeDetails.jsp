@@ -9,8 +9,12 @@
 
 	<table class="table table-striped">
 		<tr>
-			<th>Name</th>
-			<td><b><c:out value="${judge.name}" /></b></td>
+			<th>First Name</th>
+			<td><c:out value="${judge.firstName}" /></td>
+		</tr>
+		<tr>
+			<th>Last Name</th>
+			<td><c:out value="${judge.lastName}" /></td>
 		</tr>
 		<tr>
 			<th>Contact</th>
@@ -18,7 +22,7 @@
 		</tr>
 		<tr>
 			<th>City</th>
-			<td><c:out value="${judge.city}" /> spectators</td>
+			<td><c:out value="${judge.city}" /></td>
 		</tr>
 	</table>
 

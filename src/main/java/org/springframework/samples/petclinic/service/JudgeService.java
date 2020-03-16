@@ -1,7 +1,8 @@
 package org.springframework.samples.petclinic.service;
 
-import java.util.Collection;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -26,5 +27,10 @@ public class JudgeService {
 
 	public Optional<Judge> findJudgeById(int judgeId) {
 		return judgeRepo.findById(judgeId);
+	}
+
+	public void saveJudge(@Valid Judge judge) {
+		judgeRepo.save(judge);
+		
 	}	
 }
