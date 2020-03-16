@@ -16,7 +16,12 @@ import lombok.Setter;
 @DiscriminatorValue("Hability")
 public class Hability extends Tournament {
 
+	public Hability() {
+
+	}
+
+
 	@Column(name = "circuit")
-	private String circuit;
+	public String circuit;
 
 }
