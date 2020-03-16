@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS visits (
 
 CREATE TABLE IF NOT EXISTS judges (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   first_name VARCHAR(30),
+  first_name VARCHAR(30),
   last_name VARCHAR(30),
   contact VARCHAR(144),
   city VARCHAR(64)
