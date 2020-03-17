@@ -49,12 +49,22 @@ public class BeautyServiceTests {
 	}
 
 	@Test
-	public void checkPrizes() {
+	public void checkFirstPrize() {
 		Beauty beauty = this.beautyRepo.findById(3).get();
-		Assertions.assertThat(beauty.getFirstClassified()).isEqualTo(beauty.getRewardMoney() * 0.50);
-		Assertions.assertThat(beauty.getSecondClassified()).isEqualTo(beauty.getRewardMoney() * 0.35);
-		Assertions.assertThat(beauty.getThirdClassified()).isEqualTo(beauty.getRewardMoney() * 0.15);
+		Assertions.assertThat(beauty.getFirstClassified()).isEqualTo(beauty.getRewardMoney() * 0.5);
 
+	}
+
+	@Test
+	public void checkSecondPrize() {
+		Beauty beauty = this.beautyRepo.findById(3).get();
+		Assertions.assertThat(beauty.getFirstClassified()).isEqualTo(beauty.getRewardMoney() * 0.30);
+	}
+
+	@Test
+	public void checkThirdPrize() {
+		Beauty beauty = this.beautyRepo.findById(3).get();
+		Assertions.assertThat(beauty.getFirstClassified()).isEqualTo(beauty.getRewardMoney() * 0.15);
 	}
 
 }
