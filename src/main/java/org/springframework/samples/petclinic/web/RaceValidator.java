@@ -46,6 +46,7 @@ public class RaceValidator implements Validator {
 		LocalDate date = race.getDate();
 		String name = race.getName();
 		String canodrome = race.getCanodrome();
+		
 		//moneyReward validation
 		if(money == null) {
 			errors.rejectValue("rewardMoney", "It must be a positive number", "It must be a positive number");
@@ -61,7 +62,7 @@ public class RaceValidator implements Validator {
 		
 		//capacity
 		if(capacity == null) {
-			errors.rejectValue("capacity", "You must add a date for the event", "You must add a date for the event");
+			errors.rejectValue("capacity", "You must add a capacity for the event", "You must add a capacity for the event");
 		} else {
 			if(capacity < 0) {
 				errors.rejectValue("capacity", "Capacity must be a positive number", "Capacity must be a positive number");
@@ -80,12 +81,12 @@ public class RaceValidator implements Validator {
 		
 		//name
 		if (!StringUtils.hasLength(name) || name.length()>30 || name.length()<3) {
-			errors.rejectValue("name", REQUIRED+" and between 3 and 50 characters", REQUIRED+" and between 3 and 50 character");
+			errors.rejectValue("name", REQUIRED+" and between 3 and 30 characters", REQUIRED+" and between 3 and 50 characters");
 		}
 		
 		//canodorme
-		if (!StringUtils.hasLength(canodrome) || canodrome.length()>30 || canodrome.length()<3) {
-			errors.rejectValue("canodrome", REQUIRED+" and between 3 and 50 characters", REQUIRED+" and between 3 and 50 character");
+		if (!StringUtils.hasLength(canodrome) || canodrome.length()>50 || canodrome.length()<3) {
+			errors.rejectValue("canodrome", REQUIRED+" and between 3 and 50 characters", REQUIRED+" and between 3 and 50 characters");
 		}
 	}
 

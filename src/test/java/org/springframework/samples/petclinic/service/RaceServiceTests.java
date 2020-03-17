@@ -53,11 +53,28 @@ public class RaceServiceTests {
 	
 	
 	@Test
-	public void checkPrizes() {
+	public void checkFirstClassified() {
 		Race race = this.raceRepo.findById(1).get();
 		
-		assertThat(race.getFirstClassified()).isEqualTo(race.getRewardMoney()*0.5);
-		assertThat(race.getSecondClassified()).isEqualTo(race.getRewardMoney()*0.35);
-		assertThat(race.getThirdClassified()).isEqualTo(race.getRewardMoney()*0.15);
+		assertThat(race.getFirstClassified()).isEqualTo(race.getRewardMoney()*0.5);	
 	}
+	
+	
+	@Test
+	public void checkSecondClassified() {
+		Race race = this.raceRepo.findById(1).get();
+		
+		assertThat(race.getSecondClassified()).isEqualTo(race.getRewardMoney()*0.35);		
+	}
+	
+	@Test
+	public void checkThirdClassified() {
+		Race race = this.raceRepo.findById(1).get();
+		
+		assertThat(race.getThirdClassified()).isEqualTo(race.getRewardMoney()*0.15);
+			
+	}
+	
+	
+
 }

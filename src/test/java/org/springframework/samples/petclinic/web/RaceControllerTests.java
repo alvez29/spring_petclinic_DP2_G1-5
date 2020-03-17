@@ -40,8 +40,6 @@ public class RaceControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	
-	
 	@WithMockUser(value = "spring")
     @Test
     void testInitCreationForm() throws Exception {
