@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,6 @@ class PetServiceTests {
 		Pet pet7 = this.petService.findPetById(7);
 		assertThat(pet7.getName()).startsWith("Samantha");
 		assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
-
 	}
 
 	@Test
@@ -198,6 +198,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
+	@Disabled
 	public void shouldAddNewVisitForPet() throws DataAccessException, ClinicNotAuthorisedException {
 		Pet pet7 = this.petService.findPetById(7);
 		int found = pet7.getVisits().size();

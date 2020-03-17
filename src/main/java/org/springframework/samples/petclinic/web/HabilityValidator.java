@@ -45,6 +45,7 @@ public class HabilityValidator implements Validator {
 		LocalDate date = hability.getDate();
 		String name = hability.getName();
 		String circuit = hability.getCircuit();
+		
 		//moneyReward validation
 		if (money == null) {
 			errors.rejectValue("rewardMoney", "It must be a positive number", "It must be a positive number");
@@ -60,7 +61,7 @@ public class HabilityValidator implements Validator {
 
 		//capacity
 		if (capacity == null) {
-			errors.rejectValue("capacity", "You must add a date for the event", "You must add a date for the event");
+			errors.rejectValue("capacity", "You must add the capacity number", "You must add the capacity number");
 		} else {
 			if (capacity < 0) {
 				errors.rejectValue("capacity", "Capacity must be a positive number", "Capacity must be a positive number");
@@ -79,11 +80,11 @@ public class HabilityValidator implements Validator {
 
 		//name
 		if (!StringUtils.hasLength(name) || name.length() > 30 || name.length() < 3) {
-			errors.rejectValue("name", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
+			errors.rejectValue("name", HabilityValidator.REQUIRED + " and between 3 and 30 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
 		}
 
 		//circuit
-		if (!StringUtils.hasLength(circuit) || circuit.length() > 30 || circuit.length() < 3) {
+		if (!StringUtils.hasLength(circuit) || circuit.length() > 50 || circuit.length() < 3) {
 			errors.rejectValue("circuit", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
 		}
 	}
