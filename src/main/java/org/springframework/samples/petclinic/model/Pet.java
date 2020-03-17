@@ -15,12 +15,7 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.sun.istack.NotNull;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,6 +30,16 @@ import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.PastOrPresent;
+
 /**
  * Simple business object representing a pet.
  *
@@ -48,6 +53,8 @@ public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")        
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@PastOrPresent
+	@NotNull
 	private LocalDate birthDate;
 
 	@ManyToOne

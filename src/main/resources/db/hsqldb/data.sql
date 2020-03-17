@@ -25,12 +25,29 @@ INSERT INTO vet_specialties VALUES (3, 3);
 INSERT INTO vet_specialties VALUES (4, 2);
 INSERT INTO vet_specialties VALUES (5, 1);
 
-INSERT INTO types VALUES (1, 'cat');
-INSERT INTO types VALUES (2, 'dog');
-INSERT INTO types VALUES (3, 'lizard');
-INSERT INTO types VALUES (4, 'snake');
-INSERT INTO types VALUES (5, 'bird');
-INSERT INTO types VALUES (6, 'hamster');
+INSERT INTO types VALUES (1, 'Beagle');
+INSERT INTO types VALUES (2, 'Boxer');
+INSERT INTO types VALUES (3, 'Yorkshire');
+INSERT INTO types VALUES (4, 'German shepherd');
+INSERT INTO types VALUES (5, 'Greyhound');
+INSERT INTO types VALUES (6, 'Labrador');
+INSERT INTO types VALUES (7, 'Dalmatian');
+INSERT INTO types VALUES (8, 'Buldog');
+INSERT INTO types VALUES (9, 'Rottweiler');
+INSERT INTO types VALUES (10, 'Basset Hound');
+INSERT INTO types VALUES (11, 'Chow Chow');
+INSERT INTO types VALUES (12, 'Fox Terrier');
+INSERT INTO types VALUES (13, 'Golden Retriever');
+INSERT INTO types VALUES (14, 'Pitbull');
+INSERT INTO types VALUES (15, 'Bearded Collie');
+INSERT INTO types VALUES (16, 'Terranova');
+INSERT INTO types VALUES (17, 'Terrier Norwich');
+INSERT INTO types VALUES (18, 'Pekingese');
+INSERT INTO types VALUES (19, 'Siberian Husky');
+INSERT INTO types VALUES (20, 'Great Dane');
+INSERT INTO types VALUES (21, 'Mongrel Dog'); 
+INSERT INTO types VALUES (22, 'Other');
+
 
 INSERT INTO owners VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
 INSERT INTO owners VALUES (2, 'Betty', 'Davis', '638 Cardinal Ave.', 'Sun Prairie', '6085551749', 'owner1');
@@ -44,9 +61,9 @@ INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Mad
 INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487', 'owner1');
 
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', 1, 1);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 6, 2);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (3, 'Rosy', '2011-04-17', 2, 3);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (4, 'Jewel', '2010-03-07', 2, 3);
+INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 5, 2);
+INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (3, 'Rosy', '2011-04-17', 5, 3);
+INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (4, 'Jewel', '2010-03-07', 5, 3);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (5, 'Iggy', '2010-11-30', 3, 4);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (6, 'George', '2010-01-20', 4, 5);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (7, 'Samantha', '2012-09-04', 1, 6);
@@ -57,9 +74,30 @@ INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (11, 'Freddy', '201
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (12, 'Lucky', '2010-06-24', 2, 10);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (13, 'Sly', '2012-06-08', 1, 10);
 
-INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01', 'rabies shot');
-INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');
-INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
-INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
+INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (1, 7, '2013-01-01', 'rabies shot','canin vet','PASSED');
+INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (2, 8, '2013-01-02', 'rabies shot','canin vet','-');
+INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (3, 8, '2013-01-03', 'neutered','Boyton vet','NOT PASSED');
+INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (4, 7, '2013-01-04', 'spayed', 'Boyton vet', 'PASSED');
+
+
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',1,'First Race Test','2020-06-08','PENDING', 7500.00 ,800,5,'Oxford Royal Canodrome');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',2,'Second Race Test','2020-06-14','PENDING', 7500.00 ,800,5,'Oxford Royal Canodrome');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-06-10','PENDING', 7500.00,800,1,'mi casa');
+
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (3,'Pedigree', 7500.0, 'www.pedigree.com',1);
+
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,2);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,3);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,4);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,9);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,11);
 
 INSERT INTO judges values (1, 'Juez', 'Primero', 'Sevilla', 'No sale por cuarentena')
+
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,2);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,3);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,4);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,9);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,11);

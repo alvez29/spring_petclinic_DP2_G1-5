@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -23,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.PetService;
-import org.springframework.samples.petclinic.service.VetService;
+import org.springframework.samples.petclinic.service.exceptions.ClinicNotAuthorisedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -79,7 +81,12 @@ public class VisitController {
 			return "pets/createOrUpdateVisitForm";
 		}
 		else {
-			this.petService.saveVisit(visit);
+			try {
+				this.petService.saveVisit(visit);
+			} catch (ClinicNotAuthorisedException ex) {
+				result.rejectValue("clinic", "notFound", "as an authorised one");
+				return "pets/createOrUpdateVisitForm";
+			}
 			return "redirect:/owners/{ownerId}";
 		}
 	}
@@ -88,6 +95,16 @@ public class VisitController {
 	public String showVisits(@PathVariable int petId, Map<String, Object> model) {
 		model.put("visits", this.petService.findPetById(petId).getVisits());
 		return "visitList";
+	}
+	
+	@ModelAttribute("checkOptions")
+	public List <String> checkOptions(){
+		List <String> checkOptions = new ArrayList<String>();
+		checkOptions.add("-");
+		checkOptions.add("PASSED");
+		checkOptions.add("NOT PASSED");
+		return checkOptions;
+
 	}
 
 }
