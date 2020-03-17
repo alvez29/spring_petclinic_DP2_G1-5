@@ -38,6 +38,14 @@
 			<th>Third Prize</th>
 			<td><c:out value="${tournament.thirdClassified}" /> EUR</td>
 		</tr>
+		<tr>
+			<th>Judges</th>
+			<td>
+				<c:forEach items="${tournament.judges}" var="judge">
+            		<c:out value="${judge.firstName} ${judge.lastName} "/>
+      			</c:forEach>
+        	</td>
+		</tr>
 		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Race'}">
 		<tr>
 			<th>Canodrome</th>

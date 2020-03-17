@@ -30,4 +30,8 @@ public class TournamentService {
 	public Optional<Tournament> findTournamentById(int id) throws DataAccessException {
 		return tournamentRepo.findById(id);
 	}
+	
+	public void saveTournament(Tournament tournament) {
+		tournamentRepo.save(tournament);
+	}
 }

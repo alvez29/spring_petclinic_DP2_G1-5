@@ -4,7 +4,9 @@ package org.springframework.samples.petclinic.web;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.service.JudgeService;
 import org.springframework.samples.petclinic.service.TournamentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +18,9 @@ public class TounamentController {
 	
 	@Autowired
 	private TournamentService tournamentService;
+	
+	@Autowired
+	private JudgeService judgeService;
 	
 	@GetMapping("/tournaments")
 	public String tournamentList(ModelMap modelMap) {
@@ -31,5 +36,16 @@ public class TounamentController {
 		String vista = "tournaments/tournamentDetails";
 		modelMap.addAttribute("tournament", tournament.get());
 		return vista;
+	}
+	
+	@GetMapping("/tournaments/{tournamentId}/addjudge/{judgeId}")
+	public String linkJudgeToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("judgeId") int judgeId, ModelMap modelMap) {
+		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
+		Judge judge = this.judgeService.findJudgeById(judgeId).get();
+		tournament.addJudge(judge);
+		judge.addTournament(tournament);
+		this.judgeService.saveJudge(judge);
+		this.tournamentService.saveTournament(tournament);
+		return "redirect:/tournaments/"+ tournamentId;
 	}
 }
