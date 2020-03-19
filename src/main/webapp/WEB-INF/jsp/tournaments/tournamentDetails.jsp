@@ -38,14 +38,6 @@
 			<th>Third Prize</th>
 			<td><c:out value="${tournament.thirdClassified}" /> EUR</td>
 		</tr>
-		<tr>
-			<th>Judges</th>
-			<td>
-				<c:forEach items="${tournament.judges}" var="judge">
-            		<c:out value="${judge.firstName} ${judge.lastName} "/>
-      			</c:forEach>
-        	</td>
-		</tr>
 		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Race'}">
 		<tr>
 			<th>Canodrome</th>
@@ -130,5 +122,41 @@
 		<spring:param name="tournamentId" value="${tournament.id}" />
 	</spring:url>
 	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Sponsor</a>
+
+
+	<br />
+	<br />
+	<br />
+	<h2>Judges</h2>
+
+	<table class="table table-striped">
+		<c:forEach var="judge" items="${tournament.judges}">
+			<tr>
+				<td valign="top">
+					<dl class="dl-horizontal">
+						<dt>Name</dt>
+						<dd>
+							<c:out value="${judge.firstName} ${judge.lastName}" />
+						</dd>
+						<dt>Contact</dt>
+						<dd>
+							<c:out value="${judge.contact} " />
+						</dd>
+               			<dt>City</dt>
+						<dd>
+							<c:out value="${judge.city} " />
+						</dd>
+					</dl>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+	<spring:url value="/judge/tournament/{tournamentId}" var="addUrl">
+		<spring:param name="tournamentId" value="${tournament.id}" />
+	</spring:url>
+	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Judge</a>
+
+
+
 
 </petclinic:layout>
