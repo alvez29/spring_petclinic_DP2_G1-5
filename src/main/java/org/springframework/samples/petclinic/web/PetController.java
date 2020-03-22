@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -44,6 +45,8 @@ public class PetController {
 
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
 
+	private static final String VIEWS_PETS_ADD_FORM = "pets/addPetForm";
+	
 	private final PetService petService;
         private final OwnerService ownerService;
 
@@ -83,6 +86,33 @@ public class PetController {
 		dataBinder.setValidator(new PetValidator());
 	}
 
+	
+	@GetMapping(value= "{tournamentId}/pets/add")
+	public String initAddForm(Tournament tournament, ModelMap model) {
+		Pet pet = new Pet();
+		tournament.addPet(pet);
+		model.put("pet", pet);
+		return VIEWS_PETS_ADD_FORM;
+	}
+	
+	@PostMapping(value = "{tournamentId}/pets/add")
+	public String processAddForm(Tournament tournament, @Valid Pet pet, BindingResult result, ModelMap model) {
+		if (result.hasErrors()) {
+			model.put("pet", pet);
+			return VIEWS_PETS_ADD_FORM;
+		}
+		else {
+			try {
+				tournament.addPet(pet);
+				this.petService.savePet(pet);
+			} catch (Exception e) {
+				result.rejectValue("name", "duplicate", "already exists");
+				return VIEWS_PETS_ADD_FORM;
+			}
+			return "redirect:/tournaments/{tournamentId}";
+		}
+	}
+	
 	@GetMapping(value = "/pets/new")
 	public String initCreationForm(Owner owner, ModelMap model) {
 		Pet pet = new Pet();
@@ -90,7 +120,7 @@ public class PetController {
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
-
+	
 	@PostMapping(value = "/pets/new")
 	public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {		
 		if (result.hasErrors()) {

@@ -70,6 +70,10 @@ public class Tournament extends NamedEntity{
 	@OneToMany(mappedBy = "tournament")
 	private List<Sponsor> sponsors;
 	
+	public void addPet(Pet pet) {
+		getPets().add(pet);
+	}
+	
 	@Transient
 	public Double getFirstClassified() {
 		//Money money = Money.of(this.rewardMoney*0.5, "EUR");

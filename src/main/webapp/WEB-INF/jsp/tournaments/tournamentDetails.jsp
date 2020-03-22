@@ -66,6 +66,7 @@
 	<br />
 	<br />
 	<br />
+	
 	<h2>Participating Dogs</h2>
 
 	<table class="table table-striped">
