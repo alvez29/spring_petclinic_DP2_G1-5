@@ -52,6 +52,14 @@ public class TounamentController {
 		return "redirect:/tournaments/" + tournamentId;
 	}
 	
+	@GetMapping("/pet/tournament/{tournamentId}")
+	public String petListForTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
+		Iterable<Pet> pets = petService.findAll();
+		model.addAttribute("pets", pets);
+		model.addAttribute("tournamentId", tournamentId);
+		return "pets/petList";
+	}
+	
 	/*
 	public String linkJudgeToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("judgeId") int judgeId, ModelMap modelMap) {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();

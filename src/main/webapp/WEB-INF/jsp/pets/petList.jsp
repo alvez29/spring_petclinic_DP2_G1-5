@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="pet">
+<petclinic:layout pageName="pets">
     <h2>Dogs</h2>
     <c:if test="${not empty tournamentId}">
     <p>Pick a Dog to add</p>
@@ -29,13 +29,13 @@
                         	<spring:param name="eptId" value="${pet.id}"/>
                         	<spring:param name="tournamentId" value="${tournamentId}"/>
                     		</spring:url>
-                    		<a href="${fn:escapeXml(petUrl)}"><c:out value="${pet.owner} ${pet.petType}"/></a>
+                    		<a href="${fn:escapeXml(petUrl)}"><c:out value="${pet.owner} ${pet.type}"/></a>
     					</c:when>    
    						<c:otherwise>
 				        	<spring:url value="/pet/{petId}" var="petUrl">
                         	<spring:param name="petId" value="${pet.id}"/>
                     		</spring:url>
-                   	 		<a href="${fn:escapeXml(petUrl)}"><c:out value="${pet.owner} ${pet.petType}"/></a>
+                   	 		<a href="${fn:escapeXml(petUrl)}"><c:out value="${pet.owner} ${pet.type}"/></a>
 						</c:otherwise>
 						</c:choose>               
                 </td>

@@ -86,14 +86,13 @@ public class PetController {
 		dataBinder.setValidator(new PetValidator());
 	}
 
-	@GetMapping("/pet/tournament/{tournamentId}")
-	public String petListForTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
-		String view = "pet/petList";
-		Iterable<Pet> pets = petService.findAll();
-		model.addAttribute("pets", pets);
-		model.addAttribute("tournamentId", tournamentId);
-		return view;
-	}
+//	@GetMapping("/pet/tournament/{tournamentId}")
+//	public String petListForTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
+//		Iterable<Pet> pets = petService.findAll();
+//		model.addAttribute("pets", pets);
+//		model.addAttribute("tournamentId", tournamentId);
+//		return "tournaments/petList";
+//	}
 	
 	
 	@GetMapping(value = "/pets/new")

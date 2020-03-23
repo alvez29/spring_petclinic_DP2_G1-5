@@ -87,7 +87,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<spring:url value="pet/tournament/{tournamentId}" var="addUrl">
+	<spring:url value="/pet/tournament/{tournamentId}" var="addUrl">
 		<spring:param name="tournamentId" value="${tournament.id}" />
 	</spring:url>
 	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Dog</a>
