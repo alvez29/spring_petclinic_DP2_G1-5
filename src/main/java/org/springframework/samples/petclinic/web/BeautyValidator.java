@@ -56,7 +56,7 @@ public class BeautyValidator implements Validator {
 
 		//capacity
 		if (capacity == null) {
-			errors.rejectValue("capacity", "You must add a date for the event", "You must add a date for the event");
+			errors.rejectValue("capacity", "You must add a capacity for the event", "You must add a capacity for the event");
 		} else {
 			if (capacity < 0) {
 				errors.rejectValue("capacity", "Capacity must be a positive number", "Capacity must be a positive number");
@@ -75,12 +75,12 @@ public class BeautyValidator implements Validator {
 
 		//name
 		if (!StringUtils.hasLength(name) || name.length() > 30 || name.length() < 3) {
-			errors.rejectValue("name", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 character");
+			errors.rejectValue("name", BeautyValidator.REQUIRED + " and between 3 and 30 characters", BeautyValidator.REQUIRED + " and between 3 and 30 characters");
 		}
 
-		//canodorme
-		if (!StringUtils.hasLength(place) || place.length() > 30 || place.length() < 3) {
-			errors.rejectValue("place", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 character");
+		//place
+		if (!StringUtils.hasLength(place) || place.length() > 50 || place.length() < 3) {
+			errors.rejectValue("place", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 characters");
 		}
 
 		if (status != null) {
