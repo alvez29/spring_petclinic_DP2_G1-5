@@ -14,9 +14,9 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${hability['new']}">New </c:if>hability</h2>
+        <h2><c:if test="${hability['new']}">New </c:if>Hability Contest</h2>
 
-        <b>Hability</b>
+        <b>Hability Contest</b>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -26,6 +26,7 @@
                 <th>Breed Restriction</th>
                 <th>Reward Money</th>
                 <th>Circuit</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tr>
@@ -35,23 +36,27 @@
                 <td><c:out value="${hability.breedRestriction}"/></td>
                 <td><c:out value="${hability.rewardMoney}"/></td>
                 <td><c:out value="${hability.circuit}"></c:out></td>
+                <td><c:out value="${hability.status}"></c:out></td>
             </tr>
         </table>
 
         <form:form modelAttribute="hability" class="form-horizontal">
-            <div class="form-group has-feedback">
-            	<petclinic:inputField label="Name" name="name"/>
+            <div class="form-group has-feedback">  		
+      			<petclinic:inputField label="Name" name="name"/>
                 <petclinic:inputField label="Date" name="date"/>
                 <petclinic:inputField label="Capacity" name="capacity"/>
                 <petclinic:selectField label="Breed Restriction" name="breedRestriction" size="5" names="${types}"/>
               	<petclinic:inputField label="Reward Money" name="rewardMoney"/>
                 <petclinic:inputField label="Circuit" name="circuit"/>
+          		<c:if test="${edit == true }">
+          		     <petclinic:selectField label="Status" name="status" size="3" names="${statusTypes}"/>
+          		</c:if>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="petId" value="${hability.id}"/>
-                    <button class="btn btn-default" type="submit">Add Hability</button>
+                    <input type="hidden" name="habilityId" value="${hability.id}"/>
+                    <button class="btn btn-default" type="submit">Add Hability Constest</button>
                 </div>
             </div>
         </form:form>

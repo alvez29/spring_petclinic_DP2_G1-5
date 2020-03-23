@@ -34,7 +34,6 @@ public class HabilityValidator implements Validator {
 		} catch (NullPointerException npe) {
 			return false;
 		}
-
 	}
 
 	@Override
@@ -45,7 +44,8 @@ public class HabilityValidator implements Validator {
 		LocalDate date = hability.getDate();
 		String name = hability.getName();
 		String circuit = hability.getCircuit();
-		
+		String status = hability.getStatus();
+		Integer id =  hability.getId();
 		//moneyReward validation
 		if (money == null) {
 			errors.rejectValue("rewardMoney", "It must be a positive number", "It must be a positive number");
@@ -87,6 +87,12 @@ public class HabilityValidator implements Validator {
 		if (!StringUtils.hasLength(circuit) || circuit.length() > 50 || circuit.length() < 3) {
 			errors.rejectValue("circuit", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
 		}
+		
+		//status
+		if(status != null) {
+			if(status.equals("FINISHED") && date.isAfter(LocalDate.now())) {
+				errors.rejectValue("status", "The event has not been celebrated yet", "The event has not been celebrated yet");
+			}
+		}
 	}
-
 }
