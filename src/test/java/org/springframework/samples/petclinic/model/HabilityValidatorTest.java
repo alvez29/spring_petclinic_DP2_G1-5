@@ -30,7 +30,7 @@ class HabilityValidatorTest {
 		hability.setCircuit("Circuit");
 		hability.setDate(LocalDate.of(2020, 12, 1));
 		hability.setRewardMoney(1000.00);
-		hability.setStatus("PENDING");	
+		hability.setStatus("DRAFT");	
 		
 		this.errors =  new BeanPropertyBindingResult(this.hability, "");
 	}
