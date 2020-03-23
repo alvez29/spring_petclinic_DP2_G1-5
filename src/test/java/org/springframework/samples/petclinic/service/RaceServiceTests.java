@@ -76,5 +76,12 @@ public class RaceServiceTests {
 	}
 	
 	
+	@Test
+	public void checkSum() {
+		int raceId = 1;
+		Double res = this.raceService.getSponsorAmount(raceId);
+		;
+	}
+	
 
 }
