@@ -86,32 +86,15 @@ public class PetController {
 		dataBinder.setValidator(new PetValidator());
 	}
 
-	
-	@GetMapping(value= "{tournamentId}/pets/add")
-	public String initAddForm(Tournament tournament, ModelMap model) {
-		Pet pet = new Pet();
-		tournament.addPet(pet);
-		model.put("pet", pet);
-		return VIEWS_PETS_ADD_FORM;
+	@GetMapping("/pet/tournament/{tournamentId}")
+	public String petListForTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
+		String view = "pet/petList";
+		Iterable<Pet> pets = petService.findAll();
+		model.addAttribute("pets", pets);
+		model.addAttribute("tournamentId", tournamentId);
+		return view;
 	}
 	
-	@PostMapping(value = "{tournamentId}/pets/add")
-	public String processAddForm(Tournament tournament, @Valid Pet pet, BindingResult result, ModelMap model) {
-		if (result.hasErrors()) {
-			model.put("pet", pet);
-			return VIEWS_PETS_ADD_FORM;
-		}
-		else {
-			try {
-				tournament.addPet(pet);
-				this.petService.savePet(pet);
-			} catch (Exception e) {
-				result.rejectValue("name", "duplicate", "already exists");
-				return VIEWS_PETS_ADD_FORM;
-			}
-			return "redirect:/tournaments/{tournamentId}";
-		}
-	}
 	
 	@GetMapping(value = "/pets/new")
 	public String initCreationForm(Owner owner, ModelMap model) {

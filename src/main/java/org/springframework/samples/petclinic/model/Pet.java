@@ -26,6 +26,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -64,6 +66,17 @@ public class Pet extends NamedEntity {
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
+
+	@ManyToMany
+	@JoinTable(
+			  name = "tournament_pets", 
+			  joinColumns = @JoinColumn(name = "pet_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "tournament_id"))
+	private List<Tournament> tournaments;	
+	
+	public List<Tournament> getTournaments() {
+		return tournaments;
+	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
@@ -114,4 +127,7 @@ public class Pet extends NamedEntity {
 		visit.setPet(this);
 	}
 
+	public void addTournament(Tournament tourn) {
+		getTournaments().add(tourn);
+	}
 }
