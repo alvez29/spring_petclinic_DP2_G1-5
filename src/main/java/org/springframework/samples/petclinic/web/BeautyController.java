@@ -81,17 +81,22 @@ public class BeautyController {
 	@GetMapping(value = "tournaments/beauty/{beautyId}/edit")
 	public String initUpdateForm(@PathVariable("beautyId") final int beautyId, final ModelMap model) {
 		Beauty beauty = this.beautyService.findBeautyById(beautyId);
+		boolean edit = true;
 		model.put("beauty", beauty);
+		model.put("edit", edit);
 		return BeautyController.VIEWS_BEAUTY_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "tournaments/beauty/{beautyId}/edit")
 	public String processUpdateForm(@Valid final Beauty beauty, final BindingResult result, @PathVariable("beautyId") final int beautyId, final ModelMap model) throws DataAccessException, SponsorAmountException, ReservedDateExeception {
+		boolean edit = true;
 		if (result.hasErrors()) {
 			model.put("beauty", beauty);
+			model.put("edit", edit);
 			return BeautyController.VIEWS_BEAUTY_CREATE_OR_UPDATE_FORM;
 		} else {
 			beauty.setId(beautyId);
+			model.put("edit", edit);
 			try {
 				this.beautyService.editBeauty(beauty);
 			} catch (ReservedDateExeception | SponsorAmountException ex) {

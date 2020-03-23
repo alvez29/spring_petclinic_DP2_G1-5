@@ -47,7 +47,7 @@
                 <petclinic:selectField label="Breed Restriction" name="breedRestriction" size="5" names="${types}"/>
               	<petclinic:inputField label="Reward Money" name="rewardMoney"/>
                 <petclinic:inputField label="Place" name="place"/>
-                <c:if test="${!beauty['new']}">
+                <c:if test="${edit == true}">
                 <petclinic:selectField label="Status" name="status" size="3" names="${statusTypes}"/>
                 </c:if>
             </div>
