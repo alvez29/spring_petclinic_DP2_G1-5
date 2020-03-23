@@ -31,7 +31,7 @@ public class RaceValidatorTest {
 		race.setCanodrome("Canodrome");
 		race.setDate(LocalDate.of(2020, 12, 1));
 		race.setRewardMoney(1000.00);
-		race.setStatus("PENDING");	
+		race.setStatus("DRAFT");	
 		
 		this.errors =  new BeanPropertyBindingResult(this.race, "");
 	}
