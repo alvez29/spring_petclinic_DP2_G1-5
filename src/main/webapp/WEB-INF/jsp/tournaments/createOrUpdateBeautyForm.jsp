@@ -34,7 +34,8 @@
                 <td><c:out value="${beauty.capacity}"/></td>
                 <td><c:out value="${beauty.breedRestriction}"/></td>
                 <td><c:out value="${beauty.rewardMoney}"/></td>
-                <td><c:out value="${beauty.place}"></c:out></td>
+                <td><c:out value="${beauty.place}"/></td>
+                <td><c:out value="${beauty.status}"/></td>
             </tr>
         </table>
 
@@ -46,6 +47,9 @@
                 <petclinic:selectField label="Breed Restriction" name="breedRestriction" size="5" names="${types}"/>
               	<petclinic:inputField label="Reward Money" name="rewardMoney"/>
                 <petclinic:inputField label="Place" name="place"/>
+                <c:if test="${!beauty['new']}">
+                <petclinic:selectField label="Status" name="status" size="3" names="${statusTypes}"/>
+                </c:if>
             </div>
 
             <div class="form-group">
