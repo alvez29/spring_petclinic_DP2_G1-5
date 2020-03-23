@@ -70,11 +70,9 @@ public class BeautyService {
 		return this.beautyRepo.findById(beautyId).get();
 	}
 
-	@Transactional(rollbackFor = {
-		ReservedDateExeception.class, SponsorAmountException.class
-	})
+	@Transactional(rollbackFor = {ReservedDateExeception.class, SponsorAmountException.class})
 	public void editBeauty(@Valid final Beauty beauty) throws ReservedDateExeception, SponsorAmountException {
-		if (this.getSponsorAmount(beauty.getId()) < 7000.00 && (beauty.getStatus() == "PENDING" || beauty.getStatus() == "FINISHED")) {
+		if ((this.getSponsorAmount(beauty.getId()) < 7000.00) && (beauty.getStatus().equals("PENDING") || beauty.getStatus().equals("FINISHED"))) {
 			throw new SponsorAmountException();
 		}
 

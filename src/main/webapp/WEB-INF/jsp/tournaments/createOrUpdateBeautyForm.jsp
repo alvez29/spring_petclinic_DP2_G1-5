@@ -26,6 +26,7 @@
                 <th>Breed Restriction</th>
                 <th>Reward Money</th>
                 <th>Place</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tr>
