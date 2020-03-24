@@ -33,7 +33,7 @@ excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classe
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class RaceControllerTests {
 
-	
+
 	
 	@Autowired
 	private RaceController raceController;
@@ -61,7 +61,5 @@ public class RaceControllerTests {
 		//given(this.raceService.findRaceById(TEST_RACE_ID)).willReturn(value, values)
 	}
 
-	
-	
 
 }
