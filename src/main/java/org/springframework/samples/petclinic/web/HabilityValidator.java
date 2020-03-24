@@ -46,6 +46,7 @@ public class HabilityValidator implements Validator {
 		String circuit = hability.getCircuit();
 		String status = hability.getStatus();
 		Integer id =  hability.getId();
+		
 		//moneyReward validation
 		if (money == null) {
 			errors.rejectValue("rewardMoney", "It must be a positive number", "It must be a positive number");
@@ -90,6 +91,9 @@ public class HabilityValidator implements Validator {
 		
 		//status
 		if(status != null) {
+			if(!status.equals("FINISHED") && !status.equals("PENDING") && !status.equals("DRAFT")) {
+				errors.rejectValue("status", "This status is not valid", "This status is not valid");
+			}
 			if(status.equals("FINISHED") && date.isAfter(LocalDate.now())) {
 				errors.rejectValue("status", "The event has not been celebrated yet", "The event has not been celebrated yet");
 			}

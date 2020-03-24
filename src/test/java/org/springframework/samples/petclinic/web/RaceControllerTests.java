@@ -29,25 +29,5 @@ excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classe
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class RaceControllerTests {
 
-	
-	
-	@Autowired
-	private RaceController raceController;
-	
-	@MockBean
-	private RaceService raceService;
-	
-	@Autowired
-	private MockMvc mockMvc;
-	
-	@WithMockUser(value = "spring")
-    @Test
-    void testInitCreationForm() throws Exception {
-	mockMvc.perform(get("/race/new")).andExpect(status().isOk())
-			.andExpect(view().name("tournaments/createOrUpdateRaceForm")).andExpect(model().attributeExists("race"));
-	}
-
-	
-	
 
 }
