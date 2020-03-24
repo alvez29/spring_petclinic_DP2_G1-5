@@ -67,17 +67,6 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
-	@ManyToMany
-	@JoinTable(
-			  name = "tournament_pets", 
-			  joinColumns = @JoinColumn(name = "pet_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "tournament_id"))
-	private List<Tournament> tournaments;	
-	
-	public List<Tournament> getTournaments() {
-		return tournaments;
-	}
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
 
@@ -125,9 +114,5 @@ public class Pet extends NamedEntity {
 	public void addVisit(Visit visit) {
 		getVisitsInternal().add(visit);
 		visit.setPet(this);
-	}
-
-	public void addTournament(Tournament tourn) {
-		getTournaments().add(tourn);
 	}
 }

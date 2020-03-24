@@ -46,8 +46,6 @@ public class TounamentController {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
 		Pet pet = this.petService.findPetById(petId);
 		tournament.addPet(pet);
-		pet.addTournament(tournament);
-		this.petService.savePet(pet);
 		//this.tournamentService.
 		return "redirect:/tournaments/" + tournamentId;
 	}
