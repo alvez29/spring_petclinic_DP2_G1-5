@@ -27,7 +27,7 @@ public class TournamentService {
 	}
 	
 	@Transactional
-	public Optional<Tournament> findTournamentById(int id) throws DataAccessException {
-		return tournamentRepo.findById(id);
+	public Tournament findTournamentById(int id) throws DataAccessException {
+		return tournamentRepo.findById(id).get();
 	}
 }
