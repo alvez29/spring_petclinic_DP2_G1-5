@@ -96,7 +96,7 @@ public class HabilityValidator implements Validator {
 			}
 			if(status.equals("FINISHED") && date.isAfter(LocalDate.now())) {
 				errors.rejectValue("status", "The event has not been celebrated yet", "The event has not been celebrated yet");
-			}
+			}			
 		}
 	}
 }
