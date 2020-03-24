@@ -83,9 +83,14 @@ public class BeautyValidator implements Validator {
 			errors.rejectValue("place", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 characters");
 		}
 
+		//status
 		if (status != null) {
 			if (status.equals("FINISHED") && date.isAfter(LocalDate.now())) {
 				errors.rejectValue("status", "The event has not been celebrated yet", "The event has not been celebrated yet");
+			}
+
+			if (!status.equals("FINISHED") && !status.equals("PENDING") && !status.equals("DRAFT")) {
+				errors.rejectValue("status", "This status is not valid", "This status is not valid");
 			}
 		}
 	}
