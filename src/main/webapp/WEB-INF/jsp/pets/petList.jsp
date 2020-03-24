@@ -26,7 +26,7 @@
                 	<c:choose>
     					<c:when test="${not empty tournamentId}">
         					<spring:url value="/tournaments/{tournamentId}/addpet/{petId}" var="petUrl">
-                        	<spring:param name="eptId" value="${pet.id}"/>
+                        	<spring:param name="petId" value="${pet.id}"/>
                         	<spring:param name="tournamentId" value="${tournamentId}"/>
                     		</spring:url>
                     		<a href="${fn:escapeXml(petUrl)}"><c:out value="${pet.owner} ${pet.type}"/></a>
