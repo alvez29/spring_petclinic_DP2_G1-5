@@ -100,7 +100,14 @@ public class RaceValidator implements Validator {
 				errors.rejectValue("status", "The event has not been celebrated yet",
 						"The event has not been celebrated yet");
 			}
+			
+			if(!status.equals("FINISHED") && !status.equals("PENDING") && !status.equals("DRAFT")) {
+				errors.rejectValue("status", "This status is not valid",
+						"This status is not valid");
+			}
 		}
+		
+		
 
 	}
 

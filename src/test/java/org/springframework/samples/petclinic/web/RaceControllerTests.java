@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.time.LocalDate;
+
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,9 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Hability;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Race;
 import org.springframework.samples.petclinic.service.RaceService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -40,11 +44,21 @@ public class RaceControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	@WithMockUser(value = "spring")
-    @Test
-    void testInitCreationForm() throws Exception {
-	mockMvc.perform(get("/race/new")).andExpect(status().isOk())
-			.andExpect(view().name("tournaments/createOrUpdateRaceForm")).andExpect(model().attributeExists("race"));
+	private Race race;
+	
+	private static final int TEST_RACE_ID = 1;
+	
+	@BeforeEach
+	void setup() {
+		this.race = new Race();
+		race.setId(TEST_RACE_ID);
+		race.setName("Testing");
+		race.setCapacity(10);
+		race.setCanodrome("Canodrome");
+		race.setDate(LocalDate.of(2020, 12, 1));
+		race.setRewardMoney(1000.);
+		race.setStatus("DRAFT");
+		//given(this.raceService.findRaceById(TEST_RACE_ID)).willReturn(value, values)
 	}
 
 	
