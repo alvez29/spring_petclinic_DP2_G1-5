@@ -62,28 +62,65 @@ public class HabilityServiceTests {
 	}
 	
 	@Test
-	public void checkThridPrize() {
+	public void checkThirdPrize() {
 		Hability hability = habilityRepo.findById(4).get();
 		assertThat(hability.getThirdClassified()).isEqualTo(hability.getRewardMoney()*0.15);
 	}
 	
-	@ParameterizedTest
-    @CsvSource({"1 ,8000, Circuit Test, 2020-04-16, Hability ConTEST, 1000, DRAFT", "1, 8000, Circuit Test, 2020-06-08, Hability ConTEST 2, 1000, DRAFT", "1, 8000, Circuit Test, 2020-11-08, Hability ConTEST 3, 1000, PENDING"})
-	public void editHabilityContest(Integer id, Integer capacity, String circuit, LocalDate date, String name, Double rewardMoney, String status) throws ReservedDateExeception, SponsorAmountException{
+	@Test
+	public void editHabilityContestSuccess() throws ReservedDateExeception, SponsorAmountException{
 		Hability hability = new Hability();
-		hability.setId(id);
-		hability.setCapacity(capacity);
-		hability.setCircuit(circuit);
-		hability.setDate(date);
-		hability.setName(name);
-		hability.setRewardMoney(rewardMoney);
-		hability.setStatus(status);
-		List<Sponsor> sponsors = new ArrayList<Sponsor>();
-		hability.setSponsors(sponsors);
+		hability.setId(1);
+		hability.setCapacity(8000);
+		hability.setCircuit("Circuit Test");
+		hability.setDate(LocalDate.of(2040, 4, 16));
+		hability.setName("Hability ConTEST");
+		hability.setRewardMoney(1000.00);
+		hability.setStatus("DRAFT");		
+		this.habilityService.editHability(hability);
+		assertThat(hability.getId()).isNotNull();
+	}
+	
+	@Test
+	public void editHabilityContestDateException() throws ReservedDateExeception, SponsorAmountException{
+		Hability hability = new Hability();
+		hability.setId(1);
+		hability.setCapacity(8000);
+		hability.setCircuit("Circuit Test");
+		hability.setDate(LocalDate.of(2020, 6, 8));
+		hability.setName("Hability ConTEST");
+		hability.setRewardMoney(1000.00);
+		hability.setStatus("DRAFT");
 		try {
 			this.habilityService.editHability(hability);
-			assertThat(hability.getId()).isNotNull();
-		} catch (ReservedDateExeception | SponsorAmountException ex) {
+		} catch (ReservedDateExeception ex) {
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			assertThat(hability.getId()).isNull();
+		}
+	}
+	
+	@ParameterizedTest
+	@CsvSource({"0.00","6999.99"})
+	public void editHabilityContestSponsorException(Double money) throws ReservedDateExeception, SponsorAmountException{
+		Hability hability = new Hability();
+		hability.setId(1);
+		hability.setCapacity(8000);
+		hability.setCircuit("Circuit Test");
+		hability.setDate(LocalDate.of(2020, 6, 8));
+		hability.setName("Hability ConTEST");
+		hability.setRewardMoney(1000.00);
+		hability.setStatus("PENDING");
+		
+		Sponsor sponsor = new Sponsor();
+		sponsor.setName("Sponsor Test");
+		sponsor.setMoney(money);
+		List <Sponsor> sponsors = new ArrayList<Sponsor>();
+		sponsors.add(sponsor);
+		hability.setSponsors(sponsors);
+		
+		try {
+			this.habilityService.editHability(hability);
+		} catch (SponsorAmountException ex) {
 			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 			assertThat(hability.getId()).isNull();
 		}
