@@ -80,13 +80,20 @@ INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VA
 INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (4, 7, '2013-01-04', 'spayed', 'Boyton vet', 'PASSED');
 
 
-INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',1,'First Race Test','2020-06-08','PENDING', 7500.00 ,800,5,'Oxford Royal Canodrome');
-INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',2,'Second Race Test','2020-06-14','PENDING', 7500.00 ,800,5,'Oxford Royal Canodrome');
-INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-06-08','PENDING', 7500.00,800,1,'mi casa');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',1,'First Race Test','2020-06-08','DRAFT', 7500.00 ,800,5,'Oxford Royal Canodrome');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',2,'Second Race Test','2020-06-14','DRAFT', 7500.00 ,800,5,'Oxford Royal Canodrome');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-06-10','DRAFT', 7500.00,800,1,'mi casa');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',4,'Hability ConTEST','2020-07-10','DRAFT', 8000.00,800,1,'Lorem ipsum');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',5,'Hability ConTEST sponsors','2020-07-12','DRAFT', 8000.00,800,1,'Lorem ipsum');
 
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (3,'Pedigree', 7500.0, 'www.pedigree.com',1);
+
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (4,'Royal Canin', 4000.0, 'www.royalcanin.com',5);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (5,'Affinity', 3000.0, 'www.affinity.com',5);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (6,'Pedigree', 7500.0, 'www.pedigree.com',5);
+
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,2);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,3);
