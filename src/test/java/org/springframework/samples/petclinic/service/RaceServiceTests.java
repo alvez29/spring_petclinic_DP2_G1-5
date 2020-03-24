@@ -50,7 +50,7 @@ public class RaceServiceTests {
 			assertThat(race.getId()).isNotNull();
 			
 		}catch(ReservedDateExeception e){
-			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(RaceServiceTests.class.getName()).log(Level.SEVERE, null, e);
 	        assertThat(race.getId()).isNull();
 		}
 
@@ -80,27 +80,70 @@ public class RaceServiceTests {
 			
 	}
 	
+	@Test
+	public void editRaceSuccess() throws DataAccessException, SponsorAmountException, ReservedDateExeception {
+		
+		Race race = new Race();
+		race.setId(1);
+		race.setCapacity(8000);
+		race.setCanodrome("Canodrome Test");
+		race.setDate(LocalDate.of(2040, 04, 16));
+		race.setRewardMoney(1000.);
+		race.setName("Race 1 Test");
+		race.setStatus("DRAFT");
+		
+		this.raceService.editRace(race);
+		assertThat(race.getId()).isNotNull();
+			
+		
+
+	}
+	
+	@Test
+	public void editRaceReservedDateException() throws DataAccessException, SponsorAmountException {
+		
+		Race race = new Race();
+		race.setId(1);
+		race.setCapacity(8000);
+		race.setCanodrome("Canodrome Test");
+		race.setDate(LocalDate.of(2020,6,8));
+		race.setRewardMoney(1000.);
+		race.setName("Race 2 Test");
+		race.setStatus("DRAFT");
+		
+		try{
+			this.raceService.editRace(race);
+			
+		}catch(ReservedDateExeception e){
+			Logger.getLogger(RaceServiceTests.class.getName()).log(Level.SEVERE, null, e);
+	        assertThat(race.getId()).isNull();
+		}
+	}
+	
 	@ParameterizedTest
-	@CsvSource({"8000, Canodrome Test, 2020-04-16, 1000, Race 1 Test, DRAFT", "8000, Canodrome Test, 2020-06-08, 1000, Race 2 Test, DRAFT","8000, Canodrome Test, 2020-08-11, 1000, Race 3 Test, PENDING"})
-	public void editRace(Integer capacity, String canodrome, LocalDate date,
-		Double rewardMoney, String name, String status) throws DataAccessException, SponsorAmountException {
+	@CsvSource({"0.","6999.99"})
+	public void editRaceSponsorAmountException(Double money) throws DataAccessException, SponsorAmountException, ReservedDateExeception {
 		
 		Race race = new Race();
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
+		Sponsor sponsor = new Sponsor();
+		sponsor.setName("Sponsor test");
+		sponsor.setMoney(money);
+		sponsors.add(sponsor);
+		
 		race.setId(1);
-		race.setCapacity(capacity);
-		race.setCanodrome(canodrome);
-		race.setDate(date);
-		race.setRewardMoney(rewardMoney);
-		race.setName(name);
-		race.setStatus(status);
+		race.setCapacity(8000);
+		race.setCanodrome("Canodrome Test");
+		race.setDate(LocalDate.of(2020,6,8));
+		race.setRewardMoney(1000.);
+		race.setName("Race 3 Test");
+		race.setStatus("PENDING");
 		race.setSponsors(sponsors);
 		
 		try{
 			this.raceService.editRace(race);
-			assertThat(race.getId()).isNotNull();
 			
-		}catch(ReservedDateExeception|SponsorAmountException e){
+		}catch(SponsorAmountException e){
 			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
 	        assertThat(race.getId()).isNull();
 		}
