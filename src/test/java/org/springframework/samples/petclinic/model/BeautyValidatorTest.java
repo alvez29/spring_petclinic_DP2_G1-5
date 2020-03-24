@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
@@ -28,10 +29,10 @@ class BeautyValidatorTest {
 		this.beauty.setId(5);
 		this.beauty.setName("TestingName");
 		this.beauty.setCapacity(10);
-		this.beauty.setDate(LocalDate.of(2020, 03, 23));
+		this.beauty.setDate(LocalDate.of(2020, 12, 23));
 		this.beauty.setPlace("place");
 		this.beauty.setRewardMoney(800.00);
-		this.beauty.setStatus("PENDING");
+		this.beauty.setStatus("DRAFT");
 
 		this.errors = new BeanPropertyBindingResult(this.beauty, "");
 	}
@@ -174,6 +175,24 @@ class BeautyValidatorTest {
 		this.beautyValidator.validate(this.beauty, this.errors);
 
 		Assertions.assertThat(this.errors.getErrorCount()).isEqualTo(0);
+
+	}
+
+	@Test
+	void shouldNotValidateFinishedStatus() {
+		this.beauty.setStatus("FINISHED");
+		this.beautyValidator.validate(this.beauty, this.errors);
+
+		Assertions.assertThat(this.errors.getFieldError("status").getCode()).isEqualTo("The event has not been celebrated yet");
+
+	}
+
+	@Test
+	void shouldNotValidateInvalidStatus() {
+		this.beauty.setStatus("STATUSNOTVALID");
+		this.beautyValidator.validate(this.beauty, this.errors);
+
+		Assertions.assertThat(this.errors.getFieldError("status").getCode()).isEqualTo("This status is not valid");
 
 	}
 
