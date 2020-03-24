@@ -64,8 +64,7 @@ public class HabilityController {
 	}
 
 	@PostMapping(value = "/hability/new")
-	public String processCreationForm(@Valid final Hability hability, final BindingResult result,
-			final ModelMap model) {
+	public String processCreationForm(@Valid final Hability hability, final BindingResult result, final ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("hability", hability);
 			return HabilityController.VIEWS_HABILITY_CREATE_OR_UPDATE_FORM;
@@ -77,7 +76,7 @@ public class HabilityController {
 				result.rejectValue("date", "This date is reserved", "This date is reserved");
 				return HabilityController.VIEWS_HABILITY_CREATE_OR_UPDATE_FORM;
 			}
-
+			
 			return "redirect:/tournaments";
 		}
 	}
