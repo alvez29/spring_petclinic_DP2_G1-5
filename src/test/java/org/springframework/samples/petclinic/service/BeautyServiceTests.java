@@ -47,7 +47,7 @@ public class BeautyServiceTests {
 			this.beautyService.saveBeauty(beauty);
 			Assertions.assertThat(beauty.getId()).isNotNull();
 		} catch (ReservedDateExeception ex) {
-			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 	}
@@ -71,29 +71,76 @@ public class BeautyServiceTests {
 		Assertions.assertThat(beauty.getThirdClassified()).isEqualTo(beauty.getRewardMoney() * 0.15);
 	}
 
-	@ParameterizedTest
-	@CsvSource({
-		"1,8000,PLaceTest,2020-04-16,BeautyConTest2,1000,DRAFT", "1,8000,PLaceTest,2020-06-08,BeautyConTest,1000,DRAFT", "1,8000,PLaceTest,2020-11-08,BeautyConTest,1000,PENDING"
-	})
-	public void editBeauty(final Integer id, final Integer capacity, final String place, final LocalDate date, final String name, final Double rewardMoney, final String status) throws ReservedDateExeception, SponsorAmountException {
+	@Test
+	public void editBeautySuccess() throws ReservedDateExeception, SponsorAmountException {
 		Beauty beauty = new Beauty();
 
-		beauty.setId(id);
-		beauty.setCapacity(capacity);
-		beauty.setPlace(place);
-		beauty.setDate(date);
-		beauty.setName(name);
-		beauty.setRewardMoney(rewardMoney);
-		beauty.setStatus(status);
+		beauty.setId(1);
+		beauty.setCapacity(8000);
+		beauty.setPlace("placeTest");
+		beauty.setDate(LocalDate.of(2040, 04, 26));
+		beauty.setName("BeautyTest");
+		beauty.setRewardMoney(800.00);
+		beauty.setStatus("DRAFT");
+
+		this.beautyService.editBeauty(beauty);
+		Assertions.assertThat(beauty.getId()).isNotNull();
+
+	}
+
+	@Test
+	public void editBeautyDateException() throws ReservedDateExeception, SponsorAmountException {
+		Beauty beauty = new Beauty();
+
+		beauty.setId(1);
+		beauty.setCapacity(8000);
+		beauty.setPlace("placeTest");
+		beauty.setDate(LocalDate.of(2020, 8, 06));
+		beauty.setName("BeautyTest");
+		beauty.setRewardMoney(800.00);
+		beauty.setStatus("DRAFT");
+
+		try {
+			this.beautyService.editBeauty(beauty);
+
+		} catch (ReservedDateExeception ex) {
+
+			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			Assertions.assertThat(beauty.getId()).isNull();
+
+		}
+
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+		"0.00", "6999.99"
+	})
+	public void editBeautySponsorException(final Double money) throws ReservedDateExeception, SponsorAmountException {
+		Beauty beauty = new Beauty();
+
+		beauty.setId(1);
+		beauty.setCapacity(8000);
+		beauty.setPlace("placeTest");
+		beauty.setDate(LocalDate.of(2020, 8, 06));
+		beauty.setName("BeautyTest");
+		beauty.setRewardMoney(7000.00);
+		beauty.setStatus("PENDING");
 		List<Sponsor> sponsors = new ArrayList<>();
+		Sponsor sponsor = new Sponsor();
+		sponsor.setName("Sponsor1");
+		sponsor.setMoney(money);
+		sponsors.add(sponsor);
 		beauty.setSponsors(sponsors);
 
 		try {
 			this.beautyService.editBeauty(beauty);
-			Assertions.assertThat(beauty.getId()).isNotNull();
-		} catch (ReservedDateExeception | SponsorAmountException ex) {
-			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+
+		} catch (SponsorAmountException ex) {
+
+			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 			Assertions.assertThat(beauty.getId()).isNull();
+
 		}
 
 	}
