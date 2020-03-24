@@ -164,5 +164,20 @@ public class RaceValidatorTest {
 		assertThat(errors.getErrorCount()).isEqualTo(0);
 	}
 
+	@Test
+	void shouldNotValidateFinishedStatus() {
+		this.race.setStatus("FINISHED");
+		raceValidator.validate(this.race, this.errors);
+			
+		assertThat(errors.getFieldError("status").getCode()).isEqualTo("The event has not been celebrated yet");
+	}
+
+	@Test
+	void shouldNotValidateInvalidStatus() {
+		this.race.setStatus("INVENTED");
+		raceValidator.validate(this.race, this.errors);
+		assertThat(errors.getFieldError("status").getCode()).isEqualTo("This status is not valid");
+	}
+	
 	
 }
