@@ -161,4 +161,4 @@ public class RaceControllerTests {
 					.andExpect(model().attributeHasFieldErrors("race", "status"))
 					.andExpect(view().name("tournaments/createOrUpdateRaceForm"));
 		}
-
+}
