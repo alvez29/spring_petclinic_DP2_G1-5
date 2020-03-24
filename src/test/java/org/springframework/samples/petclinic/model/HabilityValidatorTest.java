@@ -163,4 +163,20 @@ class HabilityValidatorTest {
 		assertThat(errors.getErrorCount()).isEqualTo(0);
 	}
 	
+	@Test
+	void shouldNotValidateFinishedStatus() {
+		this.hability.setStatus("FINISHED");
+		habilityValidator.validate(this.hability, this.errors);
+			
+		assertThat(errors.getFieldError("status").getCode()).isEqualTo("The event has not been celebrated yet");
+	}
+	
+
+	@Test
+	void shouldNotValidateivalidStatus() {
+		this.hability.setStatus("Invalid");
+		habilityValidator.validate(this.hability, this.errors);
+			
+		assertThat(errors.getFieldError("status").getCode()).isEqualTo("This status is not valid");
+	}
 }
