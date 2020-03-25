@@ -39,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/judge").permitAll()
 				.antMatchers("/judge/**").permitAll()
 				.antMatchers("/users/new").permitAll()
+				.antMatchers("/tournaments/{tournamentId}/sponsors/**").permitAll()
         .antMatchers("/tournaments").permitAll()
 	   		.antMatchers("/tournaments/**").permitAll()
         .antMatchers("/race/**").permitAll()

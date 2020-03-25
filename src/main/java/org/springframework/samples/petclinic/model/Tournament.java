@@ -64,7 +64,23 @@ public class Tournament extends NamedEntity{
 	@OneToMany(mappedBy = "tournament")
 	private List<Sponsor> sponsors;
 	
+	public void addSponsor(Sponsor sponsor) {
+		getSponsors().add(sponsor);
+		sponsor.setTournament(this);
+	}
 	
+	public Sponsor getSponsorwithIdDifferent(String name, Integer id) {
+		name = name.toLowerCase();
+		for(Sponsor sponsor : getSponsors()) {
+			String compName = sponsor.getName();
+			compName = compName.toLowerCase();
+			if (compName.contentEquals(name) && sponsor.getId() != id) {
+				return sponsor;
+			}
+		}
+		return null;
+	}
+
 	@Transient
 	public Double getFirstClassified() {
 		//Money money = Money.of(this.rewardMoney*0.5, "EUR");
