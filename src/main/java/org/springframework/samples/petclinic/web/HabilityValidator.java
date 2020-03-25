@@ -80,13 +80,13 @@ public class HabilityValidator implements Validator {
 		}
 
 		//name
-		if (!StringUtils.hasLength(name) || name.length() > 30 || name.length() < 3) {
-			errors.rejectValue("name", HabilityValidator.REQUIRED + " and between 3 and 30 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
+		if (!StringUtils.hasLength(name) || name.length() > 50 || name.length() < 3) {
+			errors.rejectValue("name", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 characters");
 		}
 
 		//circuit
 		if (!StringUtils.hasLength(circuit) || circuit.length() > 50 || circuit.length() < 3) {
-			errors.rejectValue("circuit", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
+			errors.rejectValue("circuit", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 characters");
 		}
 		
 		//status

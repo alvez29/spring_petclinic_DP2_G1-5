@@ -2,17 +2,13 @@ package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Race;
-import org.springframework.samples.petclinic.service.RaceService;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class RaceValidator implements Validator {
 
-	@Autowired
-	private RaceService raceService;
 
 	private static final String REQUIRED = "required";
 
@@ -38,7 +34,6 @@ public class RaceValidator implements Validator {
 	@Override
 	public void validate(Object obj, Errors errors) {
 		Race race = (Race) obj;
-		Integer id = race.getId();
 		Double money = race.getRewardMoney();
 		Integer capacity = race.getCapacity();
 		LocalDate date = race.getDate();
@@ -84,9 +79,9 @@ public class RaceValidator implements Validator {
 		}
 
 		// name
-		if (!StringUtils.hasLength(name) || name.length() > 30 || name.length() < 3) {
-			errors.rejectValue("name", REQUIRED + " and between 3 and 30 characters",
-					REQUIRED + " and between 3 and 30 characters");
+		if (!StringUtils.hasLength(name) || name.length() > 50 || name.length() < 3) {
+			errors.rejectValue("name", REQUIRED + " and between 3 and 50 characters",
+					REQUIRED + " and between 3 and 50 characters");
 		}
 
 		// canodorme

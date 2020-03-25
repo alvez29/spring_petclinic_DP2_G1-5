@@ -49,16 +49,16 @@ class BeautyValidatorTest {
 		this.beauty.setName("xx");
 		this.beautyValidator.validate(this.beauty, this.errors);
 
-		Assertions.assertThat(this.errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 30 characters");
+		Assertions.assertThat(this.errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 50 characters");
 
 	}
 
 	@Test
 	void shouldNotValidateLongName() {
-		this.beauty.setName("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxv");
+		this.beauty.setName("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		this.beautyValidator.validate(this.beauty, this.errors);
 
-		Assertions.assertThat(this.errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 30 characters");
+		Assertions.assertThat(this.errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 50 characters");
 
 	}
 
@@ -72,8 +72,8 @@ class BeautyValidatorTest {
 	}
 
 	@Test
-	void shouldValidate30CharName() {
-		this.beauty.setName("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+	void shouldValidate50CharName() {
+		this.beauty.setName("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx50");
 		this.beautyValidator.validate(this.beauty, this.errors);
 
 		Assertions.assertThat(this.errors.getErrorCount()).isEqualTo(0);

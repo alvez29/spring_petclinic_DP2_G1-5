@@ -74,8 +74,8 @@ public class BeautyValidator implements Validator {
 		}
 
 		//name
-		if (!StringUtils.hasLength(name) || name.length() > 30 || name.length() < 3) {
-			errors.rejectValue("name", BeautyValidator.REQUIRED + " and between 3 and 30 characters", BeautyValidator.REQUIRED + " and between 3 and 30 characters");
+		if (!StringUtils.hasLength(name) || name.length() > 50 || name.length() < 3) {
+			errors.rejectValue("name", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 characters");
 		}
 
 		//place
