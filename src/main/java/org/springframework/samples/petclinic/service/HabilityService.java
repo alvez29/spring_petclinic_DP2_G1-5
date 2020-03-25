@@ -58,7 +58,7 @@ public class HabilityService {
 	
 	private boolean fechaReservadaEdit(Integer id, LocalDate date) {
 		List<String> fechas = this.habilityRepo.getFutureDates();
-		LocalDate miFecha = habilityRepo.getDateByHanilityId(id);
+		LocalDate miFecha = this.habilityRepo.getDateByHanilityId(id);
 		if(fechas.contains(miFecha.toString())) {
 			fechas.remove(miFecha.toString());
 		}
@@ -102,5 +102,7 @@ public class HabilityService {
 		}
 		return sum;
 	}
+	
+	
 
 }
