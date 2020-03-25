@@ -27,9 +27,9 @@ public class TounamentController {
 
 	@GetMapping("/tournaments/{tournamentId}")
 	public String showTournament(@PathVariable("tournamentId") int tournamentId, ModelMap modelMap) {
-		Optional<Tournament> tournament = this.tournamentService.findTournamentById(tournamentId);
+		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		String vista = "tournaments/tournamentDetails";
-		modelMap.addAttribute("tournament", tournament.get());
+		modelMap.addAttribute("tournament", tournament);
 		return vista;
 	}
 }
