@@ -162,3 +162,4 @@ public class RaceControllerTests {
 					.andExpect(view().name("tournaments/createOrUpdateRaceForm"));
 		}
 
+}
