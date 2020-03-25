@@ -15,6 +15,9 @@ import lombok.Setter;
 @DiscriminatorValue("Beauty")
 public class Beauty extends Tournament {
 
+	public Beauty() {
+	}
+	
     @Column(name = "place")
     public String place;
 

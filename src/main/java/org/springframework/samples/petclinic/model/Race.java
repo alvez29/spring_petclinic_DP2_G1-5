@@ -18,5 +18,6 @@ public class Race extends Tournament{
 	@Column(name = "canodrome")
 	private String canodrome;
 	
-	
+	public Race() {
+	}
 }

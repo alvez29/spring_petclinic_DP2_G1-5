@@ -50,9 +50,32 @@
 			<td><c:out value="${tournament.place}"/></td>
 		</tr>
 		</c:if>
+		
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
+		<tr>
+			<th>Circuit</th>
+			<td><c:out value="${tournament.circuit}"/></td>
+		</tr>
+		</c:if>
+		
 	</table>
+	<br />
+	<br />
 
-
+	<spring:url value="{tournamentType}/{tournamentId}/edit" var="addUrl">
+		<spring:param name="tournamentId" value="${tournament.id}" />
+		
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
+				<spring:param name="tournamentType" value="hability" />
+		</c:if>
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Beauty'}">
+				<spring:param name="tournamentType" value="beauty" />
+		</c:if>
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Race'}">
+				<spring:param name="tournamentType" value="race" />
+		</c:if>
+	</spring:url>
+	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Edit this Tournament</a>
 
 	<br />
 	<br />
