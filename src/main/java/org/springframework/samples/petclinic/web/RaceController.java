@@ -66,17 +66,17 @@ public class RaceController {
 	}
 
 	@PostMapping(value = "/race/new")
-	public String processCreationForm(@Valid Race race, BindingResult result, ModelMap model) {
+	public String processCreationForm(@Valid final Race race, final BindingResult result, final ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("race", race);
-			return VIEWS_RACE_CREATE_OR_UPDATE_FORM;
+			return RaceController.VIEWS_RACE_CREATE_OR_UPDATE_FORM;
 		} else {
 			try {
 				race.setStatus("DRAFT");
 				this.raceService.saveRace(race);
 			} catch (ReservedDateExeception ex) {
 				result.rejectValue("date", "This date is reserved", "This date is reserved");
-				return VIEWS_RACE_CREATE_OR_UPDATE_FORM;
+				return RaceController.VIEWS_RACE_CREATE_OR_UPDATE_FORM;
 			}
 			
 			return "redirect:/tournaments";
