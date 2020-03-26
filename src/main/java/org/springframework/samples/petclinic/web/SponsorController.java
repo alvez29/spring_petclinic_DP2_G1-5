@@ -40,7 +40,7 @@ public class SponsorController {
 	
 	@ModelAttribute("tournament")
 	public Tournament findTournament(@PathVariable("tournamentId") int tournamentId) {
-		return this.tournamentService.findTournamentById(tournamentId).get();
+		return this.tournamentService.findTournamentById(tournamentId);
 	}
 	
 	@GetMapping(value = "/sponsors/add")
