@@ -32,22 +32,30 @@ public class TounamentController {
 	
 	@GetMapping("/tournaments/{tournamentId}")
 	public String showTournament(@PathVariable("tournamentId") int tournamentId, ModelMap modelMap) throws UnsupportedEncodingException {
+		
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		String vista = "tournaments/tournamentDetails";
+		
+	
+		
 		String site = this.tournamentService.getSite(tournamentId);
 		
-		Place place = GoogleMapsAPIService.getPlace(site);
-		
-		Double lat = null;
-		Double lng = null;
-		
-		if(!place.getResults().isEmpty()) {
-			lat = place.getResults().get(0).getGeometry().getLocation().getLat();
-			lng = place.getResults().get(0).getGeometry().getLocation().getLng();
+		if(site!=null) {
+			Place place = GoogleMapsAPIService.getPlace(site);
+			
+			Double lat = null;
+			Double lng = null;
+			
+			if(!place.getResults().isEmpty()) {
+				lat = place.getResults().get(0).getGeometry().getLocation().getLat();
+				lng = place.getResults().get(0).getGeometry().getLocation().getLng();
+			}
+			
+			modelMap.addAttribute("lat", lat);
+			modelMap.addAttribute("lng", lng);
 		}
 		
-		modelMap.addAttribute("lat", lat);
-		modelMap.addAttribute("lng", lng);
+		
 		modelMap.addAttribute("tournament", tournament);
 
 		return vista;
