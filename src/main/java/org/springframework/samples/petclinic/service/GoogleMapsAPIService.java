@@ -19,7 +19,7 @@ public class GoogleMapsAPIService {
     	URLEncoder.encode(text, "UTF-8");
     	text.replace(" ", "+");
 
-    	String uri = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+text+"&key=AIzaSyDgX8xoAMBWfHWQJGIJ1Njq1PHz5jBg1x8";
+    	String uri = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+text+"&key=AIzaSyABvyntFA8Mer-9aGVO4Hz0DrGOBOzoUAI";
     	
     	Place result = restTemplate.getForObject(uri, Place.class);
 
