@@ -25,8 +25,8 @@ public class JudgeService {
 		return judgeRepo.findAll();
 	}
 
-	public Optional<Judge> findJudgeById(int judgeId) {
-		return judgeRepo.findById(judgeId);
+	public Judge findJudgeById(int judgeId) {
+		return judgeRepo.findById(judgeId).get();
 	}
 
 	public void saveJudge(@Valid Judge judge) {

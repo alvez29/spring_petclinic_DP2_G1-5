@@ -51,9 +51,9 @@ public class JudgeController {
 	
 	@GetMapping("/judge/{judgeId}")
 	public String showJudge(@PathVariable("judgeId") int judgeId, ModelMap model) {
-		Optional<Judge> judge = this.judgeService.findJudgeById(judgeId);
+		Judge judge = this.judgeService.findJudgeById(judgeId);
 		String vista = "judge/judgeDetails";
-		model.addAttribute("judge", judge.get());
+		model.addAttribute("judge", judge);
 		return vista;
 	}
 		
