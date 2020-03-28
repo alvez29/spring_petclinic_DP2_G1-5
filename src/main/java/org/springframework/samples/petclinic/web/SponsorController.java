@@ -44,22 +44,23 @@ public class SponsorController {
 	}
 	
 	@GetMapping(value = "/sponsors/add")
-	public String initCreationForm(Tournament tournament, ModelMap model) {
+	public String initCreationForm(ModelMap model) {
 		Sponsor sponsor = new Sponsor();
-		tournament.addSponsor(sponsor);
 		model.put("sponsor", sponsor);
 		return VIEWS_SPONSORS_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/sponsors/add")
-	public String processCreationForm(Tournament tournament, @Valid Sponsor sponsor, BindingResult result, ModelMap model) {		
+	public String processCreationForm(@PathVariable("tournamentId") int tournamentId, @Valid Sponsor sponsor, BindingResult result, ModelMap model) {		
 		if (result.hasErrors()) {
 			model.put("sponsor", sponsor);
 			return VIEWS_SPONSORS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			try{
-	       	tournament.addSponsor(sponsor);
+				
+				Tournament tournament = tournamentService.findTournamentById(tournamentId);
+				tournament.addSponsor(sponsor);
 	        	this.sponsorService.saveSponsor(sponsor);
 	        }catch(DuplicatedSponsorNameException ex){
 	        	result.rejectValue("name", "duplicate", "already exists");

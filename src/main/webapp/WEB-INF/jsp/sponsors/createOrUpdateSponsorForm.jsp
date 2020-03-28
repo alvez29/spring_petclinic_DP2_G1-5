@@ -35,7 +35,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="petId" value="${sponsor.id}"/>
+                    <input type="hidden" name="sponsorId" value="${sponsor.id}"/>
                     <button class="btn btn-default" type="submit">Add Sponsor</button>
                 </div>
             </div>
