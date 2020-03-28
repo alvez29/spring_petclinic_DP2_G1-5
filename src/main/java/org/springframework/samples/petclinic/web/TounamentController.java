@@ -81,8 +81,6 @@ public class TounamentController {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		Judge judge = this.judgeService.findJudgeById(judgeId).get();
 		tournament.addJudge(judge);
-		judge.addTournament(tournament);
-		this.judgeService.saveJudge(judge);
 		this.tournamentService.saveTournament(tournament);
 		return "redirect:/tournaments/"+ tournamentId;
 	}
