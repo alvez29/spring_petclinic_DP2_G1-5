@@ -78,18 +78,16 @@ public class TounamentController {
 
 	@GetMapping("/tournaments/{tournamentId}/addjudge/{judgeId}")
 	public String linkJudgeToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("judgeId") int judgeId, ModelMap modelMap) {
-		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
+		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		Judge judge = this.judgeService.findJudgeById(judgeId).get();
 		tournament.addJudge(judge);
-		judge.addTournament(tournament);
-		this.judgeService.saveJudge(judge);
 		this.tournamentService.saveTournament(tournament);
 		return "redirect:/tournaments/"+ tournamentId;
 	}
 
 	@GetMapping("/tournaments/{tournamentId}/addpet/{petId}")
 	public String linkPetToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId, ModelMap modelMap) throws DataAccessException, DuplicatedPetNameException {
-		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
+		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		Pet pet = this.petService.findPetById(petId);
 		List<Pet> pets = tournament.getPets();
 		if (!pets.contains(pet)) {
@@ -113,7 +111,7 @@ public class TounamentController {
 	@GetMapping("/pet/tournament/{tournamentId}")
 	public String petListForTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
 		List<Pet> pets = (List<Pet>) petService.findAll();
-		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
+		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		if (tournament.getBreedRestriction() != null) {
 			List<Pet> petsBreed = pets.stream().filter(x->!x.getType()
 					.equals(tournament.getBreedRestriction())).collect(Collectors.toList());
