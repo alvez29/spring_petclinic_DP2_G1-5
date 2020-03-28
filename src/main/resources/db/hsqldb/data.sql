@@ -101,6 +101,7 @@ INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,4);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,9);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,11);
 
+INSERT INTO judges values (1, 'Juez', 'Primero', 'Sevilla', 'No sale por cuarentena');
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,2);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,3);

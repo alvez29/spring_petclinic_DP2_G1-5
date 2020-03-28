@@ -61,8 +61,19 @@ public class Tournament extends NamedEntity{
 			  inverseJoinColumns = @JoinColumn(name = "pet_id"))
 	private List<Pet> pets;
 	
+	@ManyToMany
+	@JoinTable(
+			  name = "tournament_judges", 
+			  joinColumns = @JoinColumn(name = "tournament_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "judge_id"))
+	private List<Judge> judges;
+	
 	@OneToMany(mappedBy = "tournament")
 	private List<Sponsor> sponsors;
+	
+	public void addJudge(Judge judge) {
+		getJudges().add(judge);
+	}
 	
 	public void addPet(Pet pet) {
 		getPets().add(pet);

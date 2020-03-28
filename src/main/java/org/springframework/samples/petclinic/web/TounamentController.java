@@ -6,9 +6,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Judge;
+import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.service.JudgeService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.model.googlemapsapi.Place;
 import org.springframework.samples.petclinic.service.GoogleMapsAPIService;
@@ -26,7 +28,11 @@ public class TounamentController {
 	private TournamentService tournamentService;
 	
 	@Autowired
+	private JudgeService judgeService;
+
+  @Autowired
 	private PetService petService;
+
 	
 	@GetMapping("/tournaments")
 	public String tournamentList(ModelMap modelMap) {
@@ -69,6 +75,18 @@ public class TounamentController {
 		return vista;
 	}
 	
+
+	@GetMapping("/tournaments/{tournamentId}/addjudge/{judgeId}")
+	public String linkJudgeToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("judgeId") int judgeId, ModelMap modelMap) {
+		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
+		Judge judge = this.judgeService.findJudgeById(judgeId).get();
+		tournament.addJudge(judge);
+		judge.addTournament(tournament);
+		this.judgeService.saveJudge(judge);
+		this.tournamentService.saveTournament(tournament);
+		return "redirect:/tournaments/"+ tournamentId;
+	}
+
 	@GetMapping("/tournaments/{tournamentId}/addpet/{petId}")
 	public String linkPetToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId, ModelMap modelMap) throws DataAccessException, DuplicatedPetNameException {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
@@ -108,7 +126,5 @@ public class TounamentController {
 		model.addAttribute("tournamentId", tournamentId);
 		return "pets/petList";
 	}
-	
-
 	
 }

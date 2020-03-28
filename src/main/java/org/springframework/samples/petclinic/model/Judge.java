@@ -1,7 +1,12 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -21,6 +26,13 @@ import lombok.Setter;
 @Table(name = "judges")
 public class Judge extends Person {
 	
+	@ManyToMany
+	@JoinTable(
+			  name = "tournament_judges", 
+			  joinColumns = @JoinColumn(name = "judge_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "tournament_id"))
+	private List<Tournament> tournaments;
+	
 	@Column(name = "contact")
 	@NotEmpty
 	private String contact;
@@ -28,4 +40,8 @@ public class Judge extends Person {
 	@Column(name = "city")
 	@NotEmpty
 	private String city;
+	
+	public void addTournament(Tournament tourn) {
+		getTournaments().add(tourn);
+	}
 }
