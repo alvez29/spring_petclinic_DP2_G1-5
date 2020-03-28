@@ -47,7 +47,7 @@ class HabilityValidatorTest {
 		this.hability.setName("NN");
 		this.habilityValidator.validate(this.hability, this.errors);
 			
-		assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 30 characters");
+		assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 50 characters");
 	}
 	
 	@Test
@@ -60,15 +60,15 @@ class HabilityValidatorTest {
 	
 	@Test
 	void shouldNotValidateLongName() {
-		this.hability.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX31");
+		this.hability.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX51");
 		habilityValidator.validate(this.hability, this.errors);
 			
-			assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 30 characters");
+			assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 50 characters");
 	}
 	
 	@Test
-	void shouldValidate30CharName() {
-		this.hability.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXX30");
+	void shouldValidate50CharName() {
+		this.hability.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX50");
 		habilityValidator.validate(this.hability, this.errors);
 			
 		assertThat(errors.getErrorCount()).isEqualTo(0);

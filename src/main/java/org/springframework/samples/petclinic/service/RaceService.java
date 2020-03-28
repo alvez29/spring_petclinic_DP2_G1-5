@@ -45,8 +45,7 @@ public class RaceService {
 		List<String> fechas = raceRepo.getFutureDates();
 		LocalDate miFecha = raceRepo.getDateByRaceId(raceId);
 		
-		
-		
+
 		if(fechas.contains(miFecha.toString())) {
 			fechas.remove(miFecha.toString());
 		}
