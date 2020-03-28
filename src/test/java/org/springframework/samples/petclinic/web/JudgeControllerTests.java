@@ -29,7 +29,7 @@ public class JudgeControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private Judge judge;
+	private Judge judge; 
 	
 	@BeforeEach
 	void setUp() {
