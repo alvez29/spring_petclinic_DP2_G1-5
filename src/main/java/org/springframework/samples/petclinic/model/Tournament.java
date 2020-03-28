@@ -64,6 +64,10 @@ public class Tournament extends NamedEntity{
 	@OneToMany(mappedBy = "tournament")
 	private List<Sponsor> sponsors;
 	
+	public void addPet(Pet pet) {
+		getPets().add(pet);
+	}
+	
 	public void addSponsor(Sponsor sponsor) {
 		getSponsors().add(sponsor);
 		sponsor.setTournament(this);

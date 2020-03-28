@@ -30,6 +30,10 @@ public class TournamentService {
 		return tournamentRepo.findById(id).get();
 	}
 	
+	public void saveTournament(Tournament tournament) {
+		tournamentRepo.save(tournament);
+	}
+	
 	@Transactional
 	public String getTournamentType(int tournamentId) {
 		return tournamentRepo.findTournamentType(tournamentId);
@@ -51,7 +55,4 @@ public class TournamentService {
 		return res;
 	}
 	
-	
-	
-
 }
