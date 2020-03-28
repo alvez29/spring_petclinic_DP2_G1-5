@@ -55,6 +55,14 @@ CREATE TABLE IF NOT EXISTS visits (
   FOREIGN KEY (pet_id) REFERENCES pets(id)
 ) engine=InnoDB;
 
+CREATE TABLE IF NOT EXISTS judges (
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(30),
+  last_name VARCHAR(30),
+  contact VARCHAR(144),
+  city VARCHAR(64)
+) engine=InnoDB;
+
 CREATE TABLE IF NOT EXISTS sponsor (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
@@ -74,4 +82,3 @@ CREATE TABLE IF NOT EXISTS tournaments (
   FOREIGN KEY (type_id) REFERENCES types(id)
   FOREIGN KEY (pet_id) REFERENCES tournament_pets(pet_id)
 ) engine=InnoDB;
-

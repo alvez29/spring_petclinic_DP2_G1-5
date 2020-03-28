@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.service;
 
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -27,12 +26,33 @@ public class TournamentService {
 	}
 	
 	@Transactional
-	public Optional<Tournament> findTournamentById(int id) throws DataAccessException {
-		return tournamentRepo.findById(id);
+	public Tournament findTournamentById(int id) throws DataAccessException {
+		return tournamentRepo.findById(id).get();
 	}
 	
 	public void saveTournament(Tournament tournament) {
 		tournamentRepo.save(tournament);
+	}
+	
+	@Transactional
+	public String getTournamentType(int tournamentId) {
+		return tournamentRepo.findTournamentType(tournamentId);
+	}
+	
+	@Transactional
+	public String getSite(int tournamentId) {
+		String type = getTournamentType(tournamentId);
+		String res = "";
+		
+		if(type.equals("Race")) {
+			res = tournamentRepo.getCanodrome(tournamentId);
+		}else if(type.equals("Hability")) {
+			res = tournamentRepo.getCircuit(tournamentId);
+		}else if(type.equals("Beauty")) {
+			res = tournamentRepo.getPlace(tournamentId);
+		}
+		
+		return res;
 	}
 	
 }

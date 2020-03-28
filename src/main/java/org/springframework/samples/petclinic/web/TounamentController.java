@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
-
 import java.util.List;
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,6 +10,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.service.PetService;
+import org.springframework.samples.petclinic.model.googlemapsapi.Place;
+import org.springframework.samples.petclinic.service.GoogleMapsAPIService;
 import org.springframework.samples.petclinic.service.TournamentService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
@@ -33,15 +35,39 @@ public class TounamentController {
 		modelMap.addAttribute("tournaments", tournaments);
 		return vista;
 	}
+	
 
+	
 	@GetMapping("/tournaments/{tournamentId}")
-	public String showTournament(@PathVariable("tournamentId") int tournamentId, ModelMap modelMap) {
-		Optional<Tournament> tournament = this.tournamentService.findTournamentById(tournamentId);
+	public String showTournament(@PathVariable("tournamentId") int tournamentId, ModelMap modelMap) throws UnsupportedEncodingException {
+		
+		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		String vista = "tournaments/tournamentDetails";
-		modelMap.addAttribute("tournament", tournament.get());
+		
+	
+		
+		String site = this.tournamentService.getSite(tournamentId);
+		
+		if(site!=null) {
+			Place place = GoogleMapsAPIService.getPlace(site);
+			
+			Double lat = null;
+			Double lng = null;
+			
+			if(!place.getResults().isEmpty()) {
+				lat = place.getResults().get(0).getGeometry().getLocation().getLat();
+				lng = place.getResults().get(0).getGeometry().getLocation().getLng();
+			}
+			
+			modelMap.addAttribute("lat", lat);
+			modelMap.addAttribute("lng", lng);
+		}
+		
+		
+		modelMap.addAttribute("tournament", tournament);
+
 		return vista;
 	}
-	
 	
 	@GetMapping("/tournaments/{tournamentId}/addpet/{petId}")
 	public String linkPetToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId, ModelMap modelMap) throws DataAccessException, DuplicatedPetNameException {
@@ -83,18 +109,6 @@ public class TounamentController {
 		return "pets/petList";
 	}
 	
-	/*
-	public String linkJudgeToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("judgeId") int judgeId, ModelMap modelMap) {
-		Tournament tournament = this.tournamentService.findTournamentById(tournamentId).get();
-		Judge judge = this.judgeService.findJudgeById(judgeId).get();
-		tournament.addJudge(judge);
-		judge.addTournament(tournament);
-		this.judgeService.saveJudge(judge);
-		this.tournamentService.saveTournament(tournament);
-		return "redirect:/tournaments/"+ tournamentId;
-	}
-	*/
-	
-	
+
 	
 }
