@@ -21,9 +21,13 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -84,7 +88,6 @@ class PetServiceTests {
 		Pet pet7 = this.petService.findPetById(7);
 		assertThat(pet7.getName()).startsWith("Samantha");
 		assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
-
 	}
 
 	@Test
@@ -92,10 +95,21 @@ class PetServiceTests {
 		Collection<PetType> petTypes = this.petService.findPetTypes();
 
 		PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
-		assertThat(petType1.getName()).isEqualTo("cat");
+		assertThat(petType1.getName()).isEqualTo("Beagle");
 		PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
-		assertThat(petType4.getName()).isEqualTo("snake");
+		assertThat(petType4.getName()).isEqualTo("German shepherd");
 	}
+	
+	@Test
+	void shouldNotFindThatPetType() {
+		Collection<PetType> petTypes = this.petService.findPetTypes();
+		
+		String notRegisteredType = "Mutt";
+		assertThat(petTypes.stream().map(x->x.getName()).collect(Collectors.toList())).doesNotContain(notRegisteredType);
+		
+	}
+	
+	
 
 	@Test
 	@Transactional
@@ -196,14 +210,21 @@ class PetServiceTests {
 		});		
 	}
 
+	
+	
+	//----------------------Test for User Story #11----------------------------------- 
+	
 	@Test
 	@Transactional
+	@Disabled
 	public void shouldAddNewVisitForPet() throws DataAccessException, ClinicNotAuthorisedException {
 		Pet pet7 = this.petService.findPetById(7);
 		int found = pet7.getVisits().size();
 		Visit visit = new Visit();
 		pet7.addVisit(visit);
 		visit.setDescription("test");
+		visit.setCompetitionCheck("PASSED");
+		visit.setClinic("Dog And Cat Hospital");
 		this.petService.saveVisit(visit);
             try {
                 this.petService.savePet(pet7);
@@ -215,7 +236,76 @@ class PetServiceTests {
 		assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
 		assertThat(visit.getId()).isNotNull();
 	}
-
+	
+//	
+//	@Test
+//	@Transactional
+//	public void shouldAddNewVisitWithoutCompetitionCheckAndInventedClinic() throws DataAccessException, ClinicNotAuthorisedException, DuplicatedPetNameException{
+//		Visit visit = new Visit();
+//		visit.setDescription("This a test 1");
+//		visit.setCompetitionCheck("-");
+//		visit.setClinic("Does not exist");
+//		
+//		this.petService.saveVisit(visit);
+//		assertThat(visit.getId()).isNotNull();
+//		
+//	}
+//	
+//	
+//	//Test del escenario positivo
+//	@Test
+//	@Transactional
+//	public void shouldAddNewVisitWithCompetitionCheckAndCorrectClinic() throws DataAccessException, ClinicNotAuthorisedException, DuplicatedPetNameException{
+//		Visit visit = new Visit();
+//		visit.setDescription("This a test 2");
+//		visit.setCompetitionCheck("PASSED");
+//		visit.setClinic("Canin Vet");
+//		
+//		this.petService.saveVisit(visit);
+//		assertThat(visit.getId()).isNotNull();
+//	}
+//	
+//	
+//	//Test del escenario negativo
+//	@Test
+//	@Transactional
+//	public void shouldNotAddNewVisitWithCompetitionCheckAndInventedClinic() throws DataAccessException, ClinicNotAuthorisedException, DuplicatedPetNameException{
+//		Visit visit = new Visit();
+//		visit.setDescription("This a test 3");
+//		visit.setCompetitionCheck("NOT PASSED");
+//		visit.setClinic("Invent Vet");
+//		
+//		try {
+//			this.petService.saveVisit(visit);
+//		}catch(ClinicNotAuthorisedException ex){
+//            Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+//		}
+//		assertThat(visit.getId()).isNull();
+//	}
+//	
+//	
+	
+	
+	@ParameterizedTest
+	@CsvSource({"This is a test 1, -, Does not Exist","This is is a test 2, PASSED, Canin Vet","This is is a test 3, NOT PASSED, Invent Vet"})
+	public void showAddNewVisit(String description, String competitionCheck,
+			String clinic) {
+		Visit visit = new Visit();
+		visit.setDescription(description);
+		visit.setCompetitionCheck(competitionCheck);
+		visit.setClinic(clinic);
+		
+		try {
+			this.petService.saveVisit(visit);
+            assertThat(visit.getId()).isNotNull();
+		}catch(ClinicNotAuthorisedException ex){
+            Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+            assertThat(visit.getId()).isNull();
+		}
+		
+	}
+	
+	
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
 		Collection<Visit> visits = this.petService.findVisitsByPetId(7);
@@ -225,5 +315,6 @@ class PetServiceTests {
 		assertThat(visitArr[0].getDate()).isNotNull();
 		assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
 	}
+	
 
 }

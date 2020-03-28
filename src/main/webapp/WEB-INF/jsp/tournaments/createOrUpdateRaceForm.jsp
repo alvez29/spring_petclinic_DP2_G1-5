@@ -14,8 +14,9 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${race['new']}">New </c:if>Race</h2>
-
+        <h2><c:if test="${race['new']}">New Race </c:if></h2>
+		<h2><c:if test="${!race['new']}">Update Race </c:if></h2>
+		
         <b>Race</b>
         <table class="table table-striped">
             <thead>
@@ -26,6 +27,7 @@
                 <th>Breed Restriction</th>
                 <th>Reward Money</th>
                 <th>Canodrome</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tr>
@@ -35,6 +37,7 @@
                 <td><c:out value="${race.breedRestriction}"/></td>
                 <td><c:out value="${race.rewardMoney}"/></td>
                 <td><c:out value="${race.canodrome}"></c:out></td>
+                <td><c:out value="${race.status}"></c:out></td>
             </tr>
         </table>
 
@@ -46,14 +49,34 @@
                 <petclinic:selectField label="Breed Restriction" name="breedRestriction" size="5" names="${types}"/>
               	<petclinic:inputField label="Reward Money" name="rewardMoney"/>
                 <petclinic:inputField label="Canodrome" name="canodrome"/>
+				          
+                <c:if test="${edit == true}">
+              	  <petclinic:selectField label="Status" size="3" name="status" names="${statusTypes}"/>
+                </c:if>
+            	
             </div>
 
-            <div class="form-group">
+           
+
+			<c:if test="${race['new']}">
+			<div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="petId" value="${race.id}"/>
                     <button class="btn btn-default" type="submit">Add Race</button>
                 </div>
             </div>
+			</c:if>
+			<c:if test="${!race['new']}">
+			<div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="hidden" name="petId" value="${race.id}"/>
+                    <button class="btn btn-default" type="submit">Update Race</button>
+                </div>
+            </div>
+			</c:if>
+			
+			
+			
         </form:form>
 
     </jsp:body>
