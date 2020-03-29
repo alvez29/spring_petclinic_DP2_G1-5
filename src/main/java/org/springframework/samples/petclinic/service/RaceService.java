@@ -16,6 +16,7 @@ import org.springframework.samples.petclinic.model.Race;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.RaceRepository;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
@@ -74,12 +75,14 @@ public class RaceService {
 		}
 	}
 
-	@Transactional(rollbackFor = {ReservedDateExeception.class, SponsorAmountException.class})
-	public void editRace(@Valid Race race) throws DataAccessException, ReservedDateExeception, SponsorAmountException {
+	@Transactional(rollbackFor = {ReservedDateExeception.class, SponsorAmountException.class, JudgeNotFoundException.class})
+	public void editRace(@Valid Race race) throws DataAccessException, ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
 		if(fechaReservadaEdit(race.getId(), race.getDate())) {
 			throw new ReservedDateExeception();
 		} else if((race.getStatus().equals("PENDING") || race.getStatus().equals("FINISHED")) && getSponsorAmount(race.getId()) < 7000.) {
 			throw new SponsorAmountException();
+		}else if((race.getStatus().equals("PENDING") || race.getStatus().equals("FINISHED")) && this.raceRepo.getJudges(race.getId()).isEmpty()){
+			throw new JudgeNotFoundException();
 		}else {
 			raceRepo.save(race);
 		}

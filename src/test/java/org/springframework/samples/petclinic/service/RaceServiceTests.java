@@ -19,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Race;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.repository.springdatajpa.RaceRepository;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
@@ -81,7 +82,7 @@ public class RaceServiceTests {
 	}
 	
 	@Test
-	public void editRaceSuccess() throws DataAccessException, SponsorAmountException, ReservedDateExeception {
+	public void editRaceSuccess() throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
 		
 		Race race = new Race();
 		race.setId(1);
@@ -100,7 +101,7 @@ public class RaceServiceTests {
 	}
 	
 	@Test
-	public void editRaceReservedDateException() throws DataAccessException, SponsorAmountException {
+	public void editRaceReservedDateException() throws DataAccessException, SponsorAmountException, JudgeNotFoundException {
 		
 		Race race = new Race();
 		race.setId(1);
@@ -122,7 +123,7 @@ public class RaceServiceTests {
 	
 	@ParameterizedTest
 	@CsvSource({"0.","6999.99"})
-	public void editRaceSponsorAmountException(Double money) throws DataAccessException, SponsorAmountException, ReservedDateExeception {
+	public void editRaceSponsorAmountException(Double money) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
 		
 		Race race = new Race();
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
@@ -153,7 +154,7 @@ public class RaceServiceTests {
 	
 	@ParameterizedTest
 	@CsvSource({"PENDING", "FINISHED"})
-	public void editRaceWithSponsor(String status) throws DataAccessException, SponsorAmountException, ReservedDateExeception {
+	public void editRaceWithSponsor(String status) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
 		
 		Race race = new Race();
 		

@@ -12,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Race;
 import org.springframework.samples.petclinic.service.RaceService;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Controller;
@@ -107,13 +108,17 @@ public class RaceController {
 
 			try {
 				this.raceService.editRace(race);
-			}catch (ReservedDateExeception|SponsorAmountException ex) {
-				if(ex.getClass() == ReservedDateExeception.class){
+			}catch (ReservedDateExeception|SponsorAmountException|JudgeNotFoundException ex) {
+				if(ex.getClass().equals(ReservedDateExeception.class)){
 					result.rejectValue("date", "This date is already taken", "This date is already taken");
 				}
-				if(ex.getClass() == SponsorAmountException.class){
+				if(ex.getClass().equals(SponsorAmountException.class)){
 					result.rejectValue("status", "The total amount of sponsor contribution is under 7000.00EUR", "The total amount of sponsor contribution is under 7000.00EUR");
 				}
+				if(ex.getClass().equals(JudgeNotFoundException.class)) {
+					result.rejectValue("status", "Not judges found for this competition", "Not judges found for this competition");
+				}
+				
 				return VIEWS_RACE_CREATE_OR_UPDATE_FORM;
 			}
 		}
