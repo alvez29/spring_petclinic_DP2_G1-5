@@ -1,12 +1,15 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Judge;
+import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.service.JudgeService;
+import org.springframework.samples.petclinic.service.TournamentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +24,9 @@ public class JudgeController {
 	private JudgeService judgeService;
 	
 	@Autowired
+	private TournamentService tournamentService;
+	
+	@Autowired
 	public JudgeController(final JudgeService service) {
 		this.judgeService = service;
 	}
@@ -30,6 +36,16 @@ public class JudgeController {
 		String view = "judge/judgeList";
 		Iterable<Judge> judges = judgeService.findAll();
 		model.addAttribute("judges", judges);
+		return view;
+	}
+	
+	@GetMapping("/judge/tournament/{tournamentId}")
+	public String judgeListforTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
+		String view = "judge/judgeList";
+		Iterable<Judge> judges = judgeService.findAll();
+//		Tournament tournament = tournamentService.findTournamentById(tournamentId).get();
+		model.addAttribute("judges", judges);
+		model.addAttribute("tournamentId", tournamentId);
 		return view;
 	}
 	

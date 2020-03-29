@@ -7,6 +7,9 @@
 
 <petclinic:layout pageName="judge">
     <h2>Judges</h2>
+    <c:if test="${not empty tournamentId}">
+    <p>Pick a Judge to add</p>
+	</c:if>
 
     <table id="judgeTable" class="table table-striped">
         <thead>
@@ -21,10 +24,21 @@
         <c:forEach items="${judges}" var="judge">
             <tr>
                 <td>
-                    <spring:url value="/judge/{judgeId}" var="judgeUrl">
-                        <spring:param name="judgeId" value="${judge.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(judgeUrl)}"><c:out value="${judge.firstName} ${judge.lastName}"/></a>
+                	<c:choose>
+    					<c:when test="${not empty tournamentId}">
+        					<spring:url value="/tournaments/{tournamentId}/addjudge/{judgeId}" var="judgeUrl">
+                        	<spring:param name="judgeId" value="${judge.id}"/>
+                        	<spring:param name="tournamentId" value="${tournamentId}"/>
+                    		</spring:url>
+                    		<a href="${fn:escapeXml(judgeUrl)}"><c:out value="${judge.firstName} ${judge.lastName}"/></a>
+    					</c:when>    
+   						<c:otherwise>
+				        	<spring:url value="/judge/{judgeId}" var="judgeUrl">
+                        	<spring:param name="judgeId" value="${judge.id}"/>
+                    		</spring:url>
+                   	 		<a href="${fn:escapeXml(judgeUrl)}"><c:out value="${judge.firstName} ${judge.lastName}"/></a>
+						</c:otherwise>
+						</c:choose>               
                 </td>
                 <td>
                     <c:out value="${judge.contact}"/>
@@ -36,4 +50,5 @@
         </c:forEach>
         </tbody>
     </table>
+    <a class="btn btn-default" href='<spring:url value="/judge/new" htmlEscape="true"/>'>Add Judge</a>
 </petclinic:layout>

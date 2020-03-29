@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -44,6 +45,8 @@ public class PetController {
 
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
 
+	private static final String VIEWS_PETS_ADD_FORM = "pets/addPetForm";
+	
 	private final PetService petService;
         private final OwnerService ownerService;
 
@@ -83,6 +86,15 @@ public class PetController {
 		dataBinder.setValidator(new PetValidator());
 	}
 
+//	@GetMapping("/pet/tournament/{tournamentId}")
+//	public String petListForTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
+//		Iterable<Pet> pets = petService.findAll();
+//		model.addAttribute("pets", pets);
+//		model.addAttribute("tournamentId", tournamentId);
+//		return "tournaments/petList";
+//	}
+	
+	
 	@GetMapping(value = "/pets/new")
 	public String initCreationForm(Owner owner, ModelMap model) {
 		Pet pet = new Pet();
@@ -90,7 +102,7 @@ public class PetController {
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
-
+	
 	@PostMapping(value = "/pets/new")
 	public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {		
 		if (result.hasErrors()) {
