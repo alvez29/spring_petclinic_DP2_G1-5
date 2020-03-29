@@ -21,7 +21,7 @@ public class HabilityValidator implements Validator {
 	@Override
 	public boolean supports(final Class<?> clazz) {
 		return Hability.class.isAssignableFrom(clazz);
-	} 
+	}  
 
 	private Boolean noTieneMasDeDosDecimales(final Double num) {
         try {
