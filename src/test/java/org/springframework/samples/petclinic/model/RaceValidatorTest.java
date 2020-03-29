@@ -48,7 +48,7 @@ public class RaceValidatorTest {
 		this.race.setName("NN");
 		this.raceValidator.validate(this.race, this.errors);
 			
-		assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 30 characters");
+		assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 50 characters");
 	}
 	
 	@Test
@@ -61,15 +61,15 @@ public class RaceValidatorTest {
 	
 	@Test
 	void shouldNotValidateLongName() {
-		this.race.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX31");
+		this.race.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX51");
 		raceValidator.validate(this.race, this.errors);
 			
-			assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 30 characters");
+			assertThat(errors.getFieldError("name").getCode()).isEqualTo("required and between 3 and 50 characters");
 	}
 	
 	@Test
-	void shouldValidate30CharName() {
-		this.race.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXX30");
+	void shouldValidate50CharName() {
+		this.race.setName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX50");
 		raceValidator.validate(this.race, this.errors);
 			
 		assertThat(errors.getErrorCount()).isEqualTo(0);

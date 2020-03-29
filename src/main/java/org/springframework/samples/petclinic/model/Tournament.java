@@ -28,11 +28,11 @@ import lombok.Setter;
 @Table(name = "tournaments")
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tournament extends NamedEntity{
-
-	@Column(name = "name")
-	@NotEmpty
-	private String name;
-	
+//
+//	@Column(name = "name")
+//	@NotEmpty
+//	private String name;
+//	
 	@Column(name = "status")
 	@NotNull
 	private String status;

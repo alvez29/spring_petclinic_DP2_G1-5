@@ -13,6 +13,11 @@ import org.hibernate.validator.constraints.URL;
 
 import com.sun.istack.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "sponsor")
 public class Sponsor extends NamedEntity{
@@ -21,9 +26,12 @@ public class Sponsor extends NamedEntity{
 	//dinero
 	//url
 	
-	@Column(name = "name")
-	@NotEmpty
-	private String name;
+
+	//@Id
+//	@Column(name = "name")
+//	@NotEmpty
+//	private String name;
+
 	
 	@Column(name = "money")
 	@NotNull
@@ -37,29 +45,6 @@ public class Sponsor extends NamedEntity{
 	@JoinColumn(name = "tournament_id")
 	private Tournament tournament;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Double getMoney() {
-		return money;
-	}
-
-	public void setMoney(Double money) {
-		this.money = money;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
 
 	public Tournament getTournament() {
 		return tournament;
