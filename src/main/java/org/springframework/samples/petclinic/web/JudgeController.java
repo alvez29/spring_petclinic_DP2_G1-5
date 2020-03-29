@@ -1,15 +1,10 @@
 package org.springframework.samples.petclinic.web;
 
-import java.util.HashMap;
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Judge;
-import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.service.JudgeService;
-import org.springframework.samples.petclinic.service.TournamentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -22,9 +17,6 @@ public class JudgeController {
 
 	@Autowired
 	private JudgeService judgeService;
-	
-	@Autowired
-	private TournamentService tournamentService;
 	
 	@Autowired
 	public JudgeController(final JudgeService service) {

@@ -44,6 +44,9 @@ public class TournamentControllerTests {
 
 
 	private static final int TEST_PET_ID = 1;
+
+
+	private static final int TEST_JUDGE_ID = 1;
 	
 
 	@MockBean
@@ -105,6 +108,7 @@ public class TournamentControllerTests {
 		
 		given(this.tournamentService.findTournamentById(TEST_TOURNAMENT_ID)).willReturn(tournament);
 		given(this.petService.findPetById(TEST_PET_ID)).willReturn(pet1);
+		given(this.judgeService.findJudgeById(TEST_PET_ID)).willReturn(judge1);
 	}
 	
 	@WithMockUser(value = "admin")
@@ -135,5 +139,12 @@ public class TournamentControllerTests {
 		.andExpect(view().name("redirect:/tournaments/1"));
 	}
 	
-		
+	@WithMockUser(value = "admin")
+	@Test
+	void shouldAddJudge() throws Exception {
+		mockMvc.perform(get("/tournaments/{tournamentId}/addjudge/{judgeId}", TEST_TOURNAMENT_ID, TEST_JUDGE_ID))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/tournaments/1"));
+	}
+	
 }
