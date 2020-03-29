@@ -169,4 +169,5 @@ public class BeautyServiceTests {
 		Assertions.assertThat(beauty.getSponsors().stream().mapToDouble(x -> x.getMoney()).sum()).isGreaterThanOrEqualTo(7000.00);
 
 	}
+
 }
