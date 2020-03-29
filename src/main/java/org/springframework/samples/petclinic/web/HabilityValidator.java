@@ -21,20 +21,25 @@ public class HabilityValidator implements Validator {
 	@Override
 	public boolean supports(final Class<?> clazz) {
 		return Hability.class.isAssignableFrom(clazz);
-	}
+	}  
 
 	private Boolean noTieneMasDeDosDecimales(final Double num) {
-		try {
-			Boolean res = false;
-			Double n = num * 100;
-			if (n % 1 == 0) {
-				res = true;
-			}
-			return res;
-		} catch (NullPointerException npe) {
-			return false;
-		}
-	}
+        try {
+            Boolean res = false;
+            Double n = num * 100;
+            if (n % 1 == 0) {
+                res = true;
+            } else {
+                n = n - 0.0000000001;
+                if (n % 1 == 0) {
+                    res = true;
+                }
+            }
+            return res;
+        } catch (NullPointerException npe) {
+            return false;
+        }
+    }
 
 	@Override
 	public void validate(final Object obj, final Errors errors) {

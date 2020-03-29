@@ -14,19 +14,23 @@ public class SponsorValidator implements Validator{
 	
 	private static final String REQUIRED = "required";
 	
-	private Boolean noTieneMasDeDosDecimales(Double num) {
-		try {
-			Boolean res = false;
-			Double n = num * 100;
-			if (n % 1 == 0) {
-				res = true;
-			}
-			return res;
-		} catch (NullPointerException npe) {
-			return false;
-		}
-
-	}
+	private Boolean noTieneMasDeDosDecimales(final Double num) {
+        try {
+            Boolean res = false;
+            Double n = num * 100;
+            if (n % 1 == 0) {
+                res = true;
+            } else {
+                n = n - 0.0000000001;
+                if (n % 1 == 0) {
+                    res = true;
+                }
+            }
+            return res;
+        } catch (NullPointerException npe) {
+            return false;
+        }
+    }
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -34,9 +38,9 @@ public class SponsorValidator implements Validator{
 	}
 
 	@Override
-	public void validate(Object target, Errors errors) {
-		Sponsor sponsor = (Sponsor) target;
-		Integer id = sponsor.getId();
+	public void validate(Object obj, Errors errors) {
+		Sponsor sponsor = (Sponsor) obj;
+		//Integer id = sponsor.getId();
 		Double money = sponsor.getMoney();
 		String name = sponsor.getName();
 		String url = sponsor.getUrl();
@@ -61,9 +65,9 @@ public class SponsorValidator implements Validator{
 					REQUIRED + " and between 3 and 30 characters");
 		}
 
-		if (!StringUtils.hasLength(url) || url.length() > 60 || url.length() < 8) {
-			errors.rejectValue("url", REQUIRED + " and between 9 and 60 characters",
-					REQUIRED + " and between 9 and 60 characters");
+		if (!StringUtils.hasLength(url) || url.length() < 9) {
+			errors.rejectValue("url", REQUIRED + " and must conatain more than 9 characters",
+					REQUIRED + " and must conatain more than 9 characters");
 		}
 
 	}
