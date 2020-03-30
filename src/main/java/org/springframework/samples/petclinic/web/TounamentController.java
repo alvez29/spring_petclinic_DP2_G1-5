@@ -48,23 +48,27 @@ public class TounamentController {
 		
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		String vista = "tournaments/tournamentDetails";
-		
 	
-		
 		String site = this.tournamentService.getSite(tournamentId);
 		
 		if(site!=null) {
-			Place[] places = LocationIQAPIService.getPlace(site);
-			Place place = places[0];
 			
-			String lat = null;
-			String lng = null;
+			String lat = "";
+			String lng = "";
 			
-			if(!place.equals(null)) {
-				lat = place.getLat();
-				lng = place.getLon();
+			try {
+				Place[] places = LocationIQAPIService.getPlace(site);
+				Place place = places[0];
+
+				if(!place.equals(null)) {
+					lat = place.getLat();
+					lng = place.getLon();
+				}
+			}catch(NullPointerException ex) {
+				lat = "";
+				lng = "";
 			}
-			
+		
 			modelMap.addAttribute("lat", lat);
 			modelMap.addAttribute("lng", lng);
 		}

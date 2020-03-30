@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.samples.petclinic.model.locationiqapi.Place;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 public class LocationIQAPIService {
@@ -20,10 +21,15 @@ public class LocationIQAPIService {
     	text.replace(" ", "%20");
 
     	String uri = "https://us1.locationiq.com/v1/search.php?key=c79a116f8c3259&q="+text+"&format=json";
-    	    	
-    	Place[] result =  restTemplate.getForObject(uri, Place[].class);
+    	
+		try {
+			Place[] result = restTemplate.getForObject(uri, Place[].class);
 
-		return result;
+			return result;
+		} catch (HttpClientErrorException ex) {
+			return null;
+		}
+
 	}
 
 }

@@ -73,6 +73,7 @@
 		
 		
 		
+		
 		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
 				<spring:param name="tournamentType" value="hability" />
 				<input id="circuit" type="hidden" value="${tournament.circuit}"> 
@@ -139,6 +140,53 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB98Yoktmau6DiA4QgnZ1zBQr5MIGLPGWs&callback=initMap"
     async defer></script-->
+    
+     
+    <script type="text/javascript">
+    
+    function  writeErrorMap(){
+  		document.getElementById('map').innerHTML='<h2>This location cannot be found in Google Maps</h2> <br/><spring:url value="/resources/images/sad_dog.png" var="petsImage"/><img src="${petsImage}"/><br/> ';
+  		}
+   
+    function initMap(){
+    	var lat = document.getElementById('lat').value;
+		var lng = document.getElementById('lng').value;
+	
+		if(lat == "" && lng ==""){
+			writeErrorMap();
+		}else{		
+			// API token goes here
+			var key = 'c79a116f8c3259';
+
+			var Leaflet = L.noConflict();
+
+			
+			// Add layers that we need to the map
+			var streets = L.tileLayer.Unwired({key: key, scheme: "streets"});
+
+			// Initialize the map
+			var map = L.map('map', {
+			        center: [lat, lng], //map loads with this location as center
+			        zoom: 14,
+			        layers: [streets] // Show 'streets' by default
+			});
+
+			
+			// Add the 'scale' control
+			L.control.scale().addTo(map);
+	
+			// Add the 'layers' control
+			L.control.layers({
+			    "Streets": streets
+			}).addTo(map);
+			
+			var marker = L.marker([lat, lng]).addTo(map);
+	}
+    }
+    
+    </script>
+    
+   
 	<div id="map"></div>
 	<br/>
 	<br/>
