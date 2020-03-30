@@ -8,9 +8,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.samples.petclinic.model.Race;
@@ -29,6 +29,12 @@ public class RaceServiceMockedTest {
 	private PetRepository petRepository;
 
 	protected RaceService raceService;
+
+	@BeforeEach
+	void setup() {
+		raceService = new RaceService(raceRepository, petRepository);
+		
+			}
 
 	@Test
 	void shouldGetSponsorAmount() {
@@ -77,7 +83,7 @@ public class RaceServiceMockedTest {
 			assertThat(race.getId()).isNull();
 		}
 	}
-
+	
+	
 }
 	
-
