@@ -68,6 +68,8 @@ public class HabilityServiceTests {
 		assertThat(hability.getThirdClassified()).isEqualTo(hability.getRewardMoney()*0.15);
 	}
 	
+	//Pruebas solitarias
+	
 	@Test
 	public void editHabilityContestSuccess() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException{
 		Hability hability = new Hability();
@@ -82,50 +84,6 @@ public class HabilityServiceTests {
 		assertThat(hability.getId()).isNotNull();
 	}
 	
-	@Test
-	public void editHabilityContestDateException() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException{
-		Hability hability = new Hability();
-		hability.setId(1);
-		hability.setCapacity(8000);
-		hability.setCircuit("Circuit Test");
-		hability.setDate(LocalDate.of(2020, 6, 8));
-		hability.setName("Hability ConTEST");
-		hability.setRewardMoney(1000.00);
-		hability.setStatus("DRAFT");
-		try {
-			this.habilityService.editHability(hability);
-		} catch (ReservedDateExeception ex) {
-			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-			assertThat(hability.getId()).isNull();
-		}
-	}
-	
-	@ParameterizedTest
-	@CsvSource({"0.00","6999.99"})
-	public void editHabilityContestSponsorException(Double money) throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException{
-		Hability hability = new Hability();
-		hability.setId(1);
-		hability.setCapacity(8000);
-		hability.setCircuit("Circuit Test");
-		hability.setDate(LocalDate.of(2020, 6, 8));
-		hability.setName("Hability ConTEST");
-		hability.setRewardMoney(1000.00);
-		hability.setStatus("PENDING");
-		
-		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Sponsor Test");
-		sponsor.setMoney(money);
-		List <Sponsor> sponsors = new ArrayList<Sponsor>();
-		sponsors.add(sponsor);
-		hability.setSponsors(sponsors);
-		
-		try {
-			this.habilityService.editHability(hability);
-		} catch (SponsorAmountException ex) {
-			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-			assertThat(hability.getId()).isNull();
-		}
-	}
 	
 	@ParameterizedTest
 	@CsvSource({"PENDING","FINISHED"})
