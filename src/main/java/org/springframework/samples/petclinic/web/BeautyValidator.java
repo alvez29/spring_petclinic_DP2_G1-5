@@ -22,6 +22,7 @@ public class BeautyValidator implements Validator {
 	}
 
 	private Boolean noTieneMasDeDosDecimales(final Double num) {
+
         try {
             Boolean res = false;
             Double n = num * 100;
