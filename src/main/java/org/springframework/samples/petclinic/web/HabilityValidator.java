@@ -2,9 +2,12 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Hability;
+import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.service.HabilityService;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
@@ -21,20 +24,25 @@ public class HabilityValidator implements Validator {
 	@Override
 	public boolean supports(final Class<?> clazz) {
 		return Hability.class.isAssignableFrom(clazz);
-	}
+	}  
 
 	private Boolean noTieneMasDeDosDecimales(final Double num) {
-		try {
-			Boolean res = false;
-			Double n = num * 100;
-			if (n % 1 == 0) {
-				res = true;
-			}
-			return res;
-		} catch (NullPointerException npe) {
-			return false;
-		}
-	}
+        try {
+            Boolean res = false;
+            Double n = num * 100;
+            if (n % 1 == 0) {
+                res = true;
+            } else {
+                n = n - 0.0000000001;
+                if (n % 1 == 0) {
+                    res = true;
+                }
+            }
+            return res;
+        } catch (NullPointerException npe) {
+            return false;
+        }
+    }
 
 	@Override
 	public void validate(final Object obj, final Errors errors) {
@@ -45,7 +53,7 @@ public class HabilityValidator implements Validator {
 		String name = hability.getName();
 		String circuit = hability.getCircuit();
 		String status = hability.getStatus();
-		Integer id =  hability.getId();
+		List<Judge> judges = hability.getJudges();
 		
 		//moneyReward validation
 		if (money == null) {
@@ -96,7 +104,7 @@ public class HabilityValidator implements Validator {
 			}
 			if(status.equals("FINISHED") && date.isAfter(LocalDate.now())) {
 				errors.rejectValue("status", "The event has not been celebrated yet", "The event has not been celebrated yet");
-			}			
+			}
 		}
 	}
 }

@@ -2,18 +2,17 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.List;
 import java.io.UnsupportedEncodingException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.model.locationiqapi.Place;
 import org.springframework.samples.petclinic.service.JudgeService;
+import org.springframework.samples.petclinic.service.LocationIQAPIService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.PetService;
-import org.springframework.samples.petclinic.model.googlemapsapi.Place;
-import org.springframework.samples.petclinic.service.GoogleMapsAPIService;
 import org.springframework.samples.petclinic.service.TournamentService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
@@ -49,22 +48,27 @@ public class TounamentController {
 		
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		String vista = "tournaments/tournamentDetails";
-		
 	
-		
 		String site = this.tournamentService.getSite(tournamentId);
 		
 		if(site!=null) {
-			Place place = GoogleMapsAPIService.getPlace(site);
 			
-			Double lat = null;
-			Double lng = null;
+			String lat = "";
+			String lng = "";
 			
-			if(!place.getResults().isEmpty()) {
-				lat = place.getResults().get(0).getGeometry().getLocation().getLat();
-				lng = place.getResults().get(0).getGeometry().getLocation().getLng();
+			try {
+				Place[] places = LocationIQAPIService.getPlace(site);
+				Place place = places[0];
+
+				if(!place.equals(null)) {
+					lat = place.getLat();
+					lng = place.getLon();
+				}
+			}catch(NullPointerException ex) {
+				lat = "";
+				lng = "";
 			}
-			
+		
 			modelMap.addAttribute("lat", lat);
 			modelMap.addAttribute("lng", lng);
 		}
@@ -79,7 +83,7 @@ public class TounamentController {
 	@GetMapping("/tournaments/{tournamentId}/addjudge/{judgeId}")
 	public String linkJudgeToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("judgeId") int judgeId, ModelMap modelMap) {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
-		Judge judge = this.judgeService.findJudgeById(judgeId).get();
+		Judge judge = this.judgeService.findJudgeById(judgeId);
 		tournament.addJudge(judge);
 		this.tournamentService.saveTournament(tournament);
 		return "redirect:/tournaments/"+ tournamentId;

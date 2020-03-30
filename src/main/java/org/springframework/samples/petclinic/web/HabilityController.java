@@ -12,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Hability;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.HabilityService;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Controller;
@@ -91,7 +92,7 @@ public class HabilityController {
 	}
 	
 	@PostMapping(value = "tournaments/hability/{habilityId}/edit")
-	public String processUpdateForm(@Valid Hability hability, BindingResult result, @PathVariable("habilityId") int habilityId, ModelMap model) throws DataAccessException, SponsorAmountException, ReservedDateExeception{
+	public String processUpdateForm(@Valid Hability hability, BindingResult result, @PathVariable("habilityId") int habilityId, ModelMap model) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException{
 		boolean edit = true;
 		if(result.hasErrors()) {
 			model.put("hability",hability);
@@ -102,9 +103,12 @@ public class HabilityController {
 			model.put("edit", edit);
 			try {
 				this.habilityService.editHability(hability);
-			} catch (ReservedDateExeception|SponsorAmountException ex) {
+			} catch (ReservedDateExeception | SponsorAmountException | JudgeNotFoundException ex) {
 				if(ex.getClass() == ReservedDateExeception.class){
 					result.rejectValue("date", "This date is already taken", "This date is already taken");
+				}
+				if(ex.getClass() == JudgeNotFoundException.class){
+					result.rejectValue("status", "No judges found for this competition", "No judges found for this competition");
 				}
 				if(ex.getClass() == SponsorAmountException.class){
 					result.rejectValue("status", "The total amount of sponsor contribution is under 7000.00EUR", "The total amount of sponsor contribution is under 7000.00EUR");

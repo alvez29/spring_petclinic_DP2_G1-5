@@ -1,8 +1,12 @@
+
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.samples.petclinic.model.Beauty;
+import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -18,18 +22,23 @@ public class BeautyValidator implements Validator {
 	}
 
 	private Boolean noTieneMasDeDosDecimales(final Double num) {
-		try {
-			Boolean res = false;
-			Double n = num * 100;
-			if (n % 1 == 0) {
-				res = true;
-			}
-			return res;
-		} catch (NullPointerException npe) {
-			return false;
-		}
+        try {
+            Boolean res = false;
+            Double n = num * 100;
+            if (n % 1 == 0) {
+                res = true;
+            } else {
+                n = n - 0.0000000001;
+                if (n % 1 == 0) {
+                    res = true;
+                }
+            }
+            return res;
+        } catch (NullPointerException npe) {
+            return false;
+        }
+    }
 
-	}
 
 	@Override
 	public void validate(final Object obj, final Errors errors) {
@@ -40,6 +49,9 @@ public class BeautyValidator implements Validator {
 		String name = beauty.getName();
 		String place = beauty.getPlace();
 		String status = beauty.getStatus();
+		List<Judge> judges = new ArrayList<Judge>();
+		judges = beauty.getJudges();
+
 		//moneyReward validation
 		if (money == null) {
 			errors.rejectValue("rewardMoney", "It must be a positive number", "It must be a positive number");
@@ -92,6 +104,7 @@ public class BeautyValidator implements Validator {
 				errors.rejectValue("status", "This status is not valid", "This status is not valid");
 			}
 		}
+
 	}
 
 }

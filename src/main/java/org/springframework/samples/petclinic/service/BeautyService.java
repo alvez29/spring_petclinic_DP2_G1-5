@@ -16,6 +16,7 @@ import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.BeautyRepository;
+import org.springframework.samples.petclinic.service.exceptions.JudgesNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
@@ -70,10 +71,17 @@ public class BeautyService {
 		return this.beautyRepo.findById(beautyId).get();
 	}
 
-	@Transactional(rollbackFor = {ReservedDateExeception.class, SponsorAmountException.class})
-	public void editBeauty(@Valid final Beauty beauty) throws ReservedDateExeception, SponsorAmountException {
-		if ((this.getSponsorAmount(beauty.getId()) < 7000.00) && (beauty.getStatus().equals("PENDING") || beauty.getStatus().equals("FINISHED"))) {
+	@Transactional(rollbackFor = {
+		ReservedDateExeception.class, SponsorAmountException.class, JudgesNotFoundException.class
+	})
+	public void editBeauty(@Valid final Beauty beauty) throws ReservedDateExeception, SponsorAmountException, JudgesNotFoundException {
+
+		if (this.getSponsorAmount(beauty.getId()) < 7000.00 && (beauty.getStatus().equals("PENDING") || beauty.getStatus().equals("FINISHED"))) {
 			throw new SponsorAmountException();
+		}
+
+		if ((beauty.getStatus().equals("PENDING") || beauty.getStatus().equals("FINISHED")) && this.beautyRepo.getJudgeById(beauty.getId()).isEmpty()) {
+			throw new JudgesNotFoundException();
 		}
 
 		if (this.fechaReservadaEdit(beauty.getId(), beauty.getDate())) {

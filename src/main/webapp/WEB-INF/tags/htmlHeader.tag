@@ -41,7 +41,13 @@ PetClinic :: a Spring Framework demonstration
         padding: 0;
       }
     </style>
-
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	
+	<script src="https://tiles.locationiq.com/js/leaflet-unwired.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+	
 
     <!-- Only datepicker is used -->
     <spring:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css" var="jQueryUiCss"/>

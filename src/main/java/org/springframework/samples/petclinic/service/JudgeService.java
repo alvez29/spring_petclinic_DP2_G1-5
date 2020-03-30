@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.service;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +23,8 @@ public class JudgeService {
 		return judgeRepo.findAll();
 	}
 
-	public Optional<Judge> findJudgeById(int judgeId) {
-		return judgeRepo.findById(judgeId);
+	public Judge findJudgeById(int judgeId) {
+		return judgeRepo.findById(judgeId).get();
 	}
 
 	public void saveJudge(@Valid Judge judge) {
