@@ -2,18 +2,17 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.List;
 import java.io.UnsupportedEncodingException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.model.locationiqapi.Place;
 import org.springframework.samples.petclinic.service.JudgeService;
+import org.springframework.samples.petclinic.service.LocationIQAPIService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.PetService;
-import org.springframework.samples.petclinic.model.googlemapsapi.Place;
-import org.springframework.samples.petclinic.service.GoogleMapsAPIService;
 import org.springframework.samples.petclinic.service.TournamentService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
@@ -55,14 +54,15 @@ public class TounamentController {
 		String site = this.tournamentService.getSite(tournamentId);
 		
 		if(site!=null) {
-			Place place = GoogleMapsAPIService.getPlace(site);
+			Place[] places = LocationIQAPIService.getPlace(site);
+			Place place = places[0];
 			
-			Double lat = null;
-			Double lng = null;
+			String lat = null;
+			String lng = null;
 			
-			if(!place.getResults().isEmpty()) {
-				lat = place.getResults().get(0).getGeometry().getLocation().getLat();
-				lng = place.getResults().get(0).getGeometry().getLocation().getLng();
+			if(!place.equals(null)) {
+				lat = place.getLat();
+				lng = place.getLon();
 			}
 			
 			modelMap.addAttribute("lat", lat);

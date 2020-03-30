@@ -93,7 +93,7 @@
 	<br />
 
 	
-    <script>
+    <!--script>
       function  writeErrorMap(){
   		document.getElementById('map').innerHTML='<h2>This location cannot be found in Google Maps</h2> <br/><spring:url value="/resources/images/sad_dog.png" var="petsImage"/><img src="${petsImage}"/><br/> ';
   		}
@@ -137,8 +137,8 @@
 
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU8btPPOrMZjfKlKvZG6LbiE5gPiJN_VY&callback=initMap"
-    async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB98Yoktmau6DiA4QgnZ1zBQr5MIGLPGWs&callback=initMap"
+    async defer></script-->
 	<div id="map"></div>
 	<br/>
 	<br/>
