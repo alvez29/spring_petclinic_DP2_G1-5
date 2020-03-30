@@ -12,10 +12,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Hability;
+import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.HabilityRepository;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
@@ -43,10 +45,16 @@ public class HabilityService {
 		}
 	}
 	
-	@Transactional(rollbackFor = {ReservedDateExeception.class, SponsorAmountException.class})
-	public void editHability(@Valid Hability hability) throws ReservedDateExeception, SponsorAmountException {
-		if(getSponsorAmount(hability.getId()) < 7000.00 && (hability.getStatus() =="PENDING" || hability.getStatus() =="FINISHED")) {
+	@Transactional(rollbackFor = {ReservedDateExeception.class, SponsorAmountException.class, JudgeNotFoundException.class})
+	public void editHability(@Valid Hability hability) throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
+		Collection <Judge> judges = this.habilityRepo.getJudgesById(hability.getId());
+		
+		if(this.getSponsorAmount(hability.getId()) < 7000.00 && (hability.getStatus().equals("PENDING") || hability.getStatus().equals("FINISHED"))) {
 			throw new SponsorAmountException();
+		}
+		
+		if(judges.isEmpty() && (hability.getStatus().equals("PENDING") || hability.getStatus().equals("FINISHED"))) {
+			throw new JudgeNotFoundException();
 		}
 		
 		if (fechaReservadaEdit(hability.getId(), hability.getDate())) {

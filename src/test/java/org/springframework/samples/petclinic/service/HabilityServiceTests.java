@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Hability;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.repository.springdatajpa.HabilityRepository;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,7 @@ public class HabilityServiceTests {
 	}
 	
 	@Test
-	public void editHabilityContestSuccess() throws ReservedDateExeception, SponsorAmountException{
+	public void editHabilityContestSuccess() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException{
 		Hability hability = new Hability();
 		hability.setId(1);
 		hability.setCapacity(8000);
@@ -82,7 +83,7 @@ public class HabilityServiceTests {
 	}
 	
 	@Test
-	public void editHabilityContestDateException() throws ReservedDateExeception, SponsorAmountException{
+	public void editHabilityContestDateException() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException{
 		Hability hability = new Hability();
 		hability.setId(1);
 		hability.setCapacity(8000);
@@ -101,7 +102,7 @@ public class HabilityServiceTests {
 	
 	@ParameterizedTest
 	@CsvSource({"0.00","6999.99"})
-	public void editHabilityContestSponsorException(Double money) throws ReservedDateExeception, SponsorAmountException{
+	public void editHabilityContestSponsorException(Double money) throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException{
 		Hability hability = new Hability();
 		hability.setId(1);
 		hability.setCapacity(8000);
