@@ -83,7 +83,7 @@ public class TounamentController {
 	@GetMapping("/tournaments/{tournamentId}/addjudge/{judgeId}")
 	public String linkJudgeToTournament(@PathVariable("tournamentId") int tournamentId, @PathVariable("judgeId") int judgeId, ModelMap modelMap) {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
-		Judge judge = this.judgeService.findJudgeById(judgeId).get();
+		Judge judge = this.judgeService.findJudgeById(judgeId);
 		tournament.addJudge(judge);
 		this.tournamentService.saveTournament(tournament);
 		return "redirect:/tournaments/"+ tournamentId;

@@ -17,19 +17,23 @@ public class RaceValidator implements Validator {
 		return Race.class.isAssignableFrom(clazz);
 	}
 
-	private Boolean noTieneMasDeDosDecimales(Double num) {
-		try {
-			Boolean res = false;
-			Double n = num * 100;
-			if (n % 1 == 0) {
-				res = true;
-			}
-			return res;
-		} catch (NullPointerException npe) {
-			return false;
-		}
-
-	}
+	private Boolean noTieneMasDeDosDecimales(final Double num) {
+        try {
+            Boolean res = false;
+            Double n = num * 100;
+            if (n % 1 == 0) {
+                res = true;
+            } else {
+                n = n - 0.0000000001;
+                if (n % 1 == 0) {
+                    res = true;
+                }
+            }
+            return res;
+        } catch (NullPointerException npe) {
+            return false;
+        }
+    }
 
 	@Override
 	public void validate(Object obj, Errors errors) {
