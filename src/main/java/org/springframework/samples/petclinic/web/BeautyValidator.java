@@ -2,8 +2,11 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.samples.petclinic.model.Beauty;
+import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -19,18 +22,24 @@ public class BeautyValidator implements Validator {
 	}
 
 	private Boolean noTieneMasDeDosDecimales(final Double num) {
-		try {
-			Boolean res = false;
-			Double n = num * 100;
-			if (n % 1 == 0) {
-				res = true;
-			}
-			return res;
-		} catch (NullPointerException npe) {
-			return false;
-		}
 
-	}
+        try {
+            Boolean res = false;
+            Double n = num * 100;
+            if (n % 1 == 0) {
+                res = true;
+            } else {
+                n = n - 0.0000000001;
+                if (n % 1 == 0) {
+                    res = true;
+                }
+            }
+            return res;
+        } catch (NullPointerException npe) {
+            return false;
+        }
+    }
+
 
 	@Override
 	public void validate(final Object obj, final Errors errors) {
@@ -40,6 +49,10 @@ public class BeautyValidator implements Validator {
 		LocalDate date = beauty.getDate();
 		String name = beauty.getName();
 		String place = beauty.getPlace();
+		String status = beauty.getStatus();
+		List<Judge> judges = new ArrayList<Judge>();
+		judges = beauty.getJudges();
+
 		//moneyReward validation
 		if (money == null) {
 			errors.rejectValue("rewardMoney", "It must be a positive number", "It must be a positive number");
@@ -73,14 +86,26 @@ public class BeautyValidator implements Validator {
 		}
 
 		//name
-		if (!StringUtils.hasLength(name) || name.length() > 30 || name.length() < 3) {
-			errors.rejectValue("name", BeautyValidator.REQUIRED + " and between 3 and 30 characters", BeautyValidator.REQUIRED + " and between 3 and 30 character");
+		if (!StringUtils.hasLength(name) || name.length() > 50 || name.length() < 3) {
+			errors.rejectValue("name", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 characters");
 		}
 
-		//canodorme
+		//place
 		if (!StringUtils.hasLength(place) || place.length() > 50 || place.length() < 3) {
-			errors.rejectValue("place", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 character");
+			errors.rejectValue("place", BeautyValidator.REQUIRED + " and between 3 and 50 characters", BeautyValidator.REQUIRED + " and between 3 and 50 characters");
 		}
+
+		//status
+		if (status != null) {
+			if (status.equals("FINISHED") && date.isAfter(LocalDate.now())) {
+				errors.rejectValue("status", "The event has not been celebrated yet", "The event has not been celebrated yet");
+			}
+
+			if (!status.equals("FINISHED") && !status.equals("PENDING") && !status.equals("DRAFT")) {
+				errors.rejectValue("status", "This status is not valid", "This status is not valid");
+			}
+		}
+
 	}
 
 }

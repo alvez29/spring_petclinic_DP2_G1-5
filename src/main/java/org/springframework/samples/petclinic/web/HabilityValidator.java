@@ -2,9 +2,12 @@
 package org.springframework.samples.petclinic.web;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Hability;
+import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.service.HabilityService;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
@@ -21,21 +24,25 @@ public class HabilityValidator implements Validator {
 	@Override
 	public boolean supports(final Class<?> clazz) {
 		return Hability.class.isAssignableFrom(clazz);
-	}
+	}  
 
 	private Boolean noTieneMasDeDosDecimales(final Double num) {
-		try {
-			Boolean res = false;
-			Double n = num * 100;
-			if (n % 1 == 0) {
-				res = true;
-			}
-			return res;
-		} catch (NullPointerException npe) {
-			return false;
-		}
-
-	}
+        try {
+            Boolean res = false;
+            Double n = num * 100;
+            if (n % 1 == 0) {
+                res = true;
+            } else {
+                n = n - 0.0000000001;
+                if (n % 1 == 0) {
+                    res = true;
+                }
+            }
+            return res;
+        } catch (NullPointerException npe) {
+            return false;
+        }
+    }
 
 	@Override
 	public void validate(final Object obj, final Errors errors) {
@@ -45,6 +52,9 @@ public class HabilityValidator implements Validator {
 		LocalDate date = hability.getDate();
 		String name = hability.getName();
 		String circuit = hability.getCircuit();
+		String status = hability.getStatus();
+		List<Judge> judges = hability.getJudges();
+		
 		//moneyReward validation
 		if (money == null) {
 			errors.rejectValue("rewardMoney", "It must be a positive number", "It must be a positive number");
@@ -60,7 +70,7 @@ public class HabilityValidator implements Validator {
 
 		//capacity
 		if (capacity == null) {
-			errors.rejectValue("capacity", "You must add a date for the event", "You must add a date for the event");
+			errors.rejectValue("capacity", "You must add the capacity number", "You must add the capacity number");
 		} else {
 			if (capacity < 0) {
 				errors.rejectValue("capacity", "Capacity must be a positive number", "Capacity must be a positive number");
@@ -78,14 +88,23 @@ public class HabilityValidator implements Validator {
 		}
 
 		//name
-		if (!StringUtils.hasLength(name) || name.length() > 30 || name.length() < 3) {
-			errors.rejectValue("name", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
+		if (!StringUtils.hasLength(name) || name.length() > 50 || name.length() < 3) {
+			errors.rejectValue("name", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 characters");
 		}
 
 		//circuit
-		if (!StringUtils.hasLength(circuit) || circuit.length() > 30 || circuit.length() < 3) {
-			errors.rejectValue("circuit", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 character");
+		if (!StringUtils.hasLength(circuit) || circuit.length() > 50 || circuit.length() < 3) {
+			errors.rejectValue("circuit", HabilityValidator.REQUIRED + " and between 3 and 50 characters", HabilityValidator.REQUIRED + " and between 3 and 50 characters");
+		}
+		
+		//status
+		if(status != null) {
+			if(!status.equals("FINISHED") && !status.equals("PENDING") && !status.equals("DRAFT")) {
+				errors.rejectValue("status", "This status is not valid", "This status is not valid");
+			}
+			if(status.equals("FINISHED") && date.isAfter(LocalDate.now())) {
+				errors.rejectValue("status", "The event has not been celebrated yet", "The event has not been celebrated yet");
+			}
 		}
 	}
-
 }
