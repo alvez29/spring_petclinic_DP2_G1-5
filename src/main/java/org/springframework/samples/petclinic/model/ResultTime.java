@@ -20,6 +20,10 @@ public class ResultTime extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "pet_id")
 	private Pet pet;
+	
+	@ManyToOne
+	@JoinColumn(name = "tournament_id")
+	private Tournament tournament;
 
 	@Column(name = "time")
 	private Long time;
@@ -44,5 +48,13 @@ public class ResultTime extends BaseEntity {
 	            TimeUnit.MILLISECONDS.toMinutes(this.time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(this.time)),
 	            TimeUnit.MILLISECONDS.toSeconds(this.time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this.time)),
 	            TimeUnit.MILLISECONDS.toMillis(this.time)- TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(this.time)));
+	}
+	
+	public void setTime(int hours, int min, int seconds, int millis) {
+		this.time = TimeUnit.HOURS.toMillis(hours) + TimeUnit.MINUTES.toMillis(min) + TimeUnit.SECONDS.toMillis(seconds) + TimeUnit.MILLISECONDS.toMillis(millis);
+	}
+	
+	public void setTime(Long time) {
+		this.time = time;
 	}
 }

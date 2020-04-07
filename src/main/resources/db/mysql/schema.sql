@@ -84,3 +84,15 @@ CREATE TABLE IF NOT EXISTS tournaments (
   FOREIGN KEY (pet_id) REFERENCES tournament_pets(pet_id),
   FOREIGN KEY (judge_id) REFERENCES tournament_judges(judge_id)
 ) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS resulttime (
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pet_id INT(4) UNSIGNED NOT NULL,
+  tournament_id INT(4),
+  time LONG,
+  lowfails INT(3),
+  mediumfails INT(3),
+  bigfails INT(3),
+  FOREIGN KEY (tournament_id) REFERENCES tournament(id),
+  FOREIGN KEY (pet_id) REFERENCES pets(id)
+) engine=InnoDB;
