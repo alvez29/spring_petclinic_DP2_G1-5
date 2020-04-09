@@ -96,3 +96,15 @@ CREATE TABLE IF NOT EXISTS resulttime (
   FOREIGN KEY (tournament_id) REFERENCES tournament(id),
   FOREIGN KEY (pet_id) REFERENCES pets(id)
 ) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS resultscore (
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pet_id INT(4) UNSIGNED NOT NULL,
+  tournament_id INT(4),
+  haircut INT(1),
+  haircutdif INT(1),
+  technique INT(1),
+  posture INT(1),
+  FOREIGN KEY (tournament_id) REFERENCES tournament(id),
+  FOREIGN KEY (pet_id) REFERENCES pets(id)
+) engine=InnoDB;
