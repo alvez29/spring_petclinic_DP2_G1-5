@@ -1,8 +1,11 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -21,5 +24,7 @@ public class Beauty extends Tournament {
     @Column(name = "place")
     public String place;
 
+	@OneToMany(mappedBy = "tournament")
+	private Set<ResultScore> scores;
 
 }
