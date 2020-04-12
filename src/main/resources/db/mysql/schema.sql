@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS resulttime (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   pet_id INT(4) UNSIGNED NOT NULL,
   tournament_id INT(4),
-  time LONG,
+  time DOUBLE,
   lowfails INT(3),
   mediumfails INT(3),
   bigfails INT(3),

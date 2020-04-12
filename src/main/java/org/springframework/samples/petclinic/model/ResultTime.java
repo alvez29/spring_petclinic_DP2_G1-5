@@ -26,7 +26,7 @@ public class ResultTime extends BaseEntity {
 	private Tournament tournament;
 
 	@Column(name = "time")
-	private Long time;
+	private Double time;
 	
 	@Column(name = "lowfails")
 	private int LowFails;
@@ -43,18 +43,19 @@ public class ResultTime extends BaseEntity {
 	
 	//   Horas | 60 MINUTOS | 60 SEGUNDOS | 1000 MILISEGUNDOS
 	
-	public String getTime() {
-		return String.format("%02d:%02d:%02d.%02d", TimeUnit.MILLISECONDS.toHours(this.time),
-	            TimeUnit.MILLISECONDS.toMinutes(this.time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(this.time)),
-	            TimeUnit.MILLISECONDS.toSeconds(this.time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this.time)),
-	            TimeUnit.MILLISECONDS.toMillis(this.time)- TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(this.time)));
-	}
+//	public String getTime() {
+//		return String.format("%02d:%02d:%02d.%02d", TimeUnit.MILLISECONDS.toHours(this.time),
+//	            TimeUnit.MILLISECONDS.toMinutes(this.time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(this.time)),
+//	            TimeUnit.MILLISECONDS.toSeconds(this.time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this.time)),
+//	            TimeUnit.MILLISECONDS.toMillis(this.time)- TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(this.time)));
+//	}
 	
-	public void setTime(int hours, int min, int seconds, int millis) {
-		this.time = TimeUnit.HOURS.toMillis(hours) + TimeUnit.MINUTES.toMillis(min) + TimeUnit.SECONDS.toMillis(seconds) + TimeUnit.MILLISECONDS.toMillis(millis);
-	}
-	
-	public void setTime(Long time) {
-		this.time = time;
-	}
+//	public void setTime(int hours, int min, int seconds, int millis) {
+//		this.time = TimeUnit.HOURS.toMillis(hours) + TimeUnit.MINUTES.toMillis(min) + TimeUnit.SECONDS.toMillis(seconds) + TimeUnit.MILLISECONDS.toMillis(millis);
+//	}
+//	
+//	public void setTime(Long time) {
+//		this.time = time;
+//	}
+//	
 }
