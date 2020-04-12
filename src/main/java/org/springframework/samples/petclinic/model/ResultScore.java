@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,4 +35,14 @@ public class ResultScore extends BaseEntity {
 	
 	@Column(name = "posture")
 	private int posture;
+	
+	@Transient
+	public Integer getTotalPoints(){
+		Integer res = this.haircut +
+				this.haircutdif +
+				this.technique +
+				this.posture;
+		
+		return res;
+	}
 }
