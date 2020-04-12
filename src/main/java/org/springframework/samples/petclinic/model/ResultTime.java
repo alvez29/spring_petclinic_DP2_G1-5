@@ -27,8 +27,8 @@ public class ResultTime extends BaseEntity {
 	private Tournament	tournament;
 
 	@Column(name = "time")
-	private Double		time;
-
+	private Double time;
+	
 	@Column(name = "lowfails")
 	private int			LowFails;
 
