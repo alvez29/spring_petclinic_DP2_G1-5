@@ -82,7 +82,7 @@ INSERT INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VA
 
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',1,'First Race Test','2020-04-05','FINISHED', 7500.00 ,800,5,'Gran Hipodromo de Andalucia');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,canodrome) VALUES ('Race',2,'Second Race Test','2020-06-14','DRAFT', 7500.00 ,800,5,'Lorem Ipsum Patata');
-INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-06-10','DRAFT', 7500.00,800,1,'Pabellon España');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-06-10','FINISHED', 7500.00,800,1,'Pabellon España');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',4,'Hability ConTEST','2020-07-10','DRAFT', 8000.00,800,1,'WiZink Center');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',5,'Hability ConTEST sponsors','2020-07-12','DRAFT', 8000.00,800,1,'IFEMA');
 
@@ -110,8 +110,23 @@ INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,4);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,9);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,11);
 
+
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,2);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,3);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,4);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,9);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,11);
+
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
+
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (1, 2, 1, 40.086, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (2, 3, 1, 38.595, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (3, 4, 1, 39.487, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (4, 9, 1, 37.9402, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (5, 11, 1, 38.276, 0, 0, 0);
+
+INSERT INTO resultscore(id, pet_id, tournament_id, haircut, haircutdif, technique, posture) VALUES (1, 2, 3, 4, 5, 5, 5);
+INSERT INTO resultscore(id, pet_id, tournament_id, haircut, haircutdif, technique, posture) VALUES (2, 3, 3, 4, 6, 5, 5);
+INSERT INTO resultscore(id, pet_id, tournament_id, haircut, haircutdif, technique, posture) VALUES (3, 4, 3, 1, 0, 0, 0);
+INSERT INTO resultscore(id, pet_id, tournament_id, haircut, haircutdif, technique, posture) VALUES (4, 9, 3, 0, 0, 0, 0);
+INSERT INTO resultscore(id, pet_id, tournament_id, haircut, haircutdif, technique, posture) VALUES (5, 11, 3, 4, 10, 10, 10);

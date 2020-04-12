@@ -11,3 +11,4 @@ public interface ResultTimeRepository extends CrudRepository<ResultTime, Integer
 	@Query("select r from ResultTime r where r.tournament.id = ?1")
 	List<ResultTime> findByTournamentId(int tournamnetId);
 }
+
