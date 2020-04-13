@@ -44,14 +44,7 @@ public class BeautyResultController {
 	
 	@GetMapping("/tournament/beauty/{tournamentId}/pet/{petId}/add_result")
 	public String initCreationForm(@PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId, ModelMap model) {
-		ResultScore resultScore = new ResultScore();
-
-		Pet pet = this.petService.findPetById(petId);
-		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
-		
-		resultScore.setPet(pet);
-		resultScore.setTournament(tournament);
-		
+		ResultScore resultScore = new ResultScore();	
 		model.put("result", resultScore);
 		return VIEW_BEAUTY_ADD_RESULT;
 	}
@@ -63,6 +56,12 @@ public class BeautyResultController {
 			model.put("result", resultScore);
 			return VIEW_BEAUTY_ADD_RESULT;
 		} else {
+			Pet pet = this.petService.findPetById(petId);
+			Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
+			
+			resultScore.setPet(pet);
+			resultScore.setTournament(tournament);
+			
 			this.beautyResultService.save(resultScore);
 			return "redirect:/tournaments/"+tournamentId;
 		}
