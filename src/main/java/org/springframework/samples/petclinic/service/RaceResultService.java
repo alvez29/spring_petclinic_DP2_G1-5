@@ -1,6 +1,8 @@
-package org.springframework.samples.petclinic.web;
+package org.springframework.samples.petclinic.service;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.ResultTime;
@@ -19,6 +21,10 @@ public class RaceResultService {
 
 	public List<ResultTime> findByTournamnetId(int tournamnetId) {
 		return resultTimeRepo.findByTournamentId(tournamnetId);
+	}
+
+	public void saveResult(@Valid ResultTime resultTime) {
+		resultTimeRepo.save(resultTime);
 	} 
 
 }

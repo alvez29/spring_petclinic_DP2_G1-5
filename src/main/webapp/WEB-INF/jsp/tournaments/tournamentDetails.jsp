@@ -174,11 +174,41 @@
 						</dd>
 						<dt>Race</dt>
 						<dd>
-							<c:out value="${pet.type.name}" />
+							<c:out value="${pet.type.name} " />
+						</dd>
+						<dt>Owner</dt>
+						<dd>
+							<c:out value="${pet.owner.firstName} ${pet.owner.lastName}" />
 						</dd>
 					</dl>
 				</td>
-			</tr>
+					<td><spring:url
+							value="/tournament/{tournamentType}/{tournamentId}/pet/{petId}/add_result"
+							var="addUrl">
+							<spring:param name="tournamentId" value="${tournament.id}" />
+							<spring:param name="petId" value="${pet.id}" />
+							
+
+							<c:if
+								test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
+								<spring:param name="tournamentType" value="hability" />
+								<input id="circuit" type="hidden" value="${tournament.circuit}">
+							</c:if>
+							<c:if
+								test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Beauty'}">
+								<spring:param name="tournamentType" value="beauty" />
+								<input id="place" type="hidden" value="${tournament.place}">
+							</c:if>
+							<c:if
+								test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Race'}">
+								<spring:param name="tournamentType" value="race" />
+								<input id="canodrome" type="hidden"
+									value="${tournament.canodrome}">
+
+							</c:if>
+						</spring:url> <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add
+							Dog Result</a></td>
+				</tr>
 		</c:forEach>
 	</table>
 	<c:if test="${tournament.status != 'FINISHED'}">
