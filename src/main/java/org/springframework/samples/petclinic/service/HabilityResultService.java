@@ -3,6 +3,8 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.samples.petclinic.model.ResultTime;
@@ -20,6 +22,11 @@ public class HabilityResultService {
 	public List<ResultTime> findByTournamentId(final int tournamentId) {
 
 		return this.resultTimeRepository.findByTournamentId(tournamentId);
+	}
+
+	public void saveResult(@Valid final ResultTime resultTime) {
+		this.resultTimeRepository.save(resultTime);
+
 	}
 
 }

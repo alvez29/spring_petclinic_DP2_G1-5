@@ -14,7 +14,7 @@
 				<th>Position</th>
 				<th>Name</th>
 				<th>Haircut</th>
-				<th>Haircut Diff</th>
+				<th>Haircut Dif</th>
 				<th>Technique</th>
 				<th>Posture</th>
 				<th>Total Points</th>

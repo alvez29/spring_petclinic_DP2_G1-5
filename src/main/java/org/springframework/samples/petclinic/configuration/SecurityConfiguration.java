@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/tournaments/{tournamentId}/sponsors/**").permitAll()
 				.antMatchers("/tournament/race/{tournamentId}/pet/{petId}/add_result").permitAll()
 				.antMatchers("/tournament/beauty/{tournamentId}/pet/{petId}/add_result").permitAll()
+        .antMatchers("/tournament/hability/{tournamentId}/pet/{petId}/add_result").permitAll()
 	    	.antMatchers("/pet/tournament/**").permitAll()
         .antMatchers("/tournaments").permitAll()
 	   		.antMatchers("/tournaments/**").permitAll()
@@ -65,6 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // se sirve desde esta misma página.
                 http.csrf().ignoringAntMatchers("/h2-console/**");
                 http.headers().frameOptions().sameOrigin();
+
 	}
 
 	@Override
