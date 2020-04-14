@@ -8,7 +8,7 @@
 
 <petclinic:layout pageName="addRaceResult">
     <h2>Add New Result</h2>
-    <form:form modelAttribute="result" class="form-horizontal" id="add-owner-form">
+    <form:form modelAttribute="resultTime" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
         	
             <petclinic:inputField label="Time" name="time"/>

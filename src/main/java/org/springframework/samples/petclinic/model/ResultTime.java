@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +30,8 @@ public class ResultTime extends BaseEntity {
 	private Tournament	tournament;
 
 	@Column(name = "time")
+	@Range(min = 0, message="No puede ser negativo")
+	@NotNull
 	private Double time;
 	
 	@Column(name = "lowfails")

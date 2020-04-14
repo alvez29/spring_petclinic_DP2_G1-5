@@ -10,7 +10,7 @@
     <h2>
         Add new Result
     </h2>
-    <form:form modelAttribute="result" class="form-horizontal" id="add-result-form">
+    <form:form modelAttribute="resultTime" class="form-horizontal" id="add-result-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Time" name="time"/>
             <petclinic:inputField label="Low fails" name="lowFails"/>

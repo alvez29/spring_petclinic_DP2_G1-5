@@ -8,7 +8,7 @@
 
 <petclinic:layout pageName="addBeautyResult">
     <h2>Add New Result</h2>
-    <form:form modelAttribute="result" class="form-horizontal" id="add-result-form">
+    <form:form modelAttribute="resultScore" class="form-horizontal" id="add-result-form">
         <div class="form-group has-feedback">
         	
             <petclinic:inputField label="Haircut" name="haircut"/>

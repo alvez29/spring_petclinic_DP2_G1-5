@@ -182,7 +182,13 @@
 						</dd>
 					</dl>
 				</td>
-					<td><spring:url
+					<td>
+					
+					
+					
+					
+					<c:if test="${petHasResult[pet.id] == 0}">
+					<spring:url
 							value="/tournament/{tournamentType}/{tournamentId}/pet/{petId}/add_result"
 							var="addUrl">
 							<spring:param name="tournamentId" value="${tournament.id}" />
@@ -206,8 +212,8 @@
 									value="${tournament.canodrome}">
 
 							</c:if>
-						</spring:url> <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add
-							Dog Result</a></td>
+						</spring:url> <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add Dog Result</a></td>
+						</c:if>
 				</tr>
 		</c:forEach>
 	</table>

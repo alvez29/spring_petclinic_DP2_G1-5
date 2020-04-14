@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.springframework.samples.petclinic.model.Hability;
 import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.repository.springdatajpa.HabilityRepository;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedSponsorNameException;
 import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
@@ -38,7 +40,15 @@ public class HabilityServiceTests {
 	@Autowired
 	protected HabilityRepository habilityRepo;
 	
+	@Autowired
+	SponsorService sponsorService;
+	
+	@Autowired
+	JudgeService jusgeService;
+	
+	@PersistenceContext
 	protected EntityManager entityM;
+	
 
 	@ParameterizedTest
     @CsvSource({"8000, Circuit Test, 2020-04-16, Hability ConTEST, 1000", "8000, Circuit Test, 2020-06-08, Hability ConTEST 2, 1000"})
@@ -116,41 +126,46 @@ public class HabilityServiceTests {
 	@ParameterizedTest
 	@CsvSource({"0.","6999.99"})
 	@Disabled
-	public void editRaceSponsorAmountException(Double money) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
+	public void editHabilitySponsorAmountException(Double money) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
 		
 		Hability hability = new Hability();
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		Sponsor sponsor = new Sponsor();
+		sponsor.setId(14);
 		sponsor.setName("Sponsor test");
 		sponsor.setMoney(money);
-		sponsors.add(sponsor);
+		sponsor.setUrl("https://www.google.com");
 		
-		hability.setId(1);
+		hability.setId(14);
 		hability.setCapacity(8000);
 		hability.setCircuit("Circuit Test");
-		hability.setDate(LocalDate.of(2020,6,8));
+		hability.setDate(LocalDate.of(2020,12,8));
 		hability.setRewardMoney(1000.);
 		hability.setName("Race 3 Test");
-		hability.setStatus("PENDING");
-		hability.setSponsors(sponsors);
+		hability.setStatus("DRAFT");
+		habilityService.saveHability(hability);
+		this.entityM.flush();	
 		
+		hability.setSponsors(sponsors);		
+		sponsor.setTournament(hability);
+		sponsors.add(sponsor);
+		sponsorService.saveSponsor(sponsor);
+
 		Judge j1 = new Judge();
+		j1.setId(14);
 		j1.setCity("Sevilla");
 		j1.setFirstName("Pepe");
 		j1.setLastName("Gotera");
 		j1.setContact("666666666");
+		this.jusgeService.saveJudge(j1);
+		
 		
 		List<Judge> judges = new ArrayList<Judge>();
-		
 		hability.setJudges(judges);
-		
 		hability.addJudge(j1);
-
-//		this.entityM.persist(sponsor);
-//		this.entityM.persist(judges);
-//		this.entityM.persist(race);
-//		this.entityM.merge(race);
-//		this.entityM.flush();	
+		hability.setStatus("PENDING");
+		
+		this.entityM.flush();	
 		
 		try{
 			this.habilityService.editHability(hability);
@@ -160,7 +175,4 @@ public class HabilityServiceTests {
 		}
 
 	}
-	
-	
-		
 }

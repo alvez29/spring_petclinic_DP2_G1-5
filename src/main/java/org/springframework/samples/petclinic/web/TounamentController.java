@@ -51,6 +51,8 @@ public class TounamentController {
 	
 		String site = this.tournamentService.getSite(tournamentId);
 		
+		Integer[] petHasResult = this.tournamentService.petHasResult(tournamentId);
+		
 		if(site!=null) {
 			
 			String lat = "";
@@ -75,6 +77,7 @@ public class TounamentController {
 		
 		
 		modelMap.addAttribute("tournament", tournament);
+		modelMap.addAttribute("petHasResult", petHasResult);
 
 		return vista;
 	}
@@ -127,6 +130,6 @@ public class TounamentController {
 		model.addAttribute("pets", pets);
 		model.addAttribute("tournamentId", tournamentId);
 		return "pets/petList";
-	}
+	}	
 	
 }

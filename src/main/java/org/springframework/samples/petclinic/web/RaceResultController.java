@@ -6,9 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.ResultTime;
-import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.RaceResultService;
 import org.springframework.samples.petclinic.service.TournamentService;
@@ -33,6 +31,7 @@ public class RaceResultController {
 	@Autowired
 	private TournamentService tournamentService;
 	
+	
 	@GetMapping("/tournaments/race/{tournamentId}/result")
 	public String raceResultList(ModelMap modelMap, @PathVariable("tournamentId") int tournamnetId) {
 		String vista = "tournaments/raceResultList";
@@ -45,14 +44,14 @@ public class RaceResultController {
 	@GetMapping("/tournament/race/{tournamentId}/pet/{petId}/add_result")
 	public String initCreationForm(ModelMap model, @PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId) {
 		ResultTime result = new ResultTime();
-		model.put("result",result);
+		model.put("resultTime",result);
 		return VIEW_RACE_ADD_RESULT;
 	}
 	
 	@PostMapping(value = "/tournament/race/{tournamentId}/pet/{petId}/add_result")
-	public String processCreationForm(@Valid final ResultTime resultTime, final BindingResult result, final ModelMap model, @PathVariable("tournamentId") int tournamnetId, @PathVariable("petId") int petId) {
+	public String processCreationForm(@Valid  ResultTime resultTime, BindingResult result, ModelMap model, @PathVariable("tournamentId") int tournamnetId, @PathVariable("petId") int petId) {
 		if (result.hasErrors()) {
-			model.put("result", resultTime);
+			model.put("resultTime",resultTime);
 			return VIEW_RACE_ADD_RESULT;
 		} else {
 			resultTime.setPet(petService.findPetById(petId));

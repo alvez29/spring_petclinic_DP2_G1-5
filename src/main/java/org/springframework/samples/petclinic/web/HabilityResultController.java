@@ -45,14 +45,14 @@ public class HabilityResultController {
 	@GetMapping("/tournament/hability/{tournamentId}/pet/{petId}/add_result")
 	public String initCreationForm(final ModelMap model, @PathVariable("tournamentId") final int tournamentId, @PathVariable("petId") final int petId) {
 		ResultTime result = new ResultTime();
-		model.put("result", result);
+		model.put("resultTime", result);
 		return HabilityResultController.VIEWS_RESULT_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/tournament/hability/{tournamentId}/pet/{petId}/add_result")
 	public String processCreationForm(@Valid final ResultTime resultTime, final BindingResult result, final ModelMap model, @PathVariable("tournamentId") final int tournamentId, @PathVariable("petId") final int petId) {
 		if (result.hasErrors()) {
-			model.put("result", resultTime);
+			model.put("resultTime", resultTime);
 			return HabilityResultController.VIEWS_RESULT_CREATE_OR_UPDATE_FORM;
 		} else {
 			resultTime.setPet(this.petService.findPetById(petId));
