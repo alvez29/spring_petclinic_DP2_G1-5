@@ -70,9 +70,10 @@ public class TournamentService {
 	public Integer[] petHasResult(int tournamentId) {
 		Tournament tournament = this.tournamentRepo.findById(tournamentId).get();
 		List<Pet> pets = tournament.getPets();
-		
-		Integer maxId = pets.stream().mapToInt(x->x.getId()).max().getAsInt();
-		
+		Integer maxId = 0;
+		if(!pets.isEmpty()) {
+			maxId = pets.stream().mapToInt(x->x.getId()).max().getAsInt();
+		}
 		Integer[] res = new Integer[maxId+1];
 
 		if(getTournamentType(tournamentId).equals("Beauty")) {

@@ -56,7 +56,7 @@ public class HabilityController {
 		statusType.add("DRAFT");
 		return statusType;
 	}
-
+	
 	@GetMapping("/hability/new")
 	public String initCreationForm(final ModelMap model) {
 		Hability hability = new Hability();
