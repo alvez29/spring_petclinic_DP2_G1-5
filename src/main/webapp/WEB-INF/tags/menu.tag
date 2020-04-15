@@ -41,7 +41,7 @@
 				</petclinic:menuItem>
 				
 				<petclinic:menuItem active="${name eq 'tournaments'}" url="/tournaments"
-					title="veterinarians">
+					title="tournaments">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Tournaments</span>
 				</petclinic:menuItem>
