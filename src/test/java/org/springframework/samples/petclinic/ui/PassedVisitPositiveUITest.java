@@ -1,22 +1,27 @@
 package org.springframework.samples.petclinic.ui;
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.*;
 
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-public class PassedVisitPositive {
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class PassedVisitPositiveUITest {
+	@LocalServerPort
+	private int port;
 	private WebDriver driver;
 	private String baseUrl;
 	private boolean acceptNextAlert = true;
@@ -24,8 +29,9 @@ public class PassedVisitPositive {
 
 	@BeforeEach
 	public void setUp() throws Exception {	
-		String pathToGeckoDriver="C:\\Users\\pablo\\OneDrive\\Documentos\\Universidad\\3º\\DP II";
-		System.setProperty("webdriver.gecko.driver", pathToGeckoDriver+ "\\geckodriver.exe");
+
+		String value = System.getenv("webdriver.gecko.driver");
+		System.setProperty("webdriver.gecko.driver", value );
 		driver = new FirefoxDriver();
 		
 		baseUrl = "https://www.google.com/";
@@ -34,7 +40,7 @@ public class PassedVisitPositive {
 
 	  @Test
 	  public void passedVisitPositive() throws Exception {
-	    driver.get("http://localhost:8080/");
+	    driver.get("http://localhost:"+port);
 	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
 	    driver.findElement(By.id("username")).click();
 	    driver.findElement(By.id("username")).clear();
