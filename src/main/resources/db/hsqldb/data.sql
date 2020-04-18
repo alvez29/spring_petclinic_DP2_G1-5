@@ -100,9 +100,11 @@ INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,4);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,9);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,11);
 
-INSERT INTO judges values (1, 'Juez', 'Primero', 'Sevilla', 'No sale por cuarentena');
+INSERT INTO judges values (1, 'Juez', 'Primero', 'Sevilla', 'primero@example.com');
 
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,1);
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,2);
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,2);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,3);
@@ -110,14 +112,11 @@ INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,4);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,9);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,11);
 
-
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,2);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,3);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,4);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,9);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,11);
-
-INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
 
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (1, 2, 1, 40.086, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (2, 3, 1, 38.595, 0, 0, 0);
