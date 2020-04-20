@@ -14,5 +14,8 @@ public interface ResultTimeRepository extends CrudRepository<ResultTime, Integer
 
 	@Query("select rt.pet from ResultTime rt where rt.tournament.id = ?1")
 	List<Pet> findPetsWithResultByTournamentId(int tournamentId);
+
+	@Query("select count(rt) from ResultTime rt where rt.pet.id = ?1 and rt.tournament.id = ?2")
+	int hasResult(Integer petId, Integer tournamentId);
 }
 
