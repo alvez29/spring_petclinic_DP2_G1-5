@@ -12,6 +12,7 @@ import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.service.BeautyResultService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.TournamentService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedResultForPetInTournament;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -44,26 +45,36 @@ public class BeautyResultController {
 	
 	@GetMapping("/tournament/beauty/{tournamentId}/pet/{petId}/add_result")
 	public String initCreationForm(@PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId, ModelMap model) {
-		ResultScore resultScore = new ResultScore();	
-		model.put("resultScore", resultScore);
-		return VIEW_BEAUTY_ADD_RESULT;
+		if(!this.beautyResultService.isInTournament(tournamentId, petId)) {
+			return "redirect:/oups";
+		}else {
+			ResultScore resultScore = new ResultScore();	
+			model.put("resultScore", resultScore);
+			return VIEW_BEAUTY_ADD_RESULT;
+		}
+		
 	}
 	
 	
 	@PostMapping(value="/tournament/beauty/{tournamentId}/pet/{petId}/add_result")
-	public String processCreateForm(@Valid ResultScore resultScore, BindingResult result, @PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId, ModelMap model) {
+	public String processCreateForm(@Valid ResultScore resultScore, BindingResult result, @PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId, ModelMap model){
 		if (result.hasErrors()) {
 			model.put("resultScore", resultScore);
 			return VIEW_BEAUTY_ADD_RESULT;
 		} else {
-			Pet pet = this.petService.findPetById(petId);
-			Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
+			try{
+				Pet pet = this.petService.findPetById(petId);
+				Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
+				
+				resultScore.setPet(pet);
+				resultScore.setTournament(tournament);
+				
+				this.beautyResultService.save(resultScore);
+				return "redirect:/tournaments/"+tournamentId;
+			}catch(DuplicatedResultForPetInTournament e) {
+				return "redirect:/oups";
+			}
 			
-			resultScore.setPet(pet);
-			resultScore.setTournament(tournament);
-			
-			this.beautyResultService.save(resultScore);
-			return "redirect:/tournaments/"+tournamentId;
 		}
 	}
 	

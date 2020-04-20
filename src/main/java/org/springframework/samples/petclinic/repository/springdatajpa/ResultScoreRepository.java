@@ -16,4 +16,7 @@ public interface ResultScoreRepository extends CrudRepository<ResultScore, Integ
 	@Query("select rs.pet from ResultScore rs where rs.tournament.id = ?1")
 	List<Pet> findPetsWithResultByTournamentId(int tournamentId);
 
+	@Query("select count(rs) from ResultScore rs where rs.pet.id = ?1 and rs.tournament.id = ?2")
+	Integer hasResult(Integer petId, Integer tournamentId);
+
 }

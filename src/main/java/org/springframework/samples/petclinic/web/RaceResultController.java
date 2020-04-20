@@ -10,6 +10,7 @@ import org.springframework.samples.petclinic.model.ResultTime;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.RaceResultService;
 import org.springframework.samples.petclinic.service.TournamentService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedResultForPetInTournament;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -43,9 +44,13 @@ public class RaceResultController {
 	
 	@GetMapping("/tournament/race/{tournamentId}/pet/{petId}/add_result")
 	public String initCreationForm(ModelMap model, @PathVariable("tournamentId") int tournamentId, @PathVariable("petId") int petId) {
-		ResultTime result = new ResultTime();
-		model.put("resultTime",result);
-		return VIEW_RACE_ADD_RESULT;
+		if(!this.raceResultService.isInTournament(tournamentId, petId)) {
+			return "redirect:/oups";
+		}else {
+			ResultTime result = new ResultTime();
+			model.put("resultTime",result);
+			return VIEW_RACE_ADD_RESULT;
+		}
 	}
 	
 	@PostMapping(value = "/tournament/race/{tournamentId}/pet/{petId}/add_result")
@@ -54,10 +59,16 @@ public class RaceResultController {
 			model.put("resultTime",resultTime);
 			return VIEW_RACE_ADD_RESULT;
 		} else {
-			resultTime.setPet(petService.findPetById(petId));
-			resultTime.setTournament(tournamentService.findTournamentById(tournamnetId));
-			raceResultService.saveResult(resultTime);
-			return "redirect:/tournaments/"+tournamnetId;
+			try {
+				resultTime.setPet(petService.findPetById(petId));
+				resultTime.setTournament(tournamentService.findTournamentById(tournamnetId));
+				raceResultService.saveResult(resultTime);
+				return "redirect:/tournaments/"+tournamnetId;
+				
+			}catch(DuplicatedResultForPetInTournament e) {
+				return "redirect:/oups";
+
+			}
 		}
 	}
 }
