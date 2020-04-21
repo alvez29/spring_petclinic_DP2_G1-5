@@ -24,7 +24,13 @@ public class BeautyResultService {
 	@Autowired
 	private TournamentRepository tournamentRepo;
 	
-
+	@Autowired
+	public BeautyResultService(final ResultScoreRepository resultScoreRepo, final TournamentRepository tournamentRepo) {
+		this.resultScoreRepo = resultScoreRepo;
+		this.tournamentRepo = tournamentRepo;
+	}
+	
+	
 	public List<ResultScore> findByTournamentId(int id) {
 		return resultScoreRepo.findByTournamentId(id);
 	}
@@ -43,7 +49,6 @@ public class BeautyResultService {
 		}
 		
 	}
-
 	public boolean isInTournament(int tournamentId, int petId) {
  
 		Tournament tourn = this.tournamentRepo.findById(tournamentId).get();
