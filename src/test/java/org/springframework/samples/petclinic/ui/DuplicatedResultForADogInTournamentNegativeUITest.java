@@ -41,42 +41,54 @@ public class DuplicatedResultForADogInTournamentNegativeUITest {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
   
-//  @Test
-//  public void testHistoriaDeUsuario3() throws Exception {
-//    driver.get("http://localhost:"+ this.port);
-//    driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
-//    driver.findElement(By.id("username")).click();
-//    driver.findElement(By.xpath("//div")).click();
-//    driver.findElement(By.id("username")).sendKeys("admin1");
-//    driver.findElement(By.id("password")).click();
-//    driver.findElement(By.xpath("//div")).click();
-//    driver.findElement(By.id("password")).sendKeys("4dm1n");
-//    driver.findElement(By.xpath("//button[@type='submit']")).click();
-//    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-//    driver.findElement(By.linkText("Beauty ConTEST")).click();
-//    driver.findElement(By.linkText("Add Dog Result")).click();
-//    driver.findElement(By.id("haircut")).click();
-//    driver.findElement(By.id("haircut")).clear();
-//    driver.findElement(By.id("haircut")).sendKeys("7");
-//    driver.findElement(By.id("haircutdif")).click();
-//    driver.findElement(By.id("haircutdif")).clear();
-//    driver.findElement(By.id("haircutdif")).sendKeys("7");
-//    driver.findElement(By.id("technique")).click();
-//    driver.findElement(By.id("technique")).clear();
-//    driver.findElement(By.id("technique")).sendKeys("7");
-//    driver.findElement(By.id("posture")).click();
-//    driver.findElement(By.id("posture")).clear();
-//    driver.findElement(By.id("posture")).sendKeys("7");
-//    driver.findElement(By.xpath("//button[@type='submit']")).click();
-//    driver.findElement(By.linkText("Show results")).click();
-//    assertEquals("Basil", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[2]")).getText());
-//    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[3]")).getText());
-//    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[4]")).getText());
-//    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[5]")).getText());
-//    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[6]")).getText());
-//    assertEquals("28", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[7]")).getText());
-//    assertEquals("28", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[7]")).getText());
-//  }
+  @Test
+  public void testHistoriaDeUsuario3() throws Exception {
+    driver.get("http://localhost:"+ this.port);
+    driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
+    driver.findElement(By.id("username")).click();
+    driver.findElement(By.xpath("//div")).click();
+    driver.findElement(By.id("username")).sendKeys("admin1");
+    driver.findElement(By.id("password")).click();
+    driver.findElement(By.xpath("//div")).click();
+    driver.findElement(By.id("password")).sendKeys("4dm1n");
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
+    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
+    driver.findElement(By.linkText("Beauty ConTEST")).click();
+    driver.findElement(By.linkText("Add Dog Result")).click();
+    driver.findElement(By.id("haircut")).click();
+    driver.findElement(By.id("haircut")).clear();
+    driver.findElement(By.id("haircut")).sendKeys("7");
+    driver.findElement(By.id("haircutdif")).click();
+    driver.findElement(By.id("haircutdif")).clear();
+    driver.findElement(By.id("haircutdif")).sendKeys("7");
+    driver.findElement(By.id("technique")).click();
+    driver.findElement(By.id("technique")).clear();
+    driver.findElement(By.id("technique")).sendKeys("7");
+    driver.findElement(By.id("posture")).click();
+    driver.findElement(By.id("posture")).clear();
+    driver.findElement(By.id("posture")).sendKeys("7");
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
+    driver.findElement(By.linkText("Show results")).click();
+    assertEquals("Basil", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[2]")).getText());
+    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[3]")).getText());
+    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[4]")).getText());
+    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[5]")).getText());
+    assertEquals("7", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[6]")).getText());
+    assertEquals("28", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[7]")).getText());
+    assertEquals("28", driver.findElement(By.xpath("//table[@id='beautyResultTable']/tbody/tr[2]/td[7]")).getText());
+    driver.get("http://localhost:"+this.port+"/tournament/beauty/3/pet/2/add_result");
+    driver.findElement(By.id("haircut")).click();
+    driver.findElement(By.id("haircut")).clear();
+    driver.findElement(By.id("haircut")).sendKeys("7");
+    driver.findElement(By.id("haircutdif")).clear();
+    driver.findElement(By.id("haircutdif")).sendKeys("7");
+    driver.findElement(By.id("technique")).clear();
+    driver.findElement(By.id("technique")).sendKeys("7");
+    driver.findElement(By.id("posture")).clear();
+    driver.findElement(By.id("posture")).sendKeys("7");
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
+    assertEquals("http://localhost:"+this.port+"/oups", driver.getCurrentUrl());
+  }
 
   @AfterEach
   public void tearDown() throws Exception {
