@@ -43,8 +43,7 @@ public class RaceServiceTests {
 	@CsvSource({"8000, Canodrome Test, 2020-04-16, 1000, Race 1 Test", "8000, Canodrome Test, 2020-06-08, 1000, Race 2 Test"})
 	public void addNewRace(Integer capacity, String canodrome, LocalDate date,
 			Double rewardMoney, String name) {
-		
-		
+	
 		Race race = new Race();
 		
 		race.setCapacity(capacity);

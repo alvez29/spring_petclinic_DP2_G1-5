@@ -40,7 +40,6 @@ public class SponsorValidator implements Validator{
 	@Override
 	public void validate(Object obj, Errors errors) {
 		Sponsor sponsor = (Sponsor) obj;
-		//Integer id = sponsor.getId();
 		Double money = sponsor.getMoney();
 		String name = sponsor.getName();
 		String url = sponsor.getUrl();
