@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.logging.Level;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -30,29 +29,29 @@ import org.springframework.samples.petclinic.service.exceptions.ReservedDateExec
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
 
-
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class HabilityServiceTests {
-	
+
 	@Autowired
 	protected HabilityService habilityService;
-	
+
 	@Autowired
 	protected HabilityRepository habilityRepo;
-	
+
 	@Autowired
 	SponsorService sponsorService;
-	
+
 	@Autowired
-	JudgeService jusgeService;
-	
+	JudgeService judgeService;
+
 	@PersistenceContext
 	protected EntityManager entityM;
-	
 
 	@ParameterizedTest
-    @CsvSource({"8000, Circuit Test, 2020-04-16, Hability ConTEST, 1000", "8000, Circuit Test, 2020-06-08, Hability ConTEST 2, 1000"})
-	public void addNewHabilityContest(Integer capacity, String circuit, LocalDate date, String name, Double rewardMoney) {
+	@CsvSource({ "8000, Circuit Test, 2020-04-16, Hability ConTEST, 1000",
+			"8000, Circuit Test, 2020-06-08, Hability ConTEST 2, 1000" })
+	public void addNewHabilityContest(Integer capacity, String circuit, LocalDate date, String name,
+			Double rewardMoney) {
 		Hability hability = new Hability();
 		hability.setCapacity(capacity);
 		hability.setCircuit(circuit);
@@ -66,113 +65,157 @@ public class HabilityServiceTests {
 			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	
+
 	@Test
 	public void checkFirstPrize() {
 		Hability hability = habilityRepo.findById(4).get();
-		assertThat(hability.getFirstClassified()).isEqualTo(hability.getRewardMoney()*0.5);
+		assertThat(hability.getFirstClassified()).isEqualTo(hability.getRewardMoney() * 0.5);
 	}
-	
+
 	@Test
 	public void checkSecondPrize() {
 		Hability hability = habilityRepo.findById(4).get();
-		assertThat(hability.getSecondClassified()).isEqualTo(hability.getRewardMoney()*0.35);	
+		assertThat(hability.getSecondClassified()).isEqualTo(hability.getRewardMoney() * 0.35);
 	}
-	
+
 	@Test
 	public void checkThirdPrize() {
 		Hability hability = habilityRepo.findById(4).get();
-		assertThat(hability.getThirdClassified()).isEqualTo(hability.getRewardMoney()*0.15);
+		assertThat(hability.getThirdClassified()).isEqualTo(hability.getRewardMoney() * 0.15);
 	}
-	
-	//Pruebas solitarias
-	
+
 	@Test
-	public void editHabilityContestSuccess() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException{
-		Hability hability = new Hability();
-		hability.setId(1);
-		hability.setCapacity(8000);
-		hability.setCircuit("Circuit Test");
-		hability.setDate(LocalDate.of(2040, 4, 16));
-		hability.setName("Hability ConTEST");
-		hability.setRewardMoney(1000.00);
-		hability.setStatus("DRAFT");		
+	public void editHabilityContestSuccess()
+			throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
+		Hability hability = this.habilityService.findHabilityById(4);
+		hability.setCapacity(1000);
 		this.habilityService.editHability(hability);
-		assertThat(hability.getId()).isNotNull();
+		assertThat(this.habilityService.findHabilityById(4).getCapacity()).isEqualTo(1000);
 	}
-	
-	
+
+	@Test
+	public void editHabilityDateException() {
+		Hability hability = this.habilityService.findHabilityById(4);
+		hability.setDate(LocalDate.of(2020, 7, 12));
+		String exeception = "";
+		try {
+			this.habilityService.editHability(hability);
+		} catch (ReservedDateExeception ex) {
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			// Como editamos el la fecha a una que ya tiene asignado el Tourneo con ID 5,
+			// salta esta excepcion
+			exeception = ReservedDateExeception.class.getName();
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SponsorAmountException ex) {
+			exeception = SponsorAmountException.class.getName();
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (JudgeNotFoundException ex) {
+			exeception = JudgeNotFoundException.class.getName();
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		// Comprobamos que salta la excepcion que estamos buscando
+		assertThat(exeception).isEqualTo(ReservedDateExeception.class.getName());
+	}
+
 	@ParameterizedTest
-	@CsvSource({"PENDING","FINISHED"})
-	public void editHabilityWithSponsors(String status) {
-		Hability hability = new Hability();
-		hability.setId(1);
-		hability.setCapacity(8000);
-		hability.setCircuit("Circuit Test");
-		hability.setDate(LocalDate.now().plusMonths(1));
-		hability.setName("Hability ConTEST 4");
-		hability.setRewardMoney(1000.0);
+	@CsvSource({ "PENDING", "FINISHED" })
+	public void editHabilityWithSponsorsAndJudge(String status) throws ReservedDateExeception, SponsorAmountException,
+			JudgeNotFoundException, DataAccessException, DuplicatedSponsorNameException {
+		Hability hability = this.habilityService.findHabilityById(4);
 		hability.setStatus(status);
+
+		// creamos un sponsor que cumpla la condicion para cambiar el status (7.000,00 o
+		// más)
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		Sponsor sponsor = new Sponsor();
 		sponsor.setName("Sponsor Test");
 		sponsor.setMoney(7000.00);
 		sponsors.add(sponsor);
+		sponsor.setTournament(hability);
+		sponsor.setUrl("https://www.google.com/");
+		this.sponsorService.saveSponsor(sponsor);
+
+		// asignamos el sponsor al torneo
 		hability.setSponsors(sponsors);
-		assertThat(hability.getId()).isNotNull();
-		assertThat(hability.getSponsors().stream().mapToDouble(x->x.getMoney()).sum()).isGreaterThanOrEqualTo(7000.00);
+
+		// añadimos un juez para evitar la excepcion
+		Judge judge1 = this.judgeService.findJudgeById(1);
+		List<Judge> judges = new ArrayList<Judge>();
+		judges.add(judge1);
+		// asignamos el juez al torneo
+		hability.setJudges(judges);
+
+		this.habilityService.editHability(hability);
+		Hability habilityAssert = this.habilityService.findHabilityById(4);
+		assertThat(habilityAssert.getSponsors().stream().mapToDouble(x -> x.getMoney()).sum())
+				.isGreaterThanOrEqualTo(7000.00);
+		assertThat(habilityAssert.getJudges()).isNotEmpty();
+		assertThat(habilityAssert.getStatus()).isEqualTo(status);
 	}
-	
+
 	@ParameterizedTest
-	@CsvSource({"0.","6999.99"})
-	@Disabled
-	public void editHabilitySponsorAmountException(Double money) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
-		
-		Hability hability = new Hability();
+	@CsvSource({ "0.", "6999.99" })
+	public void editHabilitySponsorAmountException(Double money)
+			throws DataAccessException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
+
+		Hability hability = this.habilityService.findHabilityById(4);
+		hability.setStatus("PENDING");
+
+		// creamos un sponsor que cumpla la condicion para cambiar el status (7.000,00 o
+		// más)
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		Sponsor sponsor = new Sponsor();
-		sponsor.setId(14);
-		sponsor.setName("Sponsor test");
+		sponsor.setName("Sponsor Test");
 		sponsor.setMoney(money);
-		sponsor.setUrl("https://www.google.com");
-		
-		hability.setId(14);
-		hability.setCapacity(8000);
-		hability.setCircuit("Circuit Test");
-		hability.setDate(LocalDate.of(2020,12,8));
-		hability.setRewardMoney(1000.);
-		hability.setName("Race 3 Test");
-		hability.setStatus("DRAFT");
-		habilityService.saveHability(hability);
-		this.entityM.flush();	
-		
-		hability.setSponsors(sponsors);		
-		sponsor.setTournament(hability);
 		sponsors.add(sponsor);
-		sponsorService.saveSponsor(sponsor);
+		sponsor.setTournament(hability);
+		sponsor.setUrl("https://www.google.com/");
+		this.sponsorService.saveSponsor(sponsor);
 
-		Judge j1 = new Judge();
-		j1.setId(14);
-		j1.setCity("Sevilla");
-		j1.setFirstName("Pepe");
-		j1.setLastName("Gotera");
-		j1.setContact("666666666");
-		this.jusgeService.saveJudge(j1);
-		
-		
+		// asignamos el sponsor al torneo
+		hability.setSponsors(sponsors);
+
+		// añadimos un juez para evitar la excepcion
+		Judge judge1 = this.judgeService.findJudgeById(1);
 		List<Judge> judges = new ArrayList<Judge>();
+		judges.add(judge1);
+		// asignamos el juez al torneo
 		hability.setJudges(judges);
-		hability.addJudge(j1);
-		hability.setStatus("PENDING");
-		
-		this.entityM.flush();	
-		
-		try{
-			this.habilityService.editHability(hability);
-		}catch(SponsorAmountException e){
-			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
-	        assertThat(hability.getId()).isNull();
-		}
 
+		try {
+			this.habilityService.editHability(hability);
+		} catch (SponsorAmountException ex) {
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			Hability habilityAssert = this.habilityService.findHabilityById(4);
+			assertThat(habilityAssert.getSponsors().stream().mapToDouble(x -> x.getMoney()).sum()).isLessThan(7000.00);
+		}
+	}
+
+	@Test
+	public void editHabilityJudgeException()
+			throws ReservedDateExeception, SponsorAmountException, DataAccessException, DuplicatedSponsorNameException {
+		Hability hability = this.habilityService.findHabilityById(4);
+		hability.setStatus("PENDING");
+
+		// creamos un sponsor que cumpla la condicion para cambiar el status (7.000,00 o más)
+		List<Sponsor> sponsors = new ArrayList<Sponsor>();
+		Sponsor sponsor = new Sponsor();
+		sponsor.setName("Sponsor Test");
+		sponsor.setMoney(7000.00);
+		sponsors.add(sponsor);
+		sponsor.setTournament(hability);
+		sponsor.setUrl("https://www.google.com/");
+		this.sponsorService.saveSponsor(sponsor);
+
+		// asignamos el sponsor al torneo
+		hability.setSponsors(sponsors);
+
+		try {
+			this.habilityService.editHability(hability);
+		} catch (JudgeNotFoundException ex) {
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			Hability habilityAssert = this.habilityService.findHabilityById(4);
+			assertThat(habilityAssert.getJudges()).isEmpty();
+		}
 	}
 }

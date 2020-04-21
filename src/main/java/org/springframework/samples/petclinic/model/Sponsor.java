@@ -2,13 +2,10 @@ package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-
 import org.hibernate.validator.constraints.URL;
 
 import com.sun.istack.NotNull;
@@ -26,7 +23,6 @@ public class Sponsor extends NamedEntity{
 	//dinero
 	//url
 	
-
 	//@Id
 //	@Column(name = "name")
 //	@NotEmpty
@@ -36,9 +32,10 @@ public class Sponsor extends NamedEntity{
 	@Column(name = "money")
 	@NotNull
 	private Double money;
-	
+
 	@Column(name = "url")
 	@URL
+	@NotEmpty
 	private String url;
 	
 	@ManyToOne
@@ -53,8 +50,5 @@ public class Sponsor extends NamedEntity{
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
 	}
-	
-	
-	
 	
 }
