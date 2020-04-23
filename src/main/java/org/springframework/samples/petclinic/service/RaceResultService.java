@@ -59,6 +59,11 @@ public class RaceResultService {
 													.map(x->x.getId())
 													.collect(Collectors.toList());	
 		return participantsIds.contains(petId);
+	}
+
+	public void deleteRaceResult(int resultId) {
+		ResultTime result = this.resultTimeRepo.findById(resultId).get();
+		this.resultTimeRepo.delete(result);
 	} 
 
 }
