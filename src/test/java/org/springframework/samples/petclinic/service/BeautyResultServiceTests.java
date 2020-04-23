@@ -1,7 +1,9 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -69,6 +71,28 @@ public class BeautyResultServiceTests {
 		
 		Assertions.assertThat(resultScore.getId()).isNull();
 	}
+	
+	@Test
+	void shouldDeletePetResult() {
+		
+
+//Comprobamos que el torneo 1 contiene el resultado con ID 1
+		List<Integer> resultsId1 = this.beautyResultService.findByTournamentId(3).stream()
+				.map(ResultScore::getId)
+				.collect(Collectors.toList());
+		Assertions.assertThat(resultsId1.contains(2)).isTrue();
+		
+		// Eliminamos el resultado de Basil en la carrera con ID 1
+		this.beautyResultService.delete(2);
+		
+		//Verificamos que ahora no está el resultado 1 en el torneo 1
+		List<Integer> resultsId = this.beautyResultService.findByTournamentId(3).stream()
+				.map(ResultScore::getId)
+				.collect(Collectors.toList());
+		Assertions.assertThat(resultsId.contains(1)).isFalse();
+		
+	}
+	
 	
 	@Test
 	void petShouldBeInTournament() {

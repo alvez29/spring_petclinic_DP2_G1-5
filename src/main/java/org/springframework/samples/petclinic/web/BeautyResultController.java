@@ -78,4 +78,11 @@ public class BeautyResultController {
 		}
 	}
 	
+	@GetMapping(value="tournaments/beauty/{tournamentId}/result/{beautyResultId}/delete")
+	public String delete(@PathVariable("tournamentId") int tournamentId, @PathVariable("beautyResultId") int beautyResultId) {
+		this.beautyResultService.delete(beautyResultId);
+		return "redirect:/tournaments/beauty/{tournamentId}/result";
+		
+	}
+	
 }
