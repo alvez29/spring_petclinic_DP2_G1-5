@@ -58,5 +58,12 @@ public class BeautyResultService {
 													.collect(Collectors.toList());	
 		return participantsIds.contains(petId);
 	}
+
+
+	public void delete(int beautyResultId) {
+		ResultScore actualEntity = this.resultScoreRepo.findById(beautyResultId).get();
+		this.resultScoreRepo.delete(actualEntity);
+		
+	}
 	
 }
