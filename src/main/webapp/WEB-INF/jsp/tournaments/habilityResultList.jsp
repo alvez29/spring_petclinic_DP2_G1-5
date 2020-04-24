@@ -18,6 +18,8 @@
 				<th style="width: 120px">Medium fails</th>
 				<th style="width: 120px">Big fails</th>
 				<th style="width: 120px">Time with penalties</th>
+				<th> </th>
+				
 
 			</tr>
 		</thead>
@@ -36,6 +38,13 @@
 					<td><c:out value="${result.mediumFails}" /></td>
 					<td><c:out value="${result.bigFails}" /></td>
 					<td><c:out value="${result.totalResult}" /></td>
+					<td><spring:url value="/tournaments/hability/{tournamentId}/result/{resultId}/delete"
+							var="deleteUrl">
+							<spring:param name="tournamentId" value="${tournamentId}" />
+							<spring:param name="resultId" value="${result.id}" />
+						</spring:url> <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default"> Delete result</a></td>
+						
+					
 				</tr>
 			</c:forEach>
 		</tbody>

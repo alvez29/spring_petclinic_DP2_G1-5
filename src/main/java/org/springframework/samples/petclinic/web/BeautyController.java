@@ -11,7 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Beauty;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.BeautyService;
-import org.springframework.samples.petclinic.service.exceptions.JudgesNotFoundException;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Controller;
@@ -90,7 +90,7 @@ public class BeautyController {
 
 	@PostMapping(value = "tournaments/beauty/{beautyId}/edit")
 	public String processUpdateForm(@Valid final Beauty beauty, final BindingResult result, @PathVariable("beautyId") final int beautyId, final ModelMap model)
-		throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgesNotFoundException {
+		throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
 		boolean edit = true;
 		if (result.hasErrors()) {
 			model.put("beauty", beauty);
@@ -101,7 +101,7 @@ public class BeautyController {
 			model.put("edit", edit);
 			try {
 				this.beautyService.editBeauty(beauty);
-			} catch (ReservedDateExeception | SponsorAmountException | JudgesNotFoundException ex) {
+			} catch (ReservedDateExeception | SponsorAmountException | JudgeNotFoundException ex) {
 				if (ex.getClass() == ReservedDateExeception.class) {
 					result.rejectValue("date", "This date is already taken", "This date is already taken");
 				}
@@ -109,7 +109,7 @@ public class BeautyController {
 					result.rejectValue("status", "The total amount of sponsor contribution is under 7000.00EUR", "The total amount of sponsor contribution is under 7000.00EUR");
 				}
 
-				if (ex.getClass() == JudgesNotFoundException.class) {
+				if (ex.getClass() == JudgeNotFoundException.class) {
 					result.rejectValue("status", "Not judges found for this competition", "Not judges found for this competition");
 				}
 

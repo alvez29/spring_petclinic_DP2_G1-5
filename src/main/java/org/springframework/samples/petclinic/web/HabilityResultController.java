@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.ResultTime;
 import org.springframework.samples.petclinic.service.HabilityResultService;
+import org.springframework.samples.petclinic.service.HabilityService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.TournamentService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedResultForPetInTournament;
@@ -31,6 +32,9 @@ public class HabilityResultController {
 	@Autowired
 	private TournamentService		tournamentService;
 
+	@Autowired
+	private HabilityService			habilityService;
+
 	private static final String		VIEWS_RESULT_CREATE_OR_UPDATE_FORM	= "tournaments/createOrUpdateHabilityResultForm";
 
 
@@ -45,10 +49,10 @@ public class HabilityResultController {
 
 	@GetMapping("/tournament/hability/{tournamentId}/pet/{petId}/add_result")
 	public String initCreationForm(final ModelMap model, @PathVariable("tournamentId") final int tournamentId, @PathVariable("petId") final int petId) {
-		
-		if(!this.habilityResultService.isInTournament(tournamentId, petId)) {
+
+		if (!this.habilityResultService.isInTournament(tournamentId, petId)) {
 			return "redirect:/oups";
-		}else {
+		} else {
 			ResultTime result = new ResultTime();
 			model.put("resultTime", result);
 			return HabilityResultController.VIEWS_RESULT_CREATE_OR_UPDATE_FORM;
@@ -66,12 +70,20 @@ public class HabilityResultController {
 				resultTime.setTournament(this.tournamentService.findTournamentById(tournamentId));
 				this.habilityResultService.saveResult(resultTime);
 				return "redirect:/tournaments/" + tournamentId;
-			}catch(DuplicatedResultForPetInTournament e) {
+			} catch (DuplicatedResultForPetInTournament e) {
 				return "redirect:/oups";
 			}
-			
+
 		}
 
+	}
+
+	@GetMapping(value = "tournaments/hability/{tournamentId}/result/{resultId}/delete")
+	public String delete(@PathVariable("tournamentId") final int tournamentId, @PathVariable("resultId") final int resultId) {
+
+		this.habilityResultService.deleteResult(resultId);
+
+		return "redirect:/tournaments/hability/" + tournamentId + "/result";
 	}
 
 }

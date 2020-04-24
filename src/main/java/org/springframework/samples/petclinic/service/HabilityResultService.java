@@ -21,10 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class HabilityResultService {
 
 	@Autowired
-	private ResultTimeRepository resultTimeRepository;
-	
+	private ResultTimeRepository	resultTimeRepository;
+
 	@Autowired
-	private TournamentRepository tournamentRepo;
+	private TournamentRepository	tournamentRepo;
 
 
 	@Query("select r from ResultTime r where r.tournament.id = ?1")
@@ -33,25 +33,28 @@ public class HabilityResultService {
 		return this.resultTimeRepository.findByTournamentId(tournamentId);
 	}
 
+	public void deleteResult(final int resultTime) {
+		ResultTime result = this.resultTimeRepository.findById(resultTime).get();
+		this.resultTimeRepository.delete(result);
+	}
+
 	@Transactional(rollbackFor = DuplicatedResultForPetInTournament.class)
 	public void saveResult(@Valid final ResultTime resultTime) throws DuplicatedResultForPetInTournament {
 		Integer petId = resultTime.getPet().getId();
 		Integer tournamentId = resultTime.getTournament().getId();
-		
-		if(this.resultTimeRepository.hasResult(petId,tournamentId) != 0) {
+
+		if (this.resultTimeRepository.hasResult(petId, tournamentId) != 0) {
 			throw new DuplicatedResultForPetInTournament();
-		}else {
+		} else {
 			this.resultTimeRepository.save(resultTime);
 		}
 	}
 
-	public boolean isInTournament(int tournamentId, int petId) {
+	public boolean isInTournament(final int tournamentId, final int petId) {
 		Tournament tourn = this.tournamentRepo.findById(tournamentId).get();
 		List<Pet> participants = tourn.getPets();
-		List<Integer> participantsIds = participants.stream()
-													.map(x->x.getId())
-													.collect(Collectors.toList());	
-		return participantsIds.contains(petId);		
+		List<Integer> participantsIds = participants.stream().map(x -> x.getId()).collect(Collectors.toList());
+		return participantsIds.contains(petId);
 	}
 
 }
