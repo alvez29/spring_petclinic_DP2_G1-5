@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
@@ -7,18 +8,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Beauty;
-import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.repository.springdatajpa.BeautyRepository;
-import org.springframework.samples.petclinic.service.exceptions.JudgesNotFoundException;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedSponsorNameException;
+import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class BeautyServiceTests {
 
 	@Autowired
 	protected BeautyRepository	beautyRepo;
+
+	@Autowired
+	protected SponsorService	sponsorService;
 
 
 	@ParameterizedTest
@@ -74,86 +78,62 @@ public class BeautyServiceTests {
 	}
 
 	@Test
-	public void editBeautySuccess() throws ReservedDateExeception, SponsorAmountException, JudgesNotFoundException {
-		Beauty beauty = new Beauty();
+	public void editBeautySuccess() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
 
-		beauty.setId(1);
-		beauty.setCapacity(8000);
-		beauty.setPlace("placeTest");
-		beauty.setDate(LocalDate.of(2040, 04, 26));
-		beauty.setName("BeautyTest");
-		beauty.setRewardMoney(800.00);
-		beauty.setStatus("DRAFT");
+		Beauty beauty = this.beautyService.findBeautyById(3);
+
+		beauty.setCapacity(8001);
 
 		this.beautyService.editBeauty(beauty);
 		Assertions.assertThat(beauty.getId()).isNotNull();
+		Assertions.assertThat(this.beautyService.findBeautyById(3).getCapacity()).isEqualTo(8001);
 
 	}
 
 	@Test
-	@Disabled
-	public void editBeautyDateException() throws ReservedDateExeception, SponsorAmountException, JudgesNotFoundException {
-		Beauty beauty = new Beauty();
+	public void editBeautyDateException() throws SponsorAmountException, JudgeNotFoundException {
+		String ex = "";
 
-		beauty.setId(1);
-		beauty.setCapacity(8000);
-		beauty.setPlace("placeTest");
-		beauty.setDate(LocalDate.of(2020, 8, 06));
-		beauty.setName("BeautyTest");
-		beauty.setRewardMoney(800.00);
-		beauty.setStatus("DRAFT");
+		Beauty beauty = this.beautyService.findBeautyById(3);
+		beauty.setDate(LocalDate.of(2020, 7, 12));
+		beauty.setCapacity(1);
 
 		try {
 			this.beautyService.editBeauty(beauty);
-
-		} catch (ReservedDateExeception ex) {
-
-			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-			Assertions.assertThat(beauty.getId()).isNull();
-
+		} catch (ReservedDateExeception e) {
+			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			ex = e.getClass().getName();
 		}
+
+		Assertions.assertThat(ex).isEqualTo(ReservedDateExeception.class.getName());
 
 	}
 
 	@ParameterizedTest
 	@CsvSource({
-		"0.00", "6999.99"
+		"0.", "6999.99"
 	})
-	@Disabled
-	public void editBeautySponsorException(final Double money) throws ReservedDateExeception, SponsorAmountException, JudgesNotFoundException {
-		Beauty beauty = new Beauty();
+	public void editBeautySponsorException(final Double money) throws ReservedDateExeception, JudgeNotFoundException {
+		String ex = "";
 
-		beauty.setId(1);
-		beauty.setCapacity(8000);
-		beauty.setPlace("placeTest");
-		beauty.setDate(LocalDate.of(2020, 8, 06));
-		beauty.setName("BeautyTest");
-		beauty.setRewardMoney(7000.00);
-		beauty.setStatus("PENDING");
-		//		Judge judge = new Judge();
-		//		judge.setFirstName("Pepe Manuel");
-		//		judge.setContact("123456789");
-		//		judge.setCity("Madrid");
-		//		judge.setLastName("López");
-		//		List<Judge> judges = new ArrayList<>();
-		//		judges.add(judge);
-		//		beauty.setJudges(judges);
-		List<Sponsor> sponsors = new ArrayList<>();
+		Beauty beauty = this.beautyService.findBeautyById(3);
+
 		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Sponsor1");
 		sponsor.setMoney(money);
-		sponsors.add(sponsor);
-		beauty.setSponsors(sponsors);
+		sponsor.setName("Testing");
+		sponsor.setUrl("http://www.google.com");
+		sponsor.setTournament(beauty);
+
+		beauty.setStatus("PENDING");
 
 		try {
 			this.beautyService.editBeauty(beauty);
-
-		} catch (SponsorAmountException ex) {
-
-			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-			Assertions.assertThat(beauty.getId()).isNull();
-
+		} catch (SponsorAmountException e) {
+			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			ex = e.getClass().getName();
 		}
+
+		Assertions.assertThat(ex).isEqualTo(SponsorAmountException.class.getName());
 
 	}
 
@@ -161,34 +141,34 @@ public class BeautyServiceTests {
 	@CsvSource({
 		"PENDING", "FINISHED"
 	})
-	@Disabled
-	public void editBeautyWithSponsors(final String status) {
-		Beauty beauty = new Beauty();
-
-		beauty.setId(1);
-		beauty.setCapacity(8000);
-		beauty.setPlace("Place Test");
-		beauty.setDate(LocalDate.now().plusMonths(1));
-		beauty.setName("Beauty Test");
-		beauty.setRewardMoney(1000.00);
+	public void editBeautyWithSponsors(final String status) throws DataAccessException, DuplicatedSponsorNameException, ReservedDateExeception, JudgeNotFoundException {
+		Beauty beauty = this.beautyService.findBeautyById(3);
 		beauty.setStatus(status);
-		List<Sponsor> sponsors = new ArrayList<Sponsor>();
-		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Sponsor1");
-		sponsor.setMoney(7000.0);
-		sponsors.add(sponsor);
-		beauty.setSponsors(sponsors);
-		Judge judge = new Judge();
-		judge.setFirstName("Pepe Manuel");
-		judge.setContact("123456789");
-		judge.setCity("Madrid");
-		judge.setLastName("López");
-		List<Judge> judges = new ArrayList<>();
-		judges.add(judge);
-		beauty.setJudges(judges);
-		Assertions.assertThat(beauty.getId()).isNotNull();
-		Assertions.assertThat(beauty.getSponsors().stream().mapToDouble(x -> x.getMoney()).sum()).isGreaterThanOrEqualTo(7000.00);
 
+		Sponsor sponsor = new Sponsor();
+		sponsor.setMoney(7000.);
+		sponsor.setName("Testing");
+		sponsor.setUrl("http://www.google.com");
+		sponsor.setTournament(beauty);
+
+		this.sponsorService.saveSponsor(sponsor);
+
+		List<Sponsor> sponsorList = new ArrayList<Sponsor>();
+		sponsorList.add(sponsor);
+
+		beauty.setSponsors(sponsorList);
+
+		try {
+			this.beautyService.editBeauty(beauty);
+		} catch (SponsorAmountException e) {
+			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+		}
+
+		Beauty newBeauty = this.beautyService.findBeautyById(3);
+
+		Assertions.assertThat(newBeauty.getSponsors().stream().mapToDouble(x -> x.getMoney()).sum()).isGreaterThanOrEqualTo(7000.);
+		Assertions.assertThat(newBeauty.getJudges()).isNotEmpty();
+		Assertions.assertThat(newBeauty.getStatus()).isEqualTo(status);
 	}
 
 }

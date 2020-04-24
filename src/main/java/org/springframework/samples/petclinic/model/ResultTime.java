@@ -30,16 +30,19 @@ public class ResultTime extends BaseEntity {
 	private Tournament	tournament;
 
 	@Column(name = "time")
-	@Range(min = 0, message="No puede ser negativo")
+	@Range(min = 0, message = "It must be a positive number")
 	@NotNull
-	private Double time;
-	
+	private Double		time;
+
+	@Range(min = 0, message = "It must be a positive number")
 	@Column(name = "lowfails")
 	private int			LowFails;
 
+	@Range(min = 0, message = "It must be a positive number")
 	@Column(name = "mediumfails")
 	private int			MediumFails;
 
+	@Range(min = 0, message = "It must be a positive number")
 	@Column(name = "bigfails")
 	private int			BigFails;
 
