@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.Range;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,15 +27,19 @@ public class ResultScore extends BaseEntity {
 	private Tournament tournament;
 	
 	@Column(name = "haircut")
+	@Range(min = 0, max=100, message="It must be a positive number")
 	private int haircut;
 	
 	@Column(name = "haircutdif")
+	@Range(min = 0, max=100, message="It must be a positive number")
 	private int haircutdif;
 	
 	@Column(name = "technique")
+	@Range(min = 0, max=100 , message="It must be a positive number")
 	private int technique;
 	
 	@Column(name = "posture")
+	@Range(min = 0, max=100 ,message="It must be a positive number")
 	private int posture;
 	
 	@Transient

@@ -71,4 +71,10 @@ public class RaceResultController {
 			}
 		}
 	}
+	
+	@GetMapping(value = "/tournaments/race/{tournamentId}/result/{resultId}/delete")
+	public String deleteResult(@PathVariable("resultId") int resultId, @PathVariable("tournamentId") int tournamentId) {
+		this.raceResultService.deleteRaceResult(resultId);
+		return "redirect:/tournaments/race/"+tournamentId+"/result";
+	}
 }

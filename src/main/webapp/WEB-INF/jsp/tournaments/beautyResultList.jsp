@@ -18,6 +18,7 @@
 				<th>Technique</th>
 				<th>Posture</th>
 				<th>Total Points</th>
+				<th><th/>
 
 			</tr>
 		</thead>
@@ -38,6 +39,16 @@
 					<td><c:out value="${resultScore.technique}"/></td>
 					<td><c:out value="${resultScore.posture}"/></td>
 					<td><c:out value="${resultScore.totalPoints}"/></td>
+					<td>
+						<spring:url value="/tournaments/beauty/{tournamentId}/result/{beautyResultId}/delete" var="deleteUrl">
+						<spring:param name="tournamentId" value="${tournamentId}" />
+						<spring:param name="beautyResultId" value="${resultScore.id}" />
+						</spring:url>
+						<a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete result</a>
+					
+					</td>
+					
+					
 					<c:set var="count" value="${count+1}" scope="page"/>
 					
 				</tr>

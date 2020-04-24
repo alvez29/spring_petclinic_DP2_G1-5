@@ -24,6 +24,13 @@ public class RaceResultService {
 	@Autowired
 	private TournamentRepository tournamentRepo;
 
+	@Autowired
+	public RaceResultService(ResultTimeRepository resultTimeRepo2, TournamentRepository tournamentRepo2) {
+		this.resultTimeRepo = resultTimeRepo2;
+		this.tournamentRepo = tournamentRepo2;
+	}
+
+
 	public Iterable<ResultTime> findAll() {
 		return resultTimeRepo.findAll();
 	}
@@ -52,6 +59,11 @@ public class RaceResultService {
 													.map(x->x.getId())
 													.collect(Collectors.toList());	
 		return participantsIds.contains(petId);
+	}
+
+	public void deleteRaceResult(int resultId) {
+		ResultTime result = this.resultTimeRepo.findById(resultId).get();
+		this.resultTimeRepo.delete(result);
 	} 
 
 }
