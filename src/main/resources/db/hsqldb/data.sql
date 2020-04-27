@@ -130,6 +130,8 @@ INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,11);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (4,12);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (4,8);
 
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (5,2);
+
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (1, 2, 1, 40.086, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (2, 3, 1, 38.595, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (3, 4, 1, 39.487, 0, 0, 0);
