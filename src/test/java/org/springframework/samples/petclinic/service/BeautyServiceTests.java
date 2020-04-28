@@ -101,7 +101,7 @@ public class BeautyServiceTests {
 		try {
 			this.beautyService.editBeauty(beauty);
 		} catch (ReservedDateExeception e) {
-			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, e);
 			ex = e.getClass().getName();
 		}
 
@@ -129,7 +129,7 @@ public class BeautyServiceTests {
 		try {
 			this.beautyService.editBeauty(beauty);
 		} catch (SponsorAmountException e) {
-			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, e);
 			ex = e.getClass().getName();
 		}
 
@@ -161,7 +161,7 @@ public class BeautyServiceTests {
 		try {
 			this.beautyService.editBeauty(beauty);
 		} catch (SponsorAmountException e) {
-			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		Beauty newBeauty = this.beautyService.findBeautyById(3);
