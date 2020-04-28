@@ -42,13 +42,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.12</version>
 		</dependency>
-		
+
 		<!-- Selenium dependencies -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -182,11 +182,6 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -299,40 +294,40 @@
 		</plugins>
 	</build>
 	<profiles>
-	<profile>
-		<id>mysql</id>
-		<activation>
-			<activeByDefault>false</activeByDefault>
-		</activation>
-		<properties>
-			<spring.profiles.active>mysql</spring.profiles.active>
-		</properties>
-	</profile>
-	<profile>
-		<id>AcceptanceTests</id>
-		<build>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-failsafe-plugin</artifactId>
-					<executions>
-						<execution>
-							<goals>
-								<goal>integration-test</goal>
-								<goal>verify</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<includes>
-							<include>**/*UITest.java</include>
-						</includes>
-					</configuration>
-				</plugin>
-			</plugins>
-		</build>
-	</profile>
-</profiles>
+		<profile>
+			<id>mysql</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>mysql</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>AcceptanceTests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<includes>
+								<include>**/*UITest.java</include>
+							</includes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<!-- Apache 2 license -->
 	<licenses>
