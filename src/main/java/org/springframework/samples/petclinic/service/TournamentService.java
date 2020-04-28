@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.ResultTime;
 import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.repository.springdatajpa.ResultScoreRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.ResultTimeRepository;
@@ -98,5 +97,4 @@ public class TournamentService {
 		}
 				return res;
 	}
-	
 }
