@@ -109,7 +109,7 @@ INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,4);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,9);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,11);
 
-INSERT IGNORE INTO judges(id, first_name, last_name, contact) values (1, 'Juez', 'Primero', 'Sevilla', 'primero@example.com');
+INSERT IGNORE INTO judges(id, first_name, last_name, city, contact) values (1, 'Juez', 'Primero', 'Sevilla', 'primero@example.com');
 
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,1);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
