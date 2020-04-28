@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
+import java.nio.charset.StandardCharsets;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,10 @@ public class TournamentServiceTests {
 	
 	@Test
 	public void shouldGetBeautyPlace() {
-		Assertions.assertThat(this.tournamnetService.getSite(3)).isEqualTo("Pabellon España");
+		String place = this.tournamnetService.getSite(3);
+		byte[] b = place.getBytes();
+		String ans = new String(b,StandardCharsets.UTF_8);
+		Assertions.assertThat(ans).isEqualTo("Pabellon España");
 	}
 	
 	@Test
