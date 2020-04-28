@@ -16,23 +16,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 	@RunWith(SpringRunner.class)
 	@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 	public class TestingAPI {
-	 
-	    @LocalServerPort
-	    int randomServerPort;
-	 
-	    @Test
-	    @Disabled
-	    public void getPlace() throws URISyntaxException, UnsupportedEncodingException {
-	       
-	    	String text = "La Giralda";
-	    	
-	    	Place[] places = LocationIQAPIService.getPlace(text);
-	    	
-	    	System.out.println(places[0].getLat());
-	    	
-	    	Assertions.assertThat(places[0].getLat()).isEqualTo("37.386207");
-	    	Assertions.assertThat(places[0].getLon()).isEqualTo("-5.99255572619863");
-	    }
+//	 
+//	    @LocalServerPort
+//	    int randomServerPort;
+//	 
+//	    @Test
+//	    @Disabled
+//	    public void getPlace() throws URISyntaxException, UnsupportedEncodingException {
+//	       
+//	    	String text = "La Giralda";
+//	    	
+//	    	Place[] places = LocationIQAPIService.getPlace(text);
+//	    	
+//	    	System.out.println(places[0].getLat());
+//	    	
+//	    	Assertions.assertThat(places[0].getLat()).isEqualTo("37.386207");
+//	    	Assertions.assertThat(places[0].getLon()).isEqualTo("-5.99255572619863");
+//	    }
 	}
 	
 
