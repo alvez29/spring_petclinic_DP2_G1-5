@@ -8,8 +8,8 @@ INSERT INTO authorities VALUES ('owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities VALUES ('vet1','veterinarian');
 
-INSERT IGNORE IGNORE  INTO vets VALUES (1, 'James', 'Carter');
-INSERT IGNORE IGNORE  INTO vets VALUES (2, 'Helen', 'Leary');
+INSERT IGNORE INTO vets VALUES (1, 'James', 'Carter');
+INSERT IGNORE INTO vets VALUES (2, 'Helen', 'Leary');
 INSERT IGNORE INTO vets VALUES (3, 'Linda', 'Douglas');
 INSERT IGNORE INTO vets VALUES (4, 'Rafael', 'Ortega');
 INSERT IGNORE INTO vets VALUES (5, 'Henry', 'Stevens');
