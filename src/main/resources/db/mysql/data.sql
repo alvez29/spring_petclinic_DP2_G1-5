@@ -15,6 +15,7 @@ INSERT IGNORE INTO vets(id, first_name, last_name) VALUES (4, 'Rafael', 'Ortega'
 INSERT IGNORE INTO vets(id, first_name, last_name) VALUES (5, 'Henry', 'Stevens');
 INSERT IGNORE INTO vets(id, first_name, last_name) VALUES (6, 'Sharon', 'Jenkins');
 
+
 INSERT IGNORE INTO specialties(id, name) VALUES (1, 'radiology');
 INSERT IGNORE INTO specialties(id, name) VALUES (2, 'surgery');
 INSERT IGNORE INTO specialties(id, name) VALUES (3, 'dentistry');
