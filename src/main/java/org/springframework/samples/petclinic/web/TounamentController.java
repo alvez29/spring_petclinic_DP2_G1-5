@@ -1,12 +1,16 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.List;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.locationiqapi.Place;
 import org.springframework.samples.petclinic.service.JudgeService;
 import org.springframework.samples.petclinic.service.LocationIQAPIService;
@@ -119,17 +123,40 @@ public class TounamentController {
 	public String petListForTournament(@PathVariable("tournamentId") int tournamentId, ModelMap model) {
 		List<Pet> pets = (List<Pet>) petService.findAll();
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
+		List<Pet> petsOnTournament = tournament.getPets();
 		if (tournament.getBreedRestriction() != null) {
-			List<Pet> petsBreed = pets.stream().filter(x->!x.getType()
-					.equals(tournament.getBreedRestriction())).collect(Collectors.toList());
-			pets.removeAll(petsBreed);
-			pets.removeAll(tournament.getPets());
+			
+			List<Pet> petsBreed = pets.stream().filter(x->x.getType()
+					.equals(tournament.getBreedRestriction())  && chechVisits(this.petService.findVisitsByPetId(x.getId()),tournament.getDate())).collect(Collectors.toList());
+			pets = petsBreed;
+			pets.removeAll(petsOnTournament);
+			//pets.removeAll(petsBreed);
+			//pets.removeAll(tournament.getPets());
 		}else {
-			pets.removeAll(tournament.getPets());
+			List<Pet> petsAllowed = pets.stream().filter(x->chechVisits(this.petService.findVisitsByPetId(x.getId()), tournament.getDate())).collect(Collectors.toList());
+			pets = petsAllowed;
+			pets.removeAll(petsOnTournament);
+			//pets.removeAll(petsAllowed);
+			//pets.removeAll(tournament.getPets());
 		}
 		model.addAttribute("pets", pets);
 		model.addAttribute("tournamentId", tournamentId);
 		return "pets/petList";
 	}	
+	
+	
+	public static Boolean chechVisits(Collection<Visit> visits, LocalDate tournamentDate) {
+		Boolean res = false;
+		for (Visit v : visits) {
+			if (v.getCompetitionCheck().equals("PASSED")) {
+				if (v.getDate().isAfter(tournamentDate.minus(Period.ofMonths(1)))) {
+					res = true;
+					break;
+				}
+			}
+		}
+		return res;
+	}
+	
 	
 }

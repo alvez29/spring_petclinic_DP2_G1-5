@@ -25,6 +25,7 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Sponsor;
 import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.JudgeService;
 import org.springframework.samples.petclinic.service.PetService;
@@ -100,6 +101,11 @@ public class TournamentControllerTests {
 		pet1.setType(pt);
 		pets.add(pet1);
 		tournament.setPets(pets);
+		
+		Visit visit = new Visit();
+		//visit.setDate("");
+		
+		
 		
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		//TODO
