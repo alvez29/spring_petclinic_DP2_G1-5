@@ -101,21 +101,32 @@ public class TounamentController {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		Pet pet = this.petService.findPetById(petId);
 		List<Pet> pets = tournament.getPets();
+		String res = "redirect:/tournaments/" + tournamentId;
 		if (!pets.contains(pet)) {
 			if (tournament.getBreedRestriction() != null) {
-				if (pet.getType().toString().equals(tournament.getBreedRestriction().toString())) {
+				if (pet.getType().toString().equals(tournament.getBreedRestriction().toString()) &&
+						chechVisits(pet.getVisits(), tournament.getDate())) {
 					tournament.addPet(pet);
 					this.tournamentService.saveTournament(tournament);
+				}else {
+					res = "redirect:/oups";
 				}
 			}else {
 				if (pet.getType() != null) {
-					tournament.addPet(pet);
-					this.tournamentService.saveTournament(tournament);
+					if (chechVisits(pet.getVisits(), tournament.getDate())) {
+						tournament.addPet(pet);
+						this.tournamentService.saveTournament(tournament);
+					}else {
+						res = "redirect:/oups";
+					}
+					
 				}
 				
 			}
+		}else {
+			res = "redirect:/oups";
 		}
-		return "redirect:/tournaments/" + tournamentId;
+		return res;
 	}
 	
 	
@@ -125,19 +136,14 @@ public class TounamentController {
 		Tournament tournament = this.tournamentService.findTournamentById(tournamentId);
 		List<Pet> petsOnTournament = tournament.getPets();
 		if (tournament.getBreedRestriction() != null) {
-			
 			List<Pet> petsBreed = pets.stream().filter(x->x.getType()
 					.equals(tournament.getBreedRestriction())  && chechVisits(this.petService.findVisitsByPetId(x.getId()),tournament.getDate())).collect(Collectors.toList());
 			pets = petsBreed;
 			pets.removeAll(petsOnTournament);
-			//pets.removeAll(petsBreed);
-			//pets.removeAll(tournament.getPets());
 		}else {
 			List<Pet> petsAllowed = pets.stream().filter(x->chechVisits(this.petService.findVisitsByPetId(x.getId()), tournament.getDate())).collect(Collectors.toList());
 			pets = petsAllowed;
 			pets.removeAll(petsOnTournament);
-			//pets.removeAll(petsAllowed);
-			//pets.removeAll(tournament.getPets());
 		}
 		model.addAttribute("pets", pets);
 		model.addAttribute("tournamentId", tournamentId);

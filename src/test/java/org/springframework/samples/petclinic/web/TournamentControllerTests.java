@@ -64,7 +64,7 @@ public class TournamentControllerTests {
     
     @MockBean
     private AuthoritiesService authoritiesService; 
-
+    
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -79,7 +79,7 @@ public class TournamentControllerTests {
 		tournament.setName("Tournamnet Test");
 		tournament.setRewardMoney(1000.00);
 		tournament.setStatus("DRAFT");
-
+		
 		List<Judge> judges = new ArrayList<Judge>();		
 		Judge judge1 = new Judge();
 		judge1.setId(1);
@@ -91,6 +91,10 @@ public class TournamentControllerTests {
 		tournament.setJudges(judges);
 		
 		List<Pet> pets = new ArrayList<Pet>();
+		tournament.setPets(pets);
+		
+		
+		
 		Pet pet1 = new Pet();
 		pet1.setId(1);
 		pet1.setName("Perro");
@@ -99,13 +103,17 @@ public class TournamentControllerTests {
 		pt.setId(1);
 		pt.setName("Beagle");
 		pet1.setType(pt);
-		pets.add(pet1);
-		tournament.setPets(pets);
+		
 		
 		Visit visit = new Visit();
-		//visit.setDate("");
+		visit.setDate(LocalDate.of(2040, 11, 20));
+		visit.setPet(pet1);
+		visit.setId(1);
+		visit.setClinic("Clinic1");
+		visit.setDescription("Everything ok");
+		visit.setCompetitionCheck("PASSED");
 		
-		
+		pet1.addVisit(visit);
 		
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		//TODO
