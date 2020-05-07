@@ -165,7 +165,7 @@ public class RaceServiceTests {
 		
 		Sponsor sponsor = new Sponsor();
 		sponsor.setMoney(7000.);
-		sponsor.setName("Testing");
+		sponsor.setName("Testing Example 15");
 		sponsor.setUrl("http://www.google.com");
 		sponsor.setTournament(race);
 
@@ -201,7 +201,7 @@ public class RaceServiceTests {
 		
 		Sponsor sponsor = new Sponsor();
 		sponsor.setMoney(7000.);
-		sponsor.setName("Testing");
+		sponsor.setName("Testing Example 14");
 		sponsor.setUrl("http://www.google.com");
 		sponsor.setTournament(race);
 

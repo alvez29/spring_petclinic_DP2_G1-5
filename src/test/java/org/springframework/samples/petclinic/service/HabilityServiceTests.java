@@ -88,10 +88,10 @@ public class HabilityServiceTests {
 	}
 
 	@Test
-	public void editHabilityContestSuccess()
-			throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
+	public void editHabilityContestSuccess() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
 		Hability hability = this.habilityService.findHabilityById(4);
 		hability.setCapacity(1000);
+		hability.setDate(LocalDate.of(2042, 12, 2));
 		this.habilityService.editHability(hability);
 		assertThat(this.habilityService.findHabilityById(4).getCapacity()).isEqualTo(1000);
 	}
@@ -131,7 +131,7 @@ public class HabilityServiceTests {
 		// más)
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Sponsor Test");
+		sponsor.setName("Testing Example 13");
 		sponsor.setMoney(7000.00);
 		sponsors.add(sponsor);
 		sponsor.setTournament(hability);
@@ -168,7 +168,7 @@ public class HabilityServiceTests {
 		// más)
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Sponsor Test");
+		sponsor.setName("Testing Example 12");
 		sponsor.setMoney(money);
 		sponsors.add(sponsor);
 		sponsor.setTournament(hability);
@@ -203,7 +203,7 @@ public class HabilityServiceTests {
 		// creamos un sponsor que cumpla la condicion para cambiar el status (7.000,00 o más)
 		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Sponsor Test");
+		sponsor.setName("Sponsor Test 2");
 		sponsor.setMoney(7000.00);
 		sponsors.add(sponsor);
 		sponsor.setTournament(hability);

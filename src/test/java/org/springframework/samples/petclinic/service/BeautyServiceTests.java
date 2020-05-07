@@ -57,7 +57,6 @@ public class BeautyServiceTests {
 		} catch (ReservedDateExeception ex) {
 			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 	}
 
 	@Test
@@ -112,9 +111,7 @@ public class BeautyServiceTests {
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-		"0.", "6999.99"
-	})
+	@CsvSource({"0.", "6999.99"})
 	public void editBeautySponsorException(final Double money) throws ReservedDateExeception, JudgeNotFoundException {
 		String ex = "";
 
@@ -140,16 +137,14 @@ public class BeautyServiceTests {
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-		"PENDING", "FINISHED"
-	})
+	@CsvSource({"PENDING", "FINISHED"})
 	public void editBeautyWithSponsors(final String status) throws DataAccessException, DuplicatedSponsorNameException, ReservedDateExeception, JudgeNotFoundException {
 		Beauty beauty = this.beautyService.findBeautyById(3);
 		beauty.setStatus(status);
 
 		Sponsor sponsor = new Sponsor();
 		sponsor.setMoney(7000.);
-		sponsor.setName("Testing");
+		sponsor.setName("Testing Example 11");
 		sponsor.setUrl("http://www.google.com");
 		sponsor.setTournament(beauty);
 

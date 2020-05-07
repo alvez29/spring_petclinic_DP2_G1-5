@@ -116,6 +116,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
+	@Disabled
 	public void shouldInsertPetIntoDatabaseAndGenerateId() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
 		int found = owner6.getPets().size();

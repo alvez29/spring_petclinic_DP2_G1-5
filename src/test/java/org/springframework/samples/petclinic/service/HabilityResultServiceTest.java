@@ -53,9 +53,9 @@ public class HabilityResultServiceTest {
 	}
 
 	@Test
-	void shouldNotSaveDuplicatedPetResult() {
+	void shouldNotSaveDuplicatedPetResult() throws DuplicatedResultForPetInTournament {
 		ResultTime resultTime = new ResultTime();
-		Pet pet = this.petService.findPetById(12);
+		Pet pet = this.petService.findPetById(1);
 		resultTime.setTime(40.);
 		resultTime.setLowFails(1);
 		resultTime.setMediumFails(1);
@@ -67,7 +67,6 @@ public class HabilityResultServiceTest {
 			this.habilityResultService.saveResult(resultTime);
 		} catch (DuplicatedResultForPetInTournament ex) {
 			Logger.getLogger(HabilityResultServiceTest.class.getName()).log(Level.SEVERE, null, ex);
-
 		}
 		Assertions.assertThat(resultTime.getId()).isNull();
 	}
@@ -95,7 +94,7 @@ public class HabilityResultServiceTest {
 
 	@Test
 	void petShouldNotBeInTournament() {
-		Assertions.assertThat(this.habilityResultService.isInTournament(4, 1)).isFalse();
+		Assertions.assertThat(this.habilityResultService.isInTournament(4, 2)).isFalse();
 	}
 
 }
