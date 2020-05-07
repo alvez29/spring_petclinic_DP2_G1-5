@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.web.e2e;
 
 import java.time.LocalDate;
 
+import javax.transaction.Transactional;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@Transactional
 public class BeautyControllerE2ETests {
 
 	@Autowired

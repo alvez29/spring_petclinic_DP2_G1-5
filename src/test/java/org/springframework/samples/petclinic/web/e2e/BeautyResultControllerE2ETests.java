@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
   webEnvironment=SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
+@Transactional
 public class BeautyResultControllerE2ETests {
 
 	@Autowired
