@@ -14,10 +14,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RaceRepository extends CrudRepository<Race, Integer>{
 	
-	@Query(value = "SELECT date FROM Tournaments where date >= CURRENT_DATE", nativeQuery = true)
+	@Query(value = "SELECT date FROM tournaments where date >= CURRENT_DATE", nativeQuery = true)
 	public List<String> getFutureDates();
 
-	@Query(value = "SELECT date FROM Tournaments where id = ?1", nativeQuery = true)
+	@Query(value = "SELECT date FROM tournaments where id = ?1", nativeQuery = true)
 	public LocalDate getDateByRaceId(int raceId);
 
 	@Query("SELECT s from Sponsor s where tournament.id = ?1")

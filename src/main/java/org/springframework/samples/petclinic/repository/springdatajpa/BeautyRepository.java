@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BeautyRepository extends CrudRepository<Beauty, Integer> {
 
-	@Query(value = "SELECT date FROM Tournaments where date >= CURRENT_DATE", nativeQuery = true)
+	@Query(value = "SELECT date FROM tournaments where date >= CURRENT_DATE", nativeQuery = true)
 	List<String> getFutureDates();
 
 	@Query("SELECT date FROM Tournament t where t.id =?1")
