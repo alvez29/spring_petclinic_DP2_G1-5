@@ -154,6 +154,7 @@ INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,4);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,9);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,11);
 
+INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,13);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,12);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,8);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,1);
