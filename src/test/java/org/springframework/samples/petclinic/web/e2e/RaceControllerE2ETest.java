@@ -52,9 +52,8 @@ public class RaceControllerE2ETest {
 				.param("capacity", "10")
 				.with(csrf())
 				.param("canodrome", "Canodrome")
-				.param("date", "2020/12/01")
-				.param("rewardMoney", "1000.00")
-				.param("status","DRAFT"))
+				.param("date", "2042/12/01")
+				.param("rewardMoney", "1000.00"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/tournaments"));
 

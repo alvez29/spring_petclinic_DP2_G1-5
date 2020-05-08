@@ -5,11 +5,14 @@ import java.nio.charset.StandardCharsets;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+
 public class TournamentServiceTests {
 
 	@Autowired
@@ -25,7 +28,7 @@ public class TournamentServiceTests {
 		String place = this.tournamnetService.getSite(3);
 		byte[] b = place.getBytes();
 		String ans = new String(b,StandardCharsets.UTF_8);
-		Assertions.assertThat(ans).isEqualTo("Pabellon España");
+		Assertions.assertThat(ans).isEqualTo("Pabellon Principe Felipe");
 	}
 	
 	@Test
@@ -35,7 +38,7 @@ public class TournamentServiceTests {
 	
 	@Test
 	public void checkPetsWithResults() {
-		Integer[] expectedResult = {null, null, 1, 1, 1, null, null, null, null, 1, null, 1};
-		Assertions.assertThat(this.tournamnetService.petHasResult(1)).isEqualTo(expectedResult);
+		Integer[] expectedResult = {null, null, 0, 0, 0, null, null, null, null, 0, null, 0};
+		Assertions.assertThat(this.tournamnetService.petHasResult(7)).isEqualTo(expectedResult);
 	}
 }

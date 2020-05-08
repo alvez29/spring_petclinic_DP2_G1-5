@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
@@ -25,6 +26,7 @@ import org.springframework.samples.petclinic.service.exceptions.SponsorAmountExc
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BeautyServiceTests {
 
 	@Autowired
@@ -55,7 +57,6 @@ public class BeautyServiceTests {
 		} catch (ReservedDateExeception ex) {
 			Logger.getLogger(BeautyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 	}
 
 	@Test
@@ -110,9 +111,7 @@ public class BeautyServiceTests {
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-		"0.", "6999.99"
-	})
+	@CsvSource({"0.", "6999.99"})
 	public void editBeautySponsorException(final Double money) throws ReservedDateExeception, JudgeNotFoundException {
 		String ex = "";
 
@@ -138,25 +137,10 @@ public class BeautyServiceTests {
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-		"PENDING", "FINISHED"
-	})
+	@CsvSource({"PENDING", "FINISHED"})
 	public void editBeautyWithSponsors(final String status) throws DataAccessException, DuplicatedSponsorNameException, ReservedDateExeception, JudgeNotFoundException {
 		Beauty beauty = this.beautyService.findBeautyById(3);
 		beauty.setStatus(status);
-
-		Sponsor sponsor = new Sponsor();
-		sponsor.setMoney(7000.);
-		sponsor.setName("Testing");
-		sponsor.setUrl("http://www.google.com");
-		sponsor.setTournament(beauty);
-
-		this.sponsorService.saveSponsor(sponsor);
-
-		List<Sponsor> sponsorList = new ArrayList<Sponsor>();
-		sponsorList.add(sponsor);
-
-		beauty.setSponsors(sponsorList);
 
 		try {
 			this.beautyService.editBeauty(beauty);

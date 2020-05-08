@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.web.e2e;
 
 import java.time.LocalDate;
 
+import javax.transaction.Transactional;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@Transactional
 public class BeautyControllerE2ETests {
 
 	@Autowired
@@ -40,12 +43,14 @@ public class BeautyControllerE2ETests {
 	@WithMockUser(value = "admin")
 	@Test
 	void testInitUpdateBeautyForm() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/tournaments/beauty/{beautyId}/edit", 6)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("beauty"))
-			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("name", Matchers.is("Beauty ConTEST2"))))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/tournaments/beauty/{beautyId}/edit", 3)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("beauty"))
+			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("name", Matchers.is("Beauty ConTEST"))))
 			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("capacity", Matchers.is(800))))
-			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("date", Matchers.is(LocalDate.of(2022, 06, 04)))))
-			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("place", Matchers.is("Pabellon España")))).andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("rewardMoney", Matchers.is(1000.00))))
-			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("status", Matchers.is("DRAFT")))).andExpect(MockMvcResultMatchers.view().name("tournaments/createOrUpdateBeautyForm"));
+			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("date", Matchers.is(LocalDate.of(2020, 04, 06)))))
+			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("place", Matchers.is("Pabellon Principe Felipe"))))
+			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("rewardMoney", Matchers.is(7500.00))))
+			.andExpect(MockMvcResultMatchers.model().attribute("beauty", Matchers.hasProperty("status", Matchers.is("FINISHED"))))
+			.andExpect(MockMvcResultMatchers.view().name("tournaments/createOrUpdateBeautyForm"));
 
 	}
 	
