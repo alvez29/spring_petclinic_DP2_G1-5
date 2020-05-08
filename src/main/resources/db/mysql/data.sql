@@ -89,7 +89,7 @@ INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,t
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-04-06','FINISHED', 7500.00,800,1,'Pabellon Principe Felipe');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',6,'Beauty ConTEST2','2021-06-4','DRAFT', 7500.00,800,1,'Pabellon España');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',9,'Beauty ConTEST3','2020-05-07','DRAFT', 7500.00,800,1,'Pabellon Principe Felipe');
-INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',12,'Beauty ConTEST4','2020-05-06','DRAFT', 7500.00,800,1,'Pabellon Principe Felipe');
+INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',12,'Beauty ConTEST4','2020-04-03','DRAFT', 7500.00,800,1,'Pabellon Principe Felipe');
 
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',4,'Hability ConTEST','2020-07-10','DRAFT', 8000.00,800,1,'WiZink Center');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',5,'Hability ConTEST sponsors','2020-07-12','DRAFT', 8000.00,800,1,'IFEMA');
