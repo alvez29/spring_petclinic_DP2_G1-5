@@ -89,6 +89,7 @@ INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,t
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-04-06','FINISHED', 7500.00,800,1,'Pabellon Principe Felipe');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',6,'Beauty ConTEST2','2021-06-4','DRAFT', 7500.00,800,1,'Pabellon España');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',9,'Beauty ConTEST3','2020-05-07','DRAFT', 7500.00,800,1,'Pabellon Principe Felipe');
+INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',12,'Beauty ConTEST4','2020-05-06','DRAFT', 7500.00,800,1,'Pabellon Principe Felipe');
 
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',4,'Hability ConTEST','2020-07-10','DRAFT', 8000.00,800,1,'WiZink Center');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',5,'Hability ConTEST sponsors','2020-07-12','DRAFT', 8000.00,800,1,'IFEMA');
@@ -125,6 +126,7 @@ INSERT IGNORE INTO judges(id, first_name, last_name, city, contact) values (1, '
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,1);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,2);
+INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,6);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,8);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,9);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,10);
@@ -147,6 +149,7 @@ INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (2,3);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (2,4);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (2,9);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (2,11);
+INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (2,12);
 
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,2);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,3);
@@ -154,6 +157,7 @@ INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,4);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,9);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (3,11);
 
+INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,13);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,12);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,8);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (4,1);

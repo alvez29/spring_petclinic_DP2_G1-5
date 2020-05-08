@@ -115,7 +115,7 @@ public class BeautyServiceTests {
 	public void editBeautySponsorException(final Double money) throws ReservedDateExeception, JudgeNotFoundException {
 		String ex = "";
 
-		Beauty beauty = this.beautyService.findBeautyById(6);
+		Beauty beauty = this.beautyService.findBeautyById(12);
 
 		Sponsor sponsor = new Sponsor();
 		sponsor.setMoney(money);

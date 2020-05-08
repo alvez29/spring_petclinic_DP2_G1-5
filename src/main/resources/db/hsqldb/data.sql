@@ -91,6 +91,7 @@ INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',6,'Beauty ConTEST2','2021-06-4','DRAFT', 7500.00,800,1,'Pabellon España');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',3,'Beauty ConTEST','2020-04-06','FINISHED', 7500.00,800,1,'Pabellon Principe Felipe');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',9,'Beauty ConTEST3','2020-05-07','DRAFT', 7500.00,800,1,'Pabellon Principe Felipe');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,place) VALUES ('Beauty',12,'Beauty ConTEST4','2020-05-06','DRAFT', 7500.00,800,1,'Pabellon Principe Felipe');
 
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',4,'Hability ConTEST','2020-07-10','DRAFT', 8000.00,800,1,'WiZink Center');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',5,'Hability ConTEST sponsors','2020-07-12','DRAFT', 8000.00,800,1,'IFEMA');
@@ -135,10 +136,12 @@ INSERT INTO judges values (1, 'Juez', 'Primero', 'Sevilla', 'primero@example.com
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,1);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,2);
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,6);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,8);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,9);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,10);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,11);
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,12);
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,2);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,3);
@@ -154,7 +157,6 @@ INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,9);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,11);
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (4,8);
-
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (4,1);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (4,13);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (4,12);

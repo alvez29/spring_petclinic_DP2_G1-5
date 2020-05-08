@@ -2,9 +2,12 @@ package org.springframework.samples.petclinic.ui;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import org.hamcrest.core.IsEqual;
 import org.junit.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.Assert.*;
@@ -18,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MostrarResultadosNegativeUITest {
+public class ShowResultsPositiveUITest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -26,6 +29,7 @@ public class MostrarResultadosNegativeUITest {
 
   @LocalServerPort
   private int port;
+  
   
   @BeforeEach
   public void setUp() throws Exception {
@@ -36,9 +40,9 @@ public class MostrarResultadosNegativeUITest {
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
-  @org.junit.jupiter.api.Test
-  public void testMostrarResultadosNegative() throws Exception {
-	driver.get("http://localhost:" + this.port);
+  @Test
+  public void testMostrarResultados() throws Exception {
+    driver.get("http://localhost:" + this.port);
     driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
 	driver.findElement(By.id("username")).clear();
 	driver.findElement(By.id("username")).sendKeys("admin1");
@@ -46,10 +50,11 @@ public class MostrarResultadosNegativeUITest {
 	driver.findElement(By.id("password")).clear();
 	driver.findElement(By.id("password")).sendKeys("4dm1n");
 	driver.findElement(By.xpath("//button[@type='submit']")).click();
-	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-    driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[2]/td[4]")).click();
-    String status = driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[2]/td[4]")).getText();
-    driver.findElement(By.linkText("Second Race Test")).click();
+    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
+    driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr/td[4]")).click();
+    String status = driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr/td[4]")).getText();
+    assertThat(status, IsEqual.equalTo("FINISHED"));
+    driver.findElement(By.linkText("First Race Test")).click();
     driver.findElement(By.linkText("Show results")).click();
   }
 
@@ -95,4 +100,3 @@ public class MostrarResultadosNegativeUITest {
     }
   }
 }
-
