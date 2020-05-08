@@ -2,8 +2,6 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -81,13 +79,13 @@ public class BeautyServiceTests {
 	@Test
 	public void editBeautySuccess() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
 
-		Beauty beauty = this.beautyService.findBeautyById(3);
+		Beauty beauty = this.beautyService.findBeautyById(6);
 
 		beauty.setCapacity(8001);
 
 		this.beautyService.editBeauty(beauty);
 		Assertions.assertThat(beauty.getId()).isNotNull();
-		Assertions.assertThat(this.beautyService.findBeautyById(3).getCapacity()).isEqualTo(8001);
+		Assertions.assertThat(this.beautyService.findBeautyById(6).getCapacity()).isEqualTo(8001);
 
 	}
 
