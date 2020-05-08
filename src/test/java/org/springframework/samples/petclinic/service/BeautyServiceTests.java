@@ -81,13 +81,13 @@ public class BeautyServiceTests {
 	@Test
 	public void editBeautySuccess() throws ReservedDateExeception, SponsorAmountException, JudgeNotFoundException {
 
-		Beauty beauty = this.beautyService.findBeautyById(3);
+		Beauty beauty = this.beautyService.findBeautyById(12);
 
 		beauty.setCapacity(8001);
 
 		this.beautyService.editBeauty(beauty);
 		Assertions.assertThat(beauty.getId()).isNotNull();
-		Assertions.assertThat(this.beautyService.findBeautyById(3).getCapacity()).isEqualTo(8001);
+		Assertions.assertThat(this.beautyService.findBeautyById(12).getCapacity()).isEqualTo(8001);
 
 	}
 
