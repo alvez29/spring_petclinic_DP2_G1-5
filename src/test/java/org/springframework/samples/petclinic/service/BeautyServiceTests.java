@@ -142,19 +142,6 @@ public class BeautyServiceTests {
 		Beauty beauty = this.beautyService.findBeautyById(3);
 		beauty.setStatus(status);
 
-		Sponsor sponsor = new Sponsor();
-		sponsor.setMoney(7000.);
-		sponsor.setName("Testing Example 11");
-		sponsor.setUrl("http://www.google.com");
-		sponsor.setTournament(beauty);
-
-		this.sponsorService.saveSponsor(sponsor);
-
-		List<Sponsor> sponsorList = new ArrayList<Sponsor>();
-		sponsorList.add(sponsor);
-
-		beauty.setSponsors(sponsorList);
-
 		try {
 			this.beautyService.editBeauty(beauty);
 		} catch (SponsorAmountException e) {

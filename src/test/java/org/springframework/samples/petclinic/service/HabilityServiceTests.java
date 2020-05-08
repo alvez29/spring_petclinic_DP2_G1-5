@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Beauty;
 import org.springframework.samples.petclinic.model.Hability;
 import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Sponsor;
@@ -122,34 +124,13 @@ public class HabilityServiceTests {
 
 	@ParameterizedTest
 	@CsvSource({ "PENDING", "FINISHED" })
-	public void editHabilityWithSponsorsAndJudge(String status) throws ReservedDateExeception, SponsorAmountException,
-			JudgeNotFoundException, DataAccessException, DuplicatedSponsorNameException {
-		Hability hability = this.habilityService.findHabilityById(4);
+	public void editHabilityWithSponsorsAndJudge(String status) throws ReservedDateExeception, SponsorAmountException,JudgeNotFoundException, DataAccessException, DuplicatedSponsorNameException {
+		
+		Hability hability = this.habilityService.findHabilityById(11);
 		hability.setStatus(status);
 
-		// creamos un sponsor que cumpla la condicion para cambiar el status (7.000,00 o
-		// más)
-		List<Sponsor> sponsors = new ArrayList<Sponsor>();
-		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Testing Example 13");
-		sponsor.setMoney(7000.00);
-		sponsors.add(sponsor);
-		sponsor.setTournament(hability);
-		sponsor.setUrl("https://www.google.com/");
-		this.sponsorService.saveSponsor(sponsor);
-
-		// asignamos el sponsor al torneo
-		hability.setSponsors(sponsors);
-
-		// añadimos un juez para evitar la excepcion
-		Judge judge1 = this.judgeService.findJudgeById(1);
-		List<Judge> judges = new ArrayList<Judge>();
-		judges.add(judge1);
-		// asignamos el juez al torneo
-		hability.setJudges(judges);
-
 		this.habilityService.editHability(hability);
-		Hability habilityAssert = this.habilityService.findHabilityById(4);
+		Hability habilityAssert = this.habilityService.findHabilityById(11);
 		assertThat(habilityAssert.getSponsors().stream().mapToDouble(x -> x.getMoney()).sum())
 				.isGreaterThanOrEqualTo(7000.00);
 		assertThat(habilityAssert.getJudges()).isNotEmpty();
@@ -158,40 +139,28 @@ public class HabilityServiceTests {
 
 	@ParameterizedTest
 	@CsvSource({ "0.", "6999.99" })
-	public void editHabilitySponsorAmountException(Double money)
-			throws DataAccessException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
+	public void editHabilitySponsorAmountException(Double money) throws DataAccessException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
+		String ex = "";
 
-		Hability hability = this.habilityService.findHabilityById(4);
-		hability.setStatus("PENDING");
+		Hability hability = this.habilityService.findHabilityById(8);
 
-		// creamos un sponsor que cumpla la condicion para cambiar el status (7.000,00 o
-		// más)
-		List<Sponsor> sponsors = new ArrayList<Sponsor>();
 		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Testing Example 12");
 		sponsor.setMoney(money);
-		sponsors.add(sponsor);
+		sponsor.setName("Testing");
+		sponsor.setUrl("http://www.google.com");
 		sponsor.setTournament(hability);
-		sponsor.setUrl("https://www.google.com/");
-		this.sponsorService.saveSponsor(sponsor);
 
-		// asignamos el sponsor al torneo
-		hability.setSponsors(sponsors);
-
-		// añadimos un juez para evitar la excepcion
-		Judge judge1 = this.judgeService.findJudgeById(1);
-		List<Judge> judges = new ArrayList<Judge>();
-		judges.add(judge1);
-		// asignamos el juez al torneo
-		hability.setJudges(judges);
-
+		hability.setStatus("PENDING");
+		
 		try {
 			this.habilityService.editHability(hability);
-		} catch (SponsorAmountException ex) {
-			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-			Hability habilityAssert = this.habilityService.findHabilityById(4);
-			assertThat(habilityAssert.getSponsors().stream().mapToDouble(x -> x.getMoney()).sum()).isLessThan(7000.00);
+		} catch (SponsorAmountException e) {
+			Logger.getLogger(HabilityServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			ex = e.getClass().getName();
 		}
+
+		Assertions.assertThat(ex).isEqualTo(SponsorAmountException.class.getName());
+
 	}
 
 	@Test

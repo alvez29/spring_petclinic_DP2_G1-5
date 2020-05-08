@@ -160,22 +160,8 @@ public class RaceServiceTests {
 	@CsvSource({"PENDING", "FINISHED"})
 	public void editRaceWithSponsor(String status) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
 		
-		Race race = this.raceService.findRaceById(2);
+		Race race = this.raceService.findRaceById(10);
 		race.setStatus(status);	
-		
-		Sponsor sponsor = new Sponsor();
-		sponsor.setMoney(7000.);
-		sponsor.setName("Testing Example 15");
-		sponsor.setUrl("http://www.google.com");
-		sponsor.setTournament(race);
-
-		this.sponsorService.saveSponsor(sponsor);
-		
-		List<Sponsor> sponsorList = new ArrayList<Sponsor>();
-		sponsorList.add(sponsor);
-		
-		race.setSponsors(sponsorList);
-		
 		
 		try {
 			this.raceService.editRace(race);
@@ -183,7 +169,7 @@ public class RaceServiceTests {
 			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
 		}
 		
-		Race newRace = this.raceService.findRaceById(2);
+		Race newRace = this.raceService.findRaceById(10);
 		
 		assertThat(newRace.getSponsors().stream().mapToDouble(x->x.getMoney()).sum()).isGreaterThanOrEqualTo(7000.);
 		assertThat(newRace.getJudges()).isNotEmpty();
@@ -196,21 +182,10 @@ public class RaceServiceTests {
 	public void editRaceWithoutJudge(String status) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
 		String ex = "";
 		
-		Race race = this.raceService.findRaceById(2);
+		//Para esta prueba usamos el torneo 7 que ya tiene sponosrs asociados para controlar que no salte esta excepción
+		Race race = this.raceService.findRaceById(7);
 		race.setStatus(status);	
 		
-		Sponsor sponsor = new Sponsor();
-		sponsor.setMoney(7000.);
-		sponsor.setName("Testing Example 14");
-		sponsor.setUrl("http://www.google.com");
-		sponsor.setTournament(race);
-
-		this.sponsorService.saveSponsor(sponsor);
-		
-		List<Sponsor> sponsorList = new ArrayList<Sponsor>();
-		sponsorList.add(sponsor);
-		
-		race.setSponsors(sponsorList);
 		
 		List<Judge> judgeList = new ArrayList<Judge>();
 		race.setJudges(judgeList);
