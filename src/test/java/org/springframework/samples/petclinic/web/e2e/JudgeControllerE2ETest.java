@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@TestPropertySource( locations = "classpath:application-mysql.properties")
+//@TestPropertySource( locations = "classpath:application-mysql.properties")
 public class JudgeControllerE2ETest {
 	
 	@Autowired

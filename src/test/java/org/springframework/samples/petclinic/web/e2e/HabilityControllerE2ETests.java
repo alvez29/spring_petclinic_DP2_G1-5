@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 @Transactional
 
-@TestPropertySource( locations = "classpath:application-mysql.properties")
+//@TestPropertySource( locations = "classpath:application-mysql.properties")
 
 public class HabilityControllerE2ETests {
 
