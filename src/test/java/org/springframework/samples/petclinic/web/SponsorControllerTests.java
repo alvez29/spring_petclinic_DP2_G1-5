@@ -67,14 +67,8 @@ public class SponsorControllerTests {
 		beauty.setRewardMoney(800.00);
 		beauty.setStatus("DRAFT");
 		beauty.setSponsors(new ArrayList<Sponsor>());
-		
-//		Sponsor sponsor = new Sponsor();
-//		sponsor.setMoney(7000.00);
-//		sponsor.setName("Test");
-//		sponsor.setUrl("https://www.google.es");
-//		beauty.addSponsor(sponsor);
-		
-		given(this.beautyService.findBeautyById(TEST_BEAUTY_ID)).willReturn(beauty);
+	
+		given(this.tournamentService.findTournamentById(TEST_BEAUTY_ID)).willReturn(beauty);
 	}
 	
 	@WithMockUser(value = "admin")
@@ -93,7 +87,7 @@ public class SponsorControllerTests {
 						.param("name", "Sponsor de Prueba")
 						.param("money", "7000.00")
 						.param("url", "https://www.google.es"))
-			.andExpect(status().is2xxSuccessful())
+			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/tournaments/{tournamentId}"));
 	}
 	
