@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+//Preuba 2
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PetTypeTournamentNegativeUITest {
@@ -51,7 +53,6 @@ public class PetTypeTournamentNegativeUITest {
     driver.get("http://localhost:" + this.port + "/tournaments/2/addpet/1");
     String url = driver.getCurrentUrl();
     assertEquals("http://localhost:" + this.port + "/oups", url);
-    
   }
 
   @AfterEach

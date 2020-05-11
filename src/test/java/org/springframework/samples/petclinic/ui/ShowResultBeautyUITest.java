@@ -18,7 +18,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
+// Prueba 16
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ShowResultBeautyUITest {
@@ -42,6 +42,13 @@ public class ShowResultBeautyUITest {
 	@Test
 	public void testShowResultsBeauty() throws Exception {
 		driver.get("http://localhost:" + port);
+		driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
+		driver.findElement(By.id("username")).clear();
+		driver.findElement(By.id("username")).sendKeys("admin1");
+		driver.findElement(By.id("password")).click();
+		driver.findElement(By.id("password")).clear();
+		driver.findElement(By.id("password")).sendKeys("4dm1n");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
 		driver.findElement(By.linkText("Beauty ConTEST")).click();
 		driver.findElement(By.linkText("Show results")).click();

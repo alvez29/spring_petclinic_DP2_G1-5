@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+//Preuba 17
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class APIFindPlaceNegativeUITest {
@@ -43,7 +45,7 @@ public class APIFindPlaceNegativeUITest {
 		driver.get("http://localhost:" + port);
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
 		driver.findElement(By.linkText("Second Race Test")).click();
-		assertEquals("This location cannot be found in Google Maps",
+		assertEquals("This location cannot be found in LocationIQ",
 				driver.findElement(By.xpath("//div[@id='map']/h2")).getText());
 	}
 

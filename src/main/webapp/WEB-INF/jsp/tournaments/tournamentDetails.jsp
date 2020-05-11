@@ -113,7 +113,7 @@
     <script type="text/javascript">
     
     function  writeErrorMap(){
-  		document.getElementById('map').innerHTML='<h2>This location cannot be found in Google Maps</h2> <br/><spring:url value="/resources/images/sad_dog.png" var="petsImage"/><img src="${petsImage}"/><br/> ';
+  		document.getElementById('map').innerHTML='<h2>This location cannot be found in LocationIQ</h2> <br/><spring:url value="/resources/images/sad_dog.png" var="petsImage"/><img src="${petsImage}"/><br/> ';
   		}
    
     function initMap(){

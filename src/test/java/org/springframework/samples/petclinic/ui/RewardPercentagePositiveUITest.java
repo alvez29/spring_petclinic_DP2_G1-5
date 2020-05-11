@@ -20,9 +20,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+//Prueba 9
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PremiosDivididosPositivoUITest {
+public class RewardPercentagePositiveUITest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;

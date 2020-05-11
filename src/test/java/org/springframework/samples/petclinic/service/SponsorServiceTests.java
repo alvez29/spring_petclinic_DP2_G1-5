@@ -8,16 +8,17 @@ import java.util.ArrayList;
 import org.assertj.core.api.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Beauty;
 import org.springframework.samples.petclinic.model.Sponsor;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedSponsorNameException;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class SponsorServiceTests {
 
 	@Autowired
@@ -26,7 +27,7 @@ public class SponsorServiceTests {
 	@Test
 	void shouldSaveSponsor() throws DataAccessException, DuplicatedSponsorNameException {
 		Beauty beauty = new Beauty();
-		beauty.setId(5);
+		beauty.setId(13);
 		beauty.setName("TestingName");
 		beauty.setCapacity(10);
 		beauty.setDate(LocalDate.of(2020, 12, 23));
@@ -50,7 +51,7 @@ public class SponsorServiceTests {
 	@Test
 	void shouldNotSaveSameNameSponsor() throws DuplicatedSponsorNameException {
 		Beauty beauty = new Beauty();
-		beauty.setId(5);
+		beauty.setId(13);
 		beauty.setName("TestingName");
 		beauty.setCapacity(10);
 		beauty.setDate(LocalDate.of(2020, 12, 23));
@@ -77,7 +78,7 @@ public class SponsorServiceTests {
 			this.sponsorService.saveSponsor(sponsor2);
 		});		
 		
-		Assertions.assertThat(sponsor.getId()).isNotNull();
+		Assertions.assertThat(sponsor2.getId()).isNull();
 	}
 	
 }
