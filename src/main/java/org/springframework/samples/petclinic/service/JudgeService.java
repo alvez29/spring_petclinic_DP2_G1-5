@@ -29,6 +29,5 @@ public class JudgeService {
 
 	public void saveJudge(@Valid Judge judge) {
 		judgeRepo.save(judge);
-		
 	}	
 }

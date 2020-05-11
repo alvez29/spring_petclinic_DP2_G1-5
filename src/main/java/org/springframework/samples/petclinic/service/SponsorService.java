@@ -34,6 +34,4 @@ public class SponsorService {
 			sponsorRepo.save(sponsor);
 		}
 	}
-	
-	
 }

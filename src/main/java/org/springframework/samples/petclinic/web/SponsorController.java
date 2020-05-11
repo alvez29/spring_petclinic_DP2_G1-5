@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -66,6 +67,9 @@ public class SponsorController {
 		else {
 			try{
 				Tournament tournament = tournamentService.findTournamentById(tournamentId);
+				if (tournament.getSponsors()==null) {
+					tournament.setSponsors(new ArrayList<Sponsor>());
+				}
 				tournament.addSponsor(sponsor);
 	        	this.sponsorService.saveSponsor(sponsor);
 	        }catch(DuplicatedSponsorNameException ex){
