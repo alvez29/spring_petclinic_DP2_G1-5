@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.samples.petclinic.model.Tournament;
@@ -20,5 +22,6 @@ public interface TournamentRepository extends CrudRepository<Tournament, Integer
 	@Query(value="select place from tournaments where id = ?1 ",nativeQuery=true)
 	String getPlace(int tournamentId);
 
-
+	@Query(value="select dtype,id,name,capacity,date,reward_money,status,place,circuit,canodrome,type_id from tournament_pets join tournaments where pet_id = ?1 and date <= DATEADD(year, 1, CURRENT_DATE) and tournament_id = id" ,nativeQuery=true)
+	List<Tournament> findTounamentsByPetIdInAYear(Integer petId);
 }

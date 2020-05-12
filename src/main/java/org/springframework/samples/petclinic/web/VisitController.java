@@ -106,5 +106,11 @@ public class VisitController {
 		return checkOptions;
 
 	}
+	
+	@ModelAttribute("isWinner")
+	public Boolean isActualWinnerPet(@PathVariable("petId") int petId) {
+		Boolean res = this.petService.isActualWinner(petId);
+		return res;
+	}
 
 }
