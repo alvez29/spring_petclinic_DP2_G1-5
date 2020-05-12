@@ -81,10 +81,6 @@ public class MinimunDataForATournamentPositiveUITest {
 	    driver.findElement(By.id("canodrome")).sendKeys("Great Canodrome of Testing");
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	    driver.findElement(By.linkText("Testing Race")).click();
-	    driver.findElement(By.linkText("Add New Dog")).click();
-	    driver.findElement(By.linkText("Beagle: Leo - Owner: (George Franklin)")).click();
-	    driver.findElement(By.linkText("Add New Dog")).click();
-	    driver.findElement(By.linkText("Greyhound: Rosy - Owner: (Eduardo Rodriquez)")).click();
 	    driver.findElement(By.linkText("Add New Sponsor")).click();
 	    driver.findElement(By.id("name")).click();
 	    driver.findElement(By.id("name")).clear();
@@ -98,8 +94,6 @@ public class MinimunDataForATournamentPositiveUITest {
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	    driver.findElement(By.linkText("Add New Judge")).click();
 	    driver.findElement(By.linkText("Juez Primero")).click();
-	    assertEquals("Leo", driver.findElement(By.xpath("//dd")).getText());
-	    assertEquals("Rosy", driver.findElement(By.xpath("//tr[2]/td/dl/dd")).getText());
 	    assertEquals("Sponsor Test", driver.findElement(By.xpath("//table[3]/tbody/tr/td/dl/dd")).getText());
 	    assertEquals("Juez Primero", driver.findElement(By.xpath("//table[4]/tbody/tr/td/dl/dd")).getText());
 	    assertEquals("Great Canodrome of Testing", driver.findElement(By.xpath("//tr[8]/td")).getText());
