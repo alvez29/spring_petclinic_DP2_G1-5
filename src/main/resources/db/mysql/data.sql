@@ -49,7 +49,6 @@ INSERT IGNORE INTO types(id, name) VALUES (20, 'Great Dane');
 INSERT IGNORE INTO types(id, name) VALUES (21, 'Mongrel Dog'); 
 INSERT IGNORE INTO types(id, name) VALUES (22, 'Other');
 
-
 INSERT IGNORE INTO owners(id, first_name, last_name, address, city, telephone) VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison', '6085551023');
 INSERT IGNORE INTO owners(id, first_name, last_name, address, city, telephone) VALUES (2, 'Betty', 'Davis', '638 Cardinal Ave.', 'Sun Prairie', '6085551749');
 INSERT IGNORE INTO owners(id, first_name, last_name, address, city, telephone) VALUES (3, 'Eduardo', 'Rodriquez', '2693 Commerce St.', 'McFarland', '6085558763');
@@ -95,6 +94,8 @@ INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,t
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',5,'Hability ConTEST sponsors','2020-07-12','DRAFT', 8000.00,800,1,'IFEMA');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',8,'Hability ConTEST 2','2020-09-12','DRAFT', 8000.00,800,1,'Fibes');
 INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',11,'Hability ConTEST completo','2020-02-12','DRAFT', 8000.00,800,1,'Fibes');
+INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',13,'Hability ConTEST 3','2020-02-12','FINISHED', 8000.00,800,1,'Villamarin');
+INSERT IGNORE INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',14,'Hability ConTEST 4','2020-02-12','FINISHED', 8000.00,800,1,'Villamarin');
 
 INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
 INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);
@@ -121,16 +122,27 @@ INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (17,'Royal Ca
 INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (18,'Affinity', 3000.0, 'www.affinity.com',11);
 INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (19,'Pedigree', 7500.0, 'www.pedigree.com',11);
 
+INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (20,'Royal Canin', 4000.0, 'www.royalcanin.com',13);
+INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (21,'Affinity', 3000.0, 'www.affinity.com',13);
+INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (22,'Pedigree', 7500.0, 'www.pedigree.com',13);
+
+INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (23,'Royal Canin', 4000.0, 'www.royalcanin.com',14);
+INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (24,'Affinity', 3000.0, 'www.affinity.com',14);
+INSERT IGNORE INTO sponsor(id,name,money,url,tournament_id) VALUES (25,'Pedigree', 7500.0, 'www.pedigree.com',14);
+
 INSERT IGNORE INTO judges(id, first_name, last_name, city, contact) values (1, 'Juez', 'Primero', 'Sevilla', 'primero@example.com');
 
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,1);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,2);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,6);
+INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,7);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,8);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,9);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,10);
 INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,11);
+INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,14);
+INSERT IGNORE INTO tournament_judges(judge_id, tournament_id) VALUES (1,13);
 
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,2);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,3);

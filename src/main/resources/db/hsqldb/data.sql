@@ -97,8 +97,8 @@ INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',5,'Hability ConTEST sponsors','2020-07-12','DRAFT', 8000.00,800,1,'IFEMA');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',8,'Hability ConTEST 2','2020-09-12','DRAFT', 8000.00,800,1,'Fibes');
 INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',11,'Hability ConTEST completo','2020-02-12','DRAFT', 8000.00,800,1,'Fibes');
-INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',13,'Hability ConTEST 3','2020-02-12','FINISHED', 8000.00,800,1,'Villamarin');
-INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',14,'Hability ConTEST 4','2020-02-12','FINISHED', 8000.00,800,1,'Villamarin');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',13,'Hability ConTEST 3','2020-02-18','FINISHED', 8000.00,800,1,'Villamarin');
+INSERT INTO tournaments(dtype,id,name,date,status,reward_money,capacity,type_id,circuit) VALUES ('Hability',14,'Hability ConTEST 4','2020-02-17','FINISHED', 8000.00,800,1,'Villamarin');
 
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (1,'Royal Canin', 4000.0, 'www.royalcanin.com',1);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (2,'Affinity', 3000.0, 'www.affinity.com',1);
@@ -125,7 +125,16 @@ INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (17,'Royal Canin', 4
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (18,'Affinity', 3000.0, 'www.affinity.com',11);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (19,'Pedigree', 7500.0, 'www.pedigree.com',11);
 
-INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (20,'Sponsor1',12000.00,'https://www.google.com',6);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (20,'Royal Canin', 4000.0, 'www.royalcanin.com',13);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (21,'Affinity', 3000.0, 'www.affinity.com',13);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (22,'Pedigree', 7500.0, 'www.pedigree.com',13);
+
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (23,'Royal Canin', 4000.0, 'www.royalcanin.com',14);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (24,'Affinity', 3000.0, 'www.affinity.com',14);
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (25,'Pedigree', 7500.0, 'www.pedigree.com',14);
+
+
+INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (26,'Sponsor1',12000.00,'https://www.google.com',6);
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,2);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,3);
@@ -139,11 +148,14 @@ INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,1);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,3);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,2);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,6);
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,7);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,8);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,9);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,10);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,11);
 INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,12);
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,13);
+INSERT INTO tournament_judges(judge_id, tournament_id) VALUES (1,14);
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,2);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,3);
