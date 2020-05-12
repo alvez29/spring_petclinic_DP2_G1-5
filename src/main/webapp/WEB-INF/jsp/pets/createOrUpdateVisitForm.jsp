@@ -14,7 +14,14 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${visit['new']}">New </c:if>Visit</h2>
+        <h2>New Visit</h2>
+         <c:if test="${isWinner}">
+         	<h2 color=#6db33f> THIS IS A FREE VISIT</h2>
+         </c:if>
+         <c:if test="${!isWinner}">
+         	<h2 color=red> THIS IS NOT A FREE VISIT</h2>
+         </c:if>
+        
 
         <b>Dog</b>
         <table class="table table-striped">
