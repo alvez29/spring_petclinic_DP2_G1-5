@@ -26,7 +26,6 @@ public class LocationIQApiTest {
 				.body("lon[0]", equalTo("-5.99255572619863"))
 			.and()
 				.time(lessThan(20L), TimeUnit.SECONDS);
-			
 	}
 	
 	@Test
@@ -36,6 +35,5 @@ public class LocationIQApiTest {
 		.then()
 			.statusCode(404);
 	}
-	
 	
 }
