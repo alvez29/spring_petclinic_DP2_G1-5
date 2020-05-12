@@ -32,9 +32,8 @@ public class RaceServiceMockedTest {
 
 	@BeforeEach
 	void setup() {
-		raceService = new RaceService(raceRepository, petRepository);
-		
-			}
+		raceService = new RaceService(raceRepository, petRepository);	
+	}
 
 	@Test
 	void shouldGetSponsorAmount() {

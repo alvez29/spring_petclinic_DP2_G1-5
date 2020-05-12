@@ -1,6 +1,5 @@
-
 package org.springframework.samples.petclinic.service.exceptions;
 
-public class JudgesNotFoundException extends Exception {
+public class DuplicatedResultForPetInTournament extends Exception {
 
 }

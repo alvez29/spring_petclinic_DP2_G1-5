@@ -51,13 +51,9 @@ public class HabilityService {
 		
 		if(this.getSponsorAmount(hability.getId()) < 7000.00 && (hability.getStatus().equals("PENDING") || hability.getStatus().equals("FINISHED"))) {
 			throw new SponsorAmountException();
-		}
-		
-		if(judges.isEmpty() && (hability.getStatus().equals("PENDING") || hability.getStatus().equals("FINISHED"))) {
+		} else if(judges.isEmpty() && (hability.getStatus().equals("PENDING") || hability.getStatus().equals("FINISHED"))) {
 			throw new JudgeNotFoundException();
-		}
-		
-		if (fechaReservadaEdit(hability.getId(), hability.getDate())) {
+		} else if (fechaReservadaEdit(hability.getId(), hability.getDate())) {
 			throw new ReservedDateExeception();
 		} else {
 			this.habilityRepo.save(hability);

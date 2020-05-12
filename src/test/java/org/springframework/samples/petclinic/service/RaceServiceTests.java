@@ -9,42 +9,43 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Race;
 import org.springframework.samples.petclinic.model.Sponsor;
-import org.springframework.samples.petclinic.repository.springdatajpa.RaceRepository;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedSponsorNameException;
 import org.springframework.samples.petclinic.service.exceptions.JudgeNotFoundException;
 import org.springframework.samples.petclinic.service.exceptions.ReservedDateExeception;
 import org.springframework.samples.petclinic.service.exceptions.SponsorAmountException;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+
 public class RaceServiceTests {
 	
 	@Autowired
 	protected RaceService raceService;
 	
 	@Autowired
-	protected RaceRepository raceRepo;
+	protected JudgeService judgeService;
 	
-//	protected EntityManager entityM = (EntityManager) Persistence.createEntityManagerFactory("jdbc:mysql://localhost/petclinic");
+	@Autowired
+	protected SponsorService sponsorService;
 
 	
 	@ParameterizedTest
 	@CsvSource({"8000, Canodrome Test, 2020-04-16, 1000, Race 1 Test", "8000, Canodrome Test, 2020-06-08, 1000, Race 2 Test"})
 	public void addNewRace(Integer capacity, String canodrome, LocalDate date,
 			Double rewardMoney, String name) {
-		
-		
+	
 		Race race = new Race();
 		
 		race.setCapacity(capacity);
@@ -67,7 +68,7 @@ public class RaceServiceTests {
 	
 	@Test
 	public void checkFirstClassified() {
-		Race race = this.raceRepo.findById(1).get();
+		Race race = this.raceService.findRaceById(1);
 		
 		assertThat(race.getFirstClassified()).isEqualTo(race.getRewardMoney()*0.5);	
 	}
@@ -75,14 +76,14 @@ public class RaceServiceTests {
 	
 	@Test
 	public void checkSecondClassified() {
-		Race race = this.raceRepo.findById(1).get();
+		Race race = this.raceService.findRaceById(1);
 		
 		assertThat(race.getSecondClassified()).isEqualTo(race.getRewardMoney()*0.35);		
 	}
 	
 	@Test
 	public void checkThirdClassified() {
-		Race race = this.raceRepo.findById(1).get();
+		Race race = this.raceService.findRaceById(1);
 		
 		assertThat(race.getThirdClassified()).isEqualTo(race.getRewardMoney()*0.15);
 			
@@ -91,17 +92,18 @@ public class RaceServiceTests {
 	@Test
 	public void editRaceSuccess() throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
 		
-		Race race = new Race();
-		race.setId(1);
+		Race race = this.raceService.findRaceById(1);
 		race.setCapacity(8000);
-		race.setCanodrome("Canodrome Test");
+//		race.setCanodrome("Gran Hipodromo de Andalucia");
 		race.setDate(LocalDate.of(2040, 04, 16));
 		race.setRewardMoney(1000.);
 		race.setName("Race 1 Test");
-		race.setStatus("DRAFT");
 		
 		this.raceService.editRace(race);
 		assertThat(race.getId()).isNotNull();
+		Race editedRace = this.raceService.findRaceById(1);
+		assertThat(editedRace.getCapacity()).isEqualTo(race.getCapacity());
+//		assertThat(editedRace.getCanodrome()).isEqualTo(race.getCanodrome());
 			
 		
 
@@ -109,109 +111,94 @@ public class RaceServiceTests {
 	
 	@Test
 	public void editRaceReservedDateException() throws DataAccessException, SponsorAmountException, JudgeNotFoundException {
+	
+		String ex = "";
+	
+		Race race = this.raceService.findRaceById(2);
+		race.setDate(LocalDate.of(2020, 7, 12));
+		race.setCapacity(1);
 		
-		Race race = new Race();
-		race.setId(1);
-		race.setCapacity(8000);
-		race.setCanodrome("Canodrome Test");
-		race.setDate(LocalDate.of(2020,6,8));
-		race.setRewardMoney(1000.);
-		race.setName("Race 2 Test");
-		race.setStatus("DRAFT");
-		
-		try{
+		try {
 			this.raceService.editRace(race);
-			
-		}catch(ReservedDateExeception e){
-			Logger.getLogger(RaceServiceTests.class.getName()).log(Level.SEVERE, null, e);
-	        assertThat(race.getId()).isNull();
+		}catch(ReservedDateExeception e) {
+			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			ex = e.getClass().getName();
 		}
+		
+		 assertThat(ex).isEqualTo(ReservedDateExeception.class.getName());
+		
 	}
 	
 	@ParameterizedTest
 	@CsvSource({"0.","6999.99"})
-	@Disabled
 	public void editRaceSponsorAmountException(Double money) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
+		String ex = "";
 		
-		Race race = new Race();
-		List<Sponsor> sponsors = new ArrayList<Sponsor>();
+		Race race = this.raceService.findRaceById(2);
+		
 		Sponsor sponsor = new Sponsor();
-		sponsor.setName("Sponsor test");
 		sponsor.setMoney(money);
-		sponsors.add(sponsor);
-		
-		race.setId(1);
-		race.setCapacity(8000);
-		race.setCanodrome("Canodrome Test");
-		race.setDate(LocalDate.of(2020,6,8));
-		race.setRewardMoney(1000.);
-		race.setName("Race 3 Test");
+		sponsor.setName("Testing");
+		sponsor.setUrl("http://www.google.com");
+		sponsor.setTournament(race);
+
 		race.setStatus("PENDING");
-		race.setSponsors(sponsors);
 		
-		Judge j1 = new Judge();
-		j1.setCity("Sevilla");
-		j1.setFirstName("Pepe");
-		j1.setLastName("Gotera");
-		j1.setContact("666666666");
-		
-		List<Judge> judges = new ArrayList<Judge>();
-		
-		race.setJudges(judges);
-		
-		race.addJudge(j1);
-
-	
-		
-	
-//		this.entityM.persist(sponsor);
-//		this.entityM.persist(judges);
-//		this.entityM.persist(race);
-//		this.entityM.merge(race);
-//		this.entityM.flush();	
-		
-		try{
+		try {
 			this.raceService.editRace(race);
-		}catch(SponsorAmountException e){
+		}catch(SponsorAmountException e) {
 			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
-	        assertThat(race.getId()).isNull();
+			ex = e.getClass().getName();
 		}
-
+		
+		 assertThat(ex).isEqualTo(SponsorAmountException.class.getName());
+		
 	}
 	
 	
 	@ParameterizedTest
 	@CsvSource({"PENDING", "FINISHED"})
-	@Disabled
-	public void editRaceWithSponsor(String status) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException {
+	public void editRaceWithSponsor(String status) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
 		
-		Race race = new Race();
+		Race race = this.raceService.findRaceById(10);
+		race.setStatus(status);	
 		
-		Sponsor s1 = new Sponsor();
-		s1.setMoney(7000.);
-		s1.setName("Test");
+		try {
+			this.raceService.editRace(race);
+		}catch(SponsorAmountException e) {
+			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+		}
 		
-		List<Sponsor> sponsors = new ArrayList<Sponsor>();
-		sponsors.add(s1);
-		race.setId(1);
-		race.setCapacity(8000);
-		race.setCanodrome("Canodrome Test");
-		race.setDate(LocalDate.now().plusMonths(1));
-		race.setRewardMoney(1000.);
-		race.setName("Race Test 4");
-		race.setStatus(status);
-		race.setSponsors(sponsors);
+		Race newRace = this.raceService.findRaceById(10);
 		
-
-		this.raceService.editRace(race);
-		assertThat(race.getId()).isNotNull();
-		Double sum = race.getSponsors().stream().mapToDouble(x->x.getMoney()).sum();
-		assertThat(sum).isGreaterThanOrEqualTo(7000.);
-	
-
+		assertThat(newRace.getSponsors().stream().mapToDouble(x->x.getMoney()).sum()).isGreaterThanOrEqualTo(7000.);
+		assertThat(newRace.getJudges()).isNotEmpty();
+		assertThat(newRace.getStatus()).isEqualTo(status);		
 	}
 
 	
+	@ParameterizedTest
+	@CsvSource({"PENDING", "FINISHED"})
+	public void editRaceWithoutJudge(String status) throws DataAccessException, SponsorAmountException, ReservedDateExeception, JudgeNotFoundException, DuplicatedSponsorNameException {
+		String ex = "";
+		
+		//Para esta prueba usamos el torneo 7 que ya tiene sponosrs asociados para controlar que no salte esta excepción
+		Race race = this.raceService.findRaceById(7);
+		race.setStatus(status);	
+		
+		
+		List<Judge> judgeList = new ArrayList<Judge>();
+		race.setJudges(judgeList);
+
+		try {
+			this.raceService.editRace(race);
+		}catch(JudgeNotFoundException e) {
+			Logger.getLogger(PetServiceTests.class.getName()).log(Level.SEVERE, null, e);
+			ex = e.getClass().getName();
+		}		
+		assertThat(ex).isEqualTo(JudgeNotFoundException.class.getName());	
+	}
+
 	
 	
 	

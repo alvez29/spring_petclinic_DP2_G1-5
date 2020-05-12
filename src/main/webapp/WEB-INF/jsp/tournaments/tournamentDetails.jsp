@@ -62,18 +62,15 @@
 		</c:if>
 		
 	</table>
+	
+			<input id="lat" type="hidden" value="${lat}"> 
+		<input id="lng" type="hidden" value="${lng}"> 
+		
 	<br />
 	<spring:url value="{tournamentType}/{tournamentId}/edit" var="addUrl">
 		<spring:param name="tournamentId" value="${tournament.id}" />
 		
-		
-		<input id="lat" type="hidden" value="${lat}"> 
-		<input id="lng" type="hidden" value="${lng}"> 
-		
-		
-		
-		
-		
+
 		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
 				<spring:param name="tournamentType" value="hability" />
 				<input id="circuit" type="hidden" value="${tournament.circuit}"> 
@@ -89,63 +86,34 @@
 		</c:if>
 	</spring:url>
 	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Edit this Tournament</a>
-
-	<br />
-	<br />
-
 	
-    <!--script>
-      function  writeErrorMap(){
-  		document.getElementById('map').innerHTML='<h2>This location cannot be found in Google Maps</h2> <br/><spring:url value="/resources/images/sad_dog.png" var="petsImage"/><img src="${petsImage}"/><br/> ';
-  		}
-      
-      function initMap() {
-    	  
-    	var lat = document.getElementById('lat').value;
-    	var lng = document.getElementById('lng').value;
+	<spring:url value="{tournamentType}/{tournamentId}/result" var="resultUrl">
+		<spring:param name="tournamentId" value="${tournament.id}" />
 
-    	
-    	
-    	if(lat == "" && lng == "" ){
-			writeErrorMap();
-    	}else{
-    		var myLatlng = new google.maps.LatLng(lat,lng);  
-        	var mapOptions = {
-        			  zoom: 13,
-        			  center: myLatlng
-        			}
-    		  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    	    	
-    	    	if(document.getElementById("canodrome") != null){
-    	    		 var marker = new google.maps.Marker({
-    	    	            position: myLatlng,
-    	    	            title: document.getElementById("canodrome").value
-    	    	        });
-    	    	}else if(document.getElementById("circuit") != null){
-    	    		 var marker = new google.maps.Marker({
-    	 	            position: myLatlng,
-    	 	            title: document.getElementById("circuit").value
-    	 	        });
-    	    	}else if(document.getElementById("place") != null){
-    	    		var marker = new google.maps.Marker({
-    	 	            position: myLatlng,
-    	 	            title: document.getElementById("place").value
-    	 	        });
-    	    	}
-    	     
-    	        marker.setMap(map);
-    	}
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
+				<spring:param name="tournamentType" value="hability" />
+				<input id="circuit" type="hidden" value="${tournament.circuit}"> 
+		</c:if>
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Beauty'}">
+				<spring:param name="tournamentType" value="beauty" />
+				<input id="place" type="hidden" value="${tournament.place}"> 
+		</c:if>
+		<c:if test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Race'}">
+				<spring:param name="tournamentType" value="race" />
+				<input id="canodrome" type="hidden" value="${tournament.canodrome}"> 
+				
+		</c:if>
+	</spring:url>
+	<a href="${fn:escapeXml(resultUrl)}" class="btn btn-default">Show results</a>
 
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB98Yoktmau6DiA4QgnZ1zBQr5MIGLPGWs&callback=initMap"
-    async defer></script-->
-    
+	<br />
+	<br />
+
      
     <script type="text/javascript">
     
     function  writeErrorMap(){
-  		document.getElementById('map').innerHTML='<h2>This location cannot be found in Google Maps</h2> <br/><spring:url value="/resources/images/sad_dog.png" var="petsImage"/><img src="${petsImage}"/><br/> ';
+  		document.getElementById('map').innerHTML='<h2>This location cannot be found in LocationIQ</h2> <br/><spring:url value="/resources/images/sad_dog.png" var="petsImage"/><img src="${petsImage}"/><br/> ';
   		}
    
     function initMap(){
@@ -206,19 +174,56 @@
 						</dd>
 						<dt>Race</dt>
 						<dd>
-							<c:out value="${pet.type.name}" />
+							<c:out value="${pet.type.name} " />
+						</dd>
+						<dt>Owner</dt>
+						<dd>
+							<c:out value="${pet.owner.firstName} ${pet.owner.lastName}" />
 						</dd>
 					</dl>
 				</td>
-			</tr>
+					<td>
+					
+					
+					
+					
+					<c:if test="${petHasResult[pet.id] == 0}">
+					<spring:url
+							value="/tournament/{tournamentType}/{tournamentId}/pet/{petId}/add_result"
+							var="addUrl">
+							<spring:param name="tournamentId" value="${tournament.id}" />
+							<spring:param name="petId" value="${pet.id}" />
+							
+
+							<c:if
+								test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Hability'}">
+								<spring:param name="tournamentType" value="hability" />
+								<input id="circuit" type="hidden" value="${tournament.circuit}">
+							</c:if>
+							<c:if
+								test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Beauty'}">
+								<spring:param name="tournamentType" value="beauty" />
+								<input id="place" type="hidden" value="${tournament.place}">
+							</c:if>
+							<c:if
+								test="${tournament['class']['name'] == 'org.springframework.samples.petclinic.model.Race'}">
+								<spring:param name="tournamentType" value="race" />
+								<input id="canodrome" type="hidden"
+									value="${tournament.canodrome}">
+
+							</c:if>
+						</spring:url> <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add Dog Result</a></td>
+						</c:if>
+				</tr>
 		</c:forEach>
 	</table>
+	<c:if test="${tournament.status != 'FINISHED'}">
 	<spring:url value="/pet/tournament/{tournamentId}" var="addUrl">
 		<spring:param name="tournamentId" value="${tournament.id}" />
 	</spring:url>
 
 	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Dog</a>
-
+	</c:if>
 	<br />
 	<br />
 	<br />
@@ -249,12 +254,12 @@
 	
 	
 
-	
+		<c:if test="${tournament.status != 'FINISHED'}">
 	<spring:url value="{tournamentId}/sponsors/add" var="addUrl">
 		<spring:param name="tournamentId" value="${tournament.id}" />
 	</spring:url>
 	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Sponsor</a>
-
+	</c:if>
 
 	<br />
 	<br />
@@ -283,13 +288,12 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<c:if test="${tournament.status != 'FINISHED'}">
 	<spring:url value="/judge/tournament/{tournamentId}" var="addUrl">
 		<spring:param name="tournamentId" value="${tournament.id}" />
 	</spring:url>
 	<a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Judge</a>
-
-
-
+	</c:if>
 
 </petclinic:layout>
 </body>

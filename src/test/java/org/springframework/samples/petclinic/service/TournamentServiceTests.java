@@ -1,40 +1,44 @@
 package org.springframework.samples.petclinic.service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.model.Judge;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Sponsor;
-import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+
 public class TournamentServiceTests {
 
 	@Autowired
 	private TournamentService tournamnetService;
 	
-	private Tournament tournament;
-	
-	@BeforeEach
-	void setUp() {
-		tournament.setCapacity(900);
-		tournament.setDate(LocalDate.of(2040, 12, 22));
-		tournament.setName("New tournament");
-		tournament.setRewardMoney(100000.0);
-		tournament.setStatus("DRAFT");
-		
-				
+	@Test
+	public void shouldGetRacePlace() {
+		Assertions.assertThat(this.tournamnetService.getSite(1)).isEqualTo("Gran Hipodromo de Andalucia");
 	}
-
 	
-		
+	@Test
+	public void shouldGetBeautyPlace() {
+		String place = this.tournamnetService.getSite(3);
+		byte[] b = place.getBytes();
+		String ans = new String(b,StandardCharsets.UTF_8);
+		Assertions.assertThat(ans).isEqualTo("Pabellon Principe Felipe");
+	}
+	
+	@Test
+	public void shouldGetHabilityPlace() {
+		Assertions.assertThat(this.tournamnetService.getSite(4)).isEqualTo("WiZink Center");
+	}
+	
+	@Test
+	public void checkPetsWithResults() {
+		Integer[] expectedResult = {null, null, 0, 0, 0, null, null, null, null, 0, null, 0};
+		Assertions.assertThat(this.tournamnetService.petHasResult(7)).isEqualTo(expectedResult);
+	}
 }

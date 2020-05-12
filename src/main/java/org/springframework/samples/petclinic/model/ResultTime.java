@@ -1,12 +1,16 @@
+
 package org.springframework.samples.petclinic.model;
 
-import java.util.concurrent.TimeUnit;
+import java.beans.Transient;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,45 +20,59 @@ import lombok.Setter;
 @Setter
 @Entity
 public class ResultTime extends BaseEntity {
-	
+
 	@ManyToOne
 	@JoinColumn(name = "pet_id")
-	private Pet pet;
-	
+	private Pet			pet;
+
 	@ManyToOne
 	@JoinColumn(name = "tournament_id")
-	private Tournament tournament;
+	private Tournament	tournament;
 
 	@Column(name = "time")
-	private Long time;
-	
+	@Range(min = 0, message = "It must be a positive number")
+	@NotNull
+	private Double		time;
+
+	@Range(min = 0, message = "It must be a positive number")
 	@Column(name = "lowfails")
-	private int LowFails;
-	
+	private int			LowFails;
+
+	@Range(min = 0, message = "It must be a positive number")
 	@Column(name = "mediumfails")
-	private int MediumFails;
-	
+	private int			MediumFails;
+
+	@Range(min = 0, message = "It must be a positive number")
 	@Column(name = "bigfails")
-	private int BigFails;
-	
+	private int			BigFails;
+
+
+	@Transient
+	public Double getTotalResult() {
+		int lowFails = this.LowFails * 1;
+		int mediumFails = this.MediumFails * 3;
+		int bigFails = this.BigFails * 5;
+		Double totalResult = this.time + (lowFails + mediumFails + bigFails);
+		return totalResult;
+	}
+
 	public ResultTime() {
-		
+
 	}
-	
+
 	//   Horas | 60 MINUTOS | 60 SEGUNDOS | 1000 MILISEGUNDOS
-	
-	public String getTime() {
-		return String.format("%02d:%02d:%02d.%02d", TimeUnit.MILLISECONDS.toHours(this.time),
-	            TimeUnit.MILLISECONDS.toMinutes(this.time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(this.time)),
-	            TimeUnit.MILLISECONDS.toSeconds(this.time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this.time)),
-	            TimeUnit.MILLISECONDS.toMillis(this.time)- TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(this.time)));
-	}
-	
-	public void setTime(int hours, int min, int seconds, int millis) {
-		this.time = TimeUnit.HOURS.toMillis(hours) + TimeUnit.MINUTES.toMillis(min) + TimeUnit.SECONDS.toMillis(seconds) + TimeUnit.MILLISECONDS.toMillis(millis);
-	}
-	
-	public void setTime(Long time) {
-		this.time = time;
-	}
+
+	//	public String getTime() {
+	//		return String.format("%02d:%02d:%02d.%02d", TimeUnit.MILLISECONDS.toHours(this.time), TimeUnit.MILLISECONDS.toMinutes(this.time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(this.time)),
+	//			TimeUnit.MILLISECONDS.toSeconds(this.time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this.time)), TimeUnit.MILLISECONDS.toMillis(this.time) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(this.time)));
+	//	}
+	//
+	//	public void setTime(final int hours, final int min, final int seconds, final int millis) {
+	//		this.time = TimeUnit.HOURS.toMillis(hours) + TimeUnit.MINUTES.toMillis(min) + TimeUnit.SECONDS.toMillis(seconds) + TimeUnit.MILLISECONDS.toMillis(millis);
+	//	}
+	//
+	//	public void setTime(final Long time) {
+	//		this.time = time;
+	//	}
+
 }

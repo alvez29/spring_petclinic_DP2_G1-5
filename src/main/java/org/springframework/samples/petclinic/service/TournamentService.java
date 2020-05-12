@@ -1,11 +1,16 @@
 package org.springframework.samples.petclinic.service;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.repository.springdatajpa.ResultScoreRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.ResultTimeRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.TournamentRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,12 @@ public class TournamentService {
 
 	@Autowired
 	private TournamentRepository tournamentRepo;
+	
+	@Autowired
+	private ResultScoreRepository resultScoreRepo;
+
+	@Autowired
+	private ResultTimeRepository resultTimeRepo;
 	
 	@Transactional
 	public int tournamentCount() {
@@ -54,5 +65,36 @@ public class TournamentService {
 		
 		return res;
 	}
-	
+
+	public Integer[] petHasResult(int tournamentId) {
+		Tournament tournament = this.tournamentRepo.findById(tournamentId).get();
+		List<Pet> pets = tournament.getPets();
+		Integer maxId = 0;
+		if(!pets.isEmpty()) {
+			maxId = pets.stream().mapToInt(x->x.getId()).max().getAsInt();
+		}
+		Integer[] res = new Integer[maxId+1];
+
+		if(getTournamentType(tournamentId).equals("Beauty")) {
+			List<Pet> petWithResult = this.resultScoreRepo.findPetsWithResultByTournamentId(tournamentId);
+			for(Pet p : pets) {
+				if(petWithResult.contains(p)) {
+					res[p.getId()] = 1;
+				} else {
+					res[p.getId()] = 0;
+				}
+			}
+		} else {
+			List<Pet> petWithResult = this.resultTimeRepo.findPetsWithResultByTournamentId(tournamentId);
+			for(Pet p : pets) {
+				if(petWithResult.contains(p)) {
+					res[p.getId()] = 1;
+				} else {
+					res[p.getId()] = 0;
+
+				}
+			}
+		}
+				return res;
+	}
 }
