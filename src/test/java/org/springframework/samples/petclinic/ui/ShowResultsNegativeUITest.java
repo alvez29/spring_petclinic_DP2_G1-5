@@ -50,11 +50,9 @@ public class ShowResultsNegativeUITest {
 	driver.findElement(By.xpath("//button[@type='submit']")).click();
 	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
     driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[2]/td[4]")).click();
-    String status = driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[2]/td[4]")).getText();
     driver.findElement(By.linkText("Second Race Test")).click();
     driver.findElement(By.linkText("Show results")).click();
-    driver.findElement(By.xpath("//table[@id='raceResultsTable']/tbody/tr/td[2]")).click();
-    assertEquals(null, driver.findElement(By.xpath("//table[@id='raceResultsTable']/tbody/tr/td[2]")).getText());
+    assertEquals("No data available", driver.findElement(By.xpath("//h3")).getText());
   }
 
   @AfterEach

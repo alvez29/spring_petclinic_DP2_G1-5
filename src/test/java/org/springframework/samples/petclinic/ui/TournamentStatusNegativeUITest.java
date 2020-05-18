@@ -59,7 +59,7 @@ public class TournamentStatusNegativeUITest {
 		this.driver.findElement(By.linkText("Add New Sponsor")).click();
 		this.driver.findElement(By.id("name")).click();
 		this.driver.findElement(By.id("name")).clear();
-		this.driver.findElement(By.id("name")).sendKeys("luis");
+		this.driver.findElement(By.id("name")).sendKeys("luis2");
 		this.driver.findElement(By.id("money")).click();
 		this.driver.findElement(By.id("money")).clear();
 		this.driver.findElement(By.id("money")).sendKeys("7000.");
