@@ -76,11 +76,16 @@ public class RaceServiceMockedTest {
 		race.setRewardMoney(2000.);
 		race.setCanodrome("Testing");
 		
+		String exceptionClass = "";
+		
 		try {
 			raceService.saveRace(race);
 		}catch (ReservedDateExeception e) {
-			assertThat(race.getId()).isNull();
+			exceptionClass = e.getClass().getSimpleName();
 		}
+		
+		assertThat(exceptionClass).isEqualTo(ReservedDateExeception.class.getSimpleName());
+
 	}
 	
 	
