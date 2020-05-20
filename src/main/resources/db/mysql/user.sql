@@ -1,4 +1,4 @@
-DROP USER 'petclinic'@'localhost';
+DROP USER IF EXISTS 'petclinic'@'localhost';
 
 CREATE DATABASE IF NOT EXISTS petclinic;
 
