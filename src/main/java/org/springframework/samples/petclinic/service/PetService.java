@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -119,7 +120,8 @@ public class PetService {
 	
 	public Boolean isActualWinner(Integer petId) {
 		Boolean res = false;
-		List<Tournament> tournamentsInAYear = this.tournamnetRepository.findTounamentsByPetIdInAYear(petId);
+		List<Tournament> tournaments = this.tournamnetRepository.findTounamentsByPetId(petId);
+		List<Tournament> tournamentsInAYear = findTournamentInAYear(tournaments);
 		if (!tournamentsInAYear.equals(null)) {
 			for (Tournament t : tournamentsInAYear) {
 				
@@ -168,6 +170,14 @@ public class PetService {
 
 		}
 
+		return res;
+	}
+	
+	private List<Tournament> findTournamentInAYear(List<Tournament> tournaments) {
+		List<Tournament> res = tournaments.stream()
+				.filter(x->LocalDate.now().isBefore(x.getDate().plusYears(1)))
+				.filter(x->LocalDate.now().isAfter(x.getDate()))
+				.collect(Collectors.toList());
 		return res;
 	}
 
