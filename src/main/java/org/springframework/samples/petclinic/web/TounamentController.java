@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.io.UnsupportedEncodingException;
@@ -62,15 +63,19 @@ public class TounamentController {
 			String lat = "";
 			String lng = "";
 			
-			try {
-				Place[] places = tournamentService.getPlace(site);
+			
+			Place[] places = tournamentService.getPlace(site);
+			Place[] empty = {};
+			if(!Arrays.asList(places).isEmpty()) {
+			
 				Place place = places[0];
 
 				if(!place.equals(null)) {
 					lat = place.getLat();
 					lng = place.getLon();
 				}
-			}catch(NullPointerException ex) {
+			
+			}else{
 				lat = "";
 				lng = "";
 			}
