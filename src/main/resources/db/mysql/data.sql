@@ -73,6 +73,8 @@ INSERT IGNORE INTO pets(id,name,birth_date,type_id,owner_id) VALUES (10, 'Mullig
 INSERT IGNORE INTO pets(id,name,birth_date,type_id,owner_id) VALUES (11, 'Freddy', '2010-03-09', 5, 9);
 INSERT IGNORE INTO pets(id,name,birth_date,type_id,owner_id) VALUES (12, 'Lucky', '2010-06-24', 2, 10);
 INSERT IGNORE INTO pets(id,name,birth_date,type_id,owner_id) VALUES (13, 'Sly', '2012-06-08', 1, 10);
+INSERT IGNORE INTO pets(id,name,birth_date,type_id,owner_id) VALUES (14, 'Pongo', '2017-03-09', 5, 10);
+
 
 INSERT IGNORE INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (1, 7, '2013-01-01', 'rabies shot','canin vet','PASSED');
 INSERT IGNORE INTO visits(id,pet_id,visit_date,description,clinic,competition_check) VALUES (2, 8, '2013-01-02', 'rabies shot','canin vet','-');
@@ -149,6 +151,7 @@ INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,3);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,4);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,9);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,11);
+INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (1,14);
 
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (7,2);
 INSERT IGNORE INTO tournament_pets(tournament_id, pet_id) VALUES (7,3);
@@ -181,6 +184,7 @@ INSERT IGNORE INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumf
 INSERT IGNORE INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (3, 4, 1, 39.487, 0, 0, 0);
 INSERT IGNORE INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (4, 9, 1, 37.9402, 0, 0, 0);
 INSERT IGNORE INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (5, 11, 1, 38.276, 0, 0, 0);
+INSERT IGNORE INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (10, 14, 1, 39.324, 0, 0, 0);
 
 INSERT IGNORE INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (1, 2, 7, 40.086, 0, 0, 0);
 INSERT IGNORE INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (2, 3, 7, 38.595, 0, 0, 0);
