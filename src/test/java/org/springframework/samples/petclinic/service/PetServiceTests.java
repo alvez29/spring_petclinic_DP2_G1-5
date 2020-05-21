@@ -19,6 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -37,6 +39,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.ResultTime;
+import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.User;
@@ -86,6 +90,12 @@ class PetServiceTests {
         @Autowired
 	protected OwnerService ownerService;	
 
+        @Autowired
+    protected TournamentService tournamentService;
+        
+        @Autowired
+    protected RaceResultService raceResultService;
+        
 	@Test
 	void shouldFindPetWithCorrectId() {
 		Pet pet7 = this.petService.findPetById(7);
@@ -320,6 +330,18 @@ class PetServiceTests {
 		assertThat(visitArr[0].getDate()).isNotNull();
 		assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
 	}
+	
+	@Test
+	void shouldSelectActualWinner() throws Exception {
+		Tournament tournament = tournamentService.findTournamentById(1);
+		assertThat(tournament.getDate().isBefore(LocalDate.now().plusYears(1)));
+		List<ResultTime> ls = raceResultService.findByTournamnetId(1);
+		Collections.sort(ls, (x, y) -> x.getTime().compareTo(y.getTime()));
+		Pet pet = ls.get(0).getPet();
+		boolean res = petService.isActualWinner(pet.getId());
+		assertThat(res);
+	}
+	
 	
 
 }

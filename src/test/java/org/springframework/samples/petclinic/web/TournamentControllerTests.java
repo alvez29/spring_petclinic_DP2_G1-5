@@ -43,6 +43,7 @@ public class TournamentControllerTests {
 
 	private static final int TEST_TOURNAMENT_ID = 1;
 
+	private static final int TEST_TOURNAMENT_ID2 = 2;
 
 	private static final int TEST_PET_ID = 1;
 
@@ -141,8 +142,10 @@ public class TournamentControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	void testTournamnetsList() throws Exception {
-		mockMvc.perform(get("/tournaments")).andExpect(status().isOk()).andExpect(model().attributeExists("tournaments"))
-				.andExpect(view().name("tournaments/tournamentList"));
+		mockMvc.perform(get("/tournaments"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("tournaments"))
+		.andExpect(view().name("tournaments/tournamentList"));
 	}
 		
 	@WithMockUser(value = "admin")
@@ -152,7 +155,7 @@ public class TournamentControllerTests {
 		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/tournaments/1"));
 	}
-	
+	 
 	@WithMockUser(value = "admin")
 	@Test
 	void shouldAddJudge() throws Exception {
@@ -161,4 +164,12 @@ public class TournamentControllerTests {
 		.andExpect(view().name("redirect:/tournaments/1"));
 	}
 	
+	@WithMockUser(value = "admin")
+	@Test
+	void shouldListPets() throws Exception {
+		mockMvc.perform(get("/pet/tournament/1"))
+			.andExpect(status().isOk())
+			.andExpect(model().attributeExists("pets"))
+			.andExpect(view().name("pets/petList"));
+	}
 }

@@ -16,7 +16,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
-//Prueba 8
+//Prueba 13
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -54,6 +54,7 @@ public class ShowResultRaceNegativeUITest {
 				driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[7]/td[4]")).getText());
 		driver.findElement(By.linkText("Third Race Test")).click();
 		driver.findElement(By.linkText("Show results")).click();
+		assertEquals("No data available", driver.findElement(By.xpath("//h3")).getText());
   }
 
   @AfterEach
