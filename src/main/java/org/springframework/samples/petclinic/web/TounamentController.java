@@ -14,7 +14,6 @@ import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.locationiqapi.Place;
 import org.springframework.samples.petclinic.service.JudgeService;
-import org.springframework.samples.petclinic.service.LocationIQAPIService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.PetService;
