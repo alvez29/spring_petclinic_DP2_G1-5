@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.samples.petclinic.model.locationiqapi.Place;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +14,7 @@ public class LocationIQAPIService {
 	@LocalServerPort
 	int randomPort;
 	
+	@Cacheable("mapApi")
 	public static Place[] getPlace(String text) throws UnsupportedEncodingException {
 		
 		RestTemplate restTemplate = new RestTemplate();

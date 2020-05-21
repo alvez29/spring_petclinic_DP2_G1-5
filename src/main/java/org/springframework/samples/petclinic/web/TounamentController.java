@@ -63,7 +63,7 @@ public class TounamentController {
 			String lng = "";
 			
 			try {
-				Place[] places = LocationIQAPIService.getPlace(site);
+				Place[] places = tournamentService.getPlace(site);
 				Place place = places[0];
 
 				if(!place.equals(null)) {

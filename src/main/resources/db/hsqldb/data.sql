@@ -135,7 +135,6 @@ INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (23,'Royal Canin', 4
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (24,'Affinity', 3000.0, 'www.affinity.com',14);
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (25,'Pedigree', 7500.0, 'www.pedigree.com',14);
 
-
 INSERT INTO sponsor(id,name,money,url,tournament_id) VALUES (26,'Sponsor1',12000.00,'https://www.google.com',6);
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (1,2);
@@ -165,6 +164,8 @@ INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,3);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,4);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,9);
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,11);
+INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (2,12);
+
 
 
 INSERT INTO tournament_pets(tournament_id, pet_id) VALUES (3,2);
@@ -196,6 +197,11 @@ INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, b
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (5, 11, 1, 38.276, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (10, 14, 1, 39.324, 0, 0, 0);
 
+INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (11, 2, 7, 40.086, 0, 0, 0);
+INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (12, 3, 7, 38.595, 0, 0, 0);
+INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (13, 4, 7, 39.487, 0, 0, 0);
+INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (14, 9, 7, 37.9402, 0, 0, 0);
+INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (15, 11, 7, 38.276, 0, 0, 0);
 
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (6, 8, 4, 38.276, 0, 0, 0);
 INSERT INTO resulttime(id, pet_id, tournament_id, time, lowfails, mediumfails, bigfails) VALUES (7, 1, 4, 40.276, 1, 1, 1);
