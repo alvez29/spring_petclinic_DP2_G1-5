@@ -26,7 +26,7 @@ public class LocationIQAPIService {
     	
 		try {
 			Place[] result = restTemplate.getForObject(uri, Place[].class);
-
+			
 			return result;
 		} catch (HttpClientErrorException ex) {
 			return null;

@@ -40,9 +40,15 @@ public class TournamentService {
 	}
 	
 	@Transactional
-	@Cacheable("mapApi")
+	@Cacheable("getPlace")
 	public Place[] getPlace(String text) throws UnsupportedEncodingException {
-		return LocationIQAPIService.getPlace(text);
+		Place[] res = LocationIQAPIService.getPlace(text);
+		if(res == null) {
+			Place[] empty = {};
+			res = empty;
+		}
+		
+		return res;
 	}
 	
 	@Transactional
