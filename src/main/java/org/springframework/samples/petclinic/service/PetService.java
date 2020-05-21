@@ -136,7 +136,7 @@ public class PetService {
 					if(winners1T.size()<=3) {
 						res = true;
 					} else {
-						res = winners1T.subList(0, 2).contains(petId);
+						res = winners1T.subList(0, 3).contains(petId);
 
 					}
 					
@@ -148,7 +148,7 @@ public class PetService {
 					if(winners1T.size()<=3) {
 						res = true;
 					} else {
-						res = winners1T.subList(0, 2).contains(petId);
+						res = winners1T.subList(0, 3).contains(petId);
 
 					}
 				} else {
@@ -156,11 +156,11 @@ public class PetService {
 					Collections.sort(results, (x, y) -> x.getTotalResult().compareTo(y.getTotalResult()));
 					List<Integer> winners1T = results.stream().map(x -> x.getPet().getId())
 							.collect(Collectors.toList());
-					res = winners1T.subList(0, 2).contains(petId);
+					res = winners1T.subList(0, 3).contains(petId);
 					if(winners1T.size()<=3) {
 						res = true;
 					} else {
-						res = winners1T.subList(0, 2).contains(petId);
+						res = winners1T.subList(0, 3).contains(petId);
 					}
 				}
 				if (res) {
