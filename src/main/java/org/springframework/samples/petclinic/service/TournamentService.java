@@ -12,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.model.locationiqapi.Place;
+import org.springframework.samples.petclinic.projections.ListTournament;
 import org.springframework.samples.petclinic.repository.springdatajpa.ResultScoreRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.ResultTimeRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.TournamentRepository;
@@ -111,5 +112,10 @@ public class TournamentService {
 			}
 		}
 				return res;
+	}
+	
+	@Transactional
+	public List<ListTournament> findAllTournamentsP() throws DataAccessException{
+		return this.tournamentRepo.findAllTournamentsP();
 	}
 }
