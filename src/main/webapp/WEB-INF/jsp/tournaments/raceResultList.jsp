@@ -16,7 +16,6 @@
 				<th style="width: 120px">Time</th>
 				<th style="width: 120px"> </th>
 				
-
 			</tr>
 		</thead>
 		<tbody>
@@ -37,4 +36,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<c:if test="${empty results}">
+		<h3 style="color:red">No data available</h3>
+	</c:if>
 </petclinic:layout>

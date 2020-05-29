@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.io.UnsupportedEncodingException;
@@ -12,8 +13,8 @@ import org.springframework.samples.petclinic.model.Judge;
 import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.locationiqapi.Place;
+import org.springframework.samples.petclinic.projections.ListTournament;
 import org.springframework.samples.petclinic.service.JudgeService;
-import org.springframework.samples.petclinic.service.LocationIQAPIService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.PetService;
@@ -40,12 +41,10 @@ public class TounamentController {
 	@GetMapping("/tournaments")
 	public String tournamentList(ModelMap modelMap) {
 		String vista = "tournaments/tournamentList";
-		Iterable<Tournament> tournaments = tournamentService.findAll();
+		List<ListTournament> tournaments = tournamentService.findAllTournamentsP();
 		modelMap.addAttribute("tournaments", tournaments);
 		return vista;
 	}
-	
-
 	
 	@GetMapping("/tournaments/{tournamentId}")
 	public String showTournament(@PathVariable("tournamentId") int tournamentId, ModelMap modelMap) throws UnsupportedEncodingException {
@@ -62,15 +61,19 @@ public class TounamentController {
 			String lat = "";
 			String lng = "";
 			
-			try {
-				Place[] places = LocationIQAPIService.getPlace(site);
+			
+			Place[] places = tournamentService.getPlace(site);
+			Place[] empty = {};
+			if(!Arrays.asList(places).isEmpty()) {
+			
 				Place place = places[0];
 
 				if(!place.equals(null)) {
 					lat = place.getLat();
 					lng = place.getLon();
 				}
-			}catch(NullPointerException ex) {
+			
+			}else{
 				lat = "";
 				lng = "";
 			}

@@ -1,14 +1,18 @@
 package org.springframework.samples.petclinic.service;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Tournament;
+import org.springframework.samples.petclinic.model.locationiqapi.Place;
+import org.springframework.samples.petclinic.projections.ListTournament;
 import org.springframework.samples.petclinic.repository.springdatajpa.ResultScoreRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.ResultTimeRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.TournamentRepository;
@@ -34,6 +38,18 @@ public class TournamentService {
 	@Transactional
 	public Iterable<Tournament> findAll(){
 		return tournamentRepo.findAll();
+	}
+	
+	@Transactional
+	@Cacheable("getPlace")
+	public Place[] getPlace(String text) throws UnsupportedEncodingException {
+		Place[] res = LocationIQAPIService.getPlace(text);
+		if(res == null) {
+			Place[] empty = {};
+			res = empty;
+		}
+		
+		return res;
 	}
 	
 	@Transactional
@@ -96,5 +112,10 @@ public class TournamentService {
 			}
 		}
 				return res;
+	}
+	
+	@Transactional
+	public List<ListTournament> findAllTournamentsP() throws DataAccessException{
+		return this.tournamentRepo.findAllTournamentsP();
 	}
 }

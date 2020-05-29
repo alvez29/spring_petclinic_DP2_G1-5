@@ -30,11 +30,9 @@ public class BeautyResultService {
 		this.tournamentRepo = tournamentRepo;
 	}
 	
-	
 	public List<ResultScore> findByTournamentId(int id) {
 		return resultScoreRepo.findByTournamentId(id);
 	}
-
 
 	@Transactional(rollbackFor = DuplicatedResultForPetInTournament.class)
 	public void save(@Valid ResultScore resultScore) throws DuplicatedResultForPetInTournament {

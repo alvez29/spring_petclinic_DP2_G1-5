@@ -15,17 +15,24 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.ResultScore;
+import org.springframework.samples.petclinic.model.ResultTime;
+import org.springframework.samples.petclinic.model.Tournament;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.TournamentRepository;
 import org.springframework.samples.petclinic.service.exceptions.ClinicNotAuthorisedException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
@@ -44,6 +51,15 @@ public class PetService {
 	private PetRepository petRepository;
 	
 	private VisitRepository visitRepository;
+	
+	@Autowired
+	private TournamentRepository tournamnetRepository;
+	
+	@Autowired
+	private RaceResultService raceResultService;
+	
+	@Autowired
+	private BeautyResultService beautyResultService;
 	
 
 	@Autowired
@@ -100,6 +116,68 @@ public class PetService {
 
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
+	}
+	
+	public Boolean isActualWinner(Integer petId) {
+		Boolean res = false;
+		List<Tournament> tournaments = this.tournamnetRepository.findTounamentsByPetId(petId);
+		List<Tournament> tournamentsInAYear = findTournamentInAYear(tournaments);
+		if (!tournamentsInAYear.equals(null)) {
+			for (Tournament t : tournamentsInAYear) {
+				
+				String canodrome = this.tournamnetRepository.getCanodrome(t.getId());
+				String place = this.tournamnetRepository.getPlace(t.getId());
+				
+				if (canodrome!=null) {
+					List<ResultTime> results = raceResultService.findByTournamnetId(t.getId());
+					Collections.sort(results, (x, y) -> x.getTime().compareTo(y.getTime()));
+					List<Integer> winners1T = results.stream().map(x -> x.getPet().getId())
+							.collect(Collectors.toList());
+					if(winners1T.size()<=3) {
+						res = true;
+					} else {
+						res = winners1T.subList(0, 3).contains(petId);
+
+					}
+					
+				} else if (place!=null) {
+					List<ResultScore> resultS = beautyResultService.findByTournamentId(t.getId());
+					Collections.sort(resultS, (x, y) -> x.getTotalPoints().compareTo(y.getTotalPoints()));
+					List<Integer> winners1T = resultS.stream().map(x -> x.getPet().getId())
+							.collect(Collectors.toList());
+					if(winners1T.size()<=3) {
+						res = true;
+					} else {
+						res = winners1T.subList(0, 3).contains(petId);
+
+					}
+				} else {
+					List<ResultTime> results = raceResultService.findByTournamnetId(t.getId());
+					Collections.sort(results, (x, y) -> x.getTotalResult().compareTo(y.getTotalResult()));
+					List<Integer> winners1T = results.stream().map(x -> x.getPet().getId())
+							.collect(Collectors.toList());
+					if(winners1T.size()<=3) {
+						res = true;
+					} else {
+						res = winners1T.subList(0, 3).contains(petId);
+					}
+				}
+				if (res) {
+					break;
+				}
+			}
+
+		}
+
+		return res;
+	}
+	
+	private List<Tournament> findTournamentInAYear(List<Tournament> tournaments) {
+		List<Tournament> res = tournaments.stream()
+				.filter(x->LocalDate.now().isBefore(x.getDate().plusYears(1)))
+				.filter(x->LocalDate.now().isAfter(x.getDate()))
+				.collect(Collectors.toList());
+		return res;
 	}
 
 }

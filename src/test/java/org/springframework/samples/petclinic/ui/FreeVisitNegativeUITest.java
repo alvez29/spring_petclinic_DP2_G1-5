@@ -1,58 +1,60 @@
 package org.springframework.samples.petclinic.ui;
 
-import java.util.regex.Pattern;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.concurrent.TimeUnit;
-import org.junit.*;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-//Prueba 12
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ShowResultsNegativeUITest {
+public class FreeVisitNegativeUITest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
-
+	
   @LocalServerPort
   private int port;
   
   @BeforeEach
   public void setUp() throws Exception {
-	String value = System.getenv("webdriver.gecko.driver");		
-	System.setProperty("webdriver.gecko.driver", value );
+	String value = System.getenv("webdriver.gecko.driver");
+	System.setProperty("webdriver.gecko.driver", value);
+	
     driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
   @org.junit.jupiter.api.Test
-  public void testMostrarResultadosNegative() throws Exception {
+  public void testFreeVisitPositiveUI() throws Exception {
 	driver.get("http://localhost:" + this.port);
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
-	driver.findElement(By.id("username")).clear();
-	driver.findElement(By.id("username")).sendKeys("admin1");
-	driver.findElement(By.id("password")).click();
-	driver.findElement(By.id("password")).clear();
-	driver.findElement(By.id("password")).sendKeys("4dm1n");
-	driver.findElement(By.xpath("//button[@type='submit']")).click();
-	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-    driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[2]/td[4]")).click();
-    driver.findElement(By.linkText("Second Race Test")).click();
-    driver.findElement(By.linkText("Show results")).click();
-    assertEquals("No data available", driver.findElement(By.xpath("//h3")).getText());
+  	driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
+  	driver.findElement(By.id("password")).clear();
+    driver.findElement(By.id("password")).sendKeys("v3t");
+    driver.findElement(By.id("username")).clear();
+    driver.findElement(By.id("username")).sendKeys("vet1");
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
+    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
+    driver.findElement(By.linkText("Harold Davis")).click();
+    driver.findElement(By.linkText("Add Visit")).click();
+    driver.findElement(By.xpath("//h2[2]")).click();
+    String notFreeVisit = driver.findElement(By.xpath("//h2[2]")).getText();
+    assertEquals(notFreeVisit, "THIS IS NOT A FREE VISIT");
   }
 
   @AfterEach
@@ -97,4 +99,3 @@ public class ShowResultsNegativeUITest {
     }
   }
 }
-
