@@ -56,23 +56,5 @@ public class ResultTime extends BaseEntity {
 		return totalResult;
 	}
 
-	public ResultTime() {
-
-	}
-
-	//   Horas | 60 MINUTOS | 60 SEGUNDOS | 1000 MILISEGUNDOS
-
-	//	public String getTime() {
-	//		return String.format("%02d:%02d:%02d.%02d", TimeUnit.MILLISECONDS.toHours(this.time), TimeUnit.MILLISECONDS.toMinutes(this.time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(this.time)),
-	//			TimeUnit.MILLISECONDS.toSeconds(this.time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this.time)), TimeUnit.MILLISECONDS.toMillis(this.time) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(this.time)));
-	//	}
-	//
-	//	public void setTime(final int hours, final int min, final int seconds, final int millis) {
-	//		this.time = TimeUnit.HOURS.toMillis(hours) + TimeUnit.MINUTES.toMillis(min) + TimeUnit.SECONDS.toMillis(seconds) + TimeUnit.MILLISECONDS.toMillis(millis);
-	//	}
-	//
-	//	public void setTime(final Long time) {
-	//		this.time = time;
-	//	}
 
 }

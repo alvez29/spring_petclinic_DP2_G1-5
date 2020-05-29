@@ -27,11 +27,7 @@ import lombok.Setter;
 @Table(name = "tournaments")
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Tournament extends NamedEntity{
-//
-//	@Column(name = "name")
-//	@NotEmpty
-//	private String name;
-//	
+
 	@Column(name = "status")
 	@NotNull
 	private String status;
@@ -97,21 +93,18 @@ public class Tournament extends NamedEntity{
 
 	@Transient
 	public Double getFirstClassified() {
-		//Money money = Money.of(this.rewardMoney*0.5, "EUR");
 		Double money = this.rewardMoney*0.5;
 		return money;
 	}
 	
 	@Transient
 	public Double getSecondClassified() {
-		//Money money = Money.of(this.rewardMoney*0.35, "EUR");
 		Double money = this.rewardMoney*0.35;
 		return money;
 	}
 	
 	@Transient
 	public Double getThirdClassified() {
-		//Money money = Money.of(this.rewardMoney*0.15, "EUR");
 		Double money = this.rewardMoney*0.15;
 		return money;
 	}

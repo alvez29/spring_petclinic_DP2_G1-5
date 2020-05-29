@@ -48,8 +48,7 @@ public class BeautyService {
 	private boolean fechaReservada(final LocalDate date) {
 		List<String> fechas = this.beautyRepo.getFutureDates();
 		List<LocalDate> fechasLD = this.fechasString2LocalDate(fechas);
-		Boolean res = fechasLD.contains(date);
-		return res;
+		return fechasLD.contains(date);
 	}
 
 	private List<LocalDate> fechasString2LocalDate(final List<String> fechas) {

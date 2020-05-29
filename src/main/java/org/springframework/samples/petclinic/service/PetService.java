@@ -118,59 +118,74 @@ public class PetService {
 		return visitRepository.findByPetId(petId);
 	}
 	
-	public Boolean isActualWinner(Integer petId) {
-		Boolean res = false;
+	public boolean isActualWinner(Integer petId) {
+		boolean res = false;
 		List<Tournament> tournaments = this.tournamnetRepository.findTounamentsByPetId(petId);
 		List<Tournament> tournamentsInAYear = findTournamentInAYear(tournaments);
 		if (!tournamentsInAYear.equals(null)) {
-			for (Tournament t : tournamentsInAYear) {
-				
+			for (Tournament t : tournamentsInAYear) {				
 				String canodrome = this.tournamnetRepository.getCanodrome(t.getId());
-				String place = this.tournamnetRepository.getPlace(t.getId());
-				
-				if (canodrome!=null) {
-					List<ResultTime> results = raceResultService.findByTournamnetId(t.getId());
-					Collections.sort(results, (x, y) -> x.getTime().compareTo(y.getTime()));
-					List<Integer> winners1T = results.stream().map(x -> x.getPet().getId())
-							.collect(Collectors.toList());
-					if(winners1T.size()<=3) {
-						res = true;
-					} else {
-						res = winners1T.subList(0, 3).contains(petId);
-
-					}
-					
+				String place = this.tournamnetRepository.getPlace(t.getId());				
+				if (canodrome!=null) {					
+					res = isPetWinnerRace(t, petId);					
 				} else if (place!=null) {
-					List<ResultScore> resultS = beautyResultService.findByTournamentId(t.getId());
-					Collections.sort(resultS, (x, y) -> x.getTotalPoints().compareTo(y.getTotalPoints()));
-					List<Integer> winners1T = resultS.stream().map(x -> x.getPet().getId())
-							.collect(Collectors.toList());
-					if(winners1T.size()<=3) {
-						res = true;
-					} else {
-						res = winners1T.subList(0, 3).contains(petId);
-
-					}
+					res = isPetWinnerBeauty(t, petId);
 				} else {
-					List<ResultTime> results = raceResultService.findByTournamnetId(t.getId());
-					Collections.sort(results, (x, y) -> x.getTotalResult().compareTo(y.getTotalResult()));
-					List<Integer> winners1T = results.stream().map(x -> x.getPet().getId())
-							.collect(Collectors.toList());
-					if(winners1T.size()<=3) {
-						res = true;
-					} else {
-						res = winners1T.subList(0, 3).contains(petId);
-					}
+					res = isPetWinnerHability(t, petId);
 				}
 				if (res) {
 					break;
 				}
 			}
-
 		}
-
 		return res;
 	}
+	
+	private boolean isPetWinnerRace(Tournament t, Integer petId) {
+		boolean res = false;
+		List<ResultTime> results = raceResultService.findByTournamnetId(t.getId());
+		Collections.sort(results, (x, y) -> x.getTime().compareTo(y.getTime()));
+		List<Integer> winners1T = results.stream().map(x -> x.getPet().getId())
+				.collect(Collectors.toList());
+		if(winners1T.size()<=3) {
+			res = true;
+		} else {
+			res = winners1T.subList(0, 3).contains(petId);
+
+		}
+		return res;
+	}
+	
+	private boolean isPetWinnerBeauty(Tournament t, Integer petId) {	
+		boolean res = false;
+		List<ResultScore> resultS = beautyResultService.findByTournamentId(t.getId());
+		Collections.sort(resultS, (x, y) -> x.getTotalPoints().compareTo(y.getTotalPoints()));
+		List<Integer> winners1T = resultS.stream().map(x -> x.getPet().getId())
+				.collect(Collectors.toList());
+		if(winners1T.size()<=3) {
+			res = true;
+		} else {
+			res = winners1T.subList(0, 3).contains(petId);
+
+		}
+		return res;
+	}
+	
+	private boolean isPetWinnerHability(Tournament t, Integer petId) {
+		boolean res = false;
+		List<ResultTime> results = raceResultService.findByTournamnetId(t.getId());
+		Collections.sort(results, (x, y) -> x.getTotalResult().compareTo(y.getTotalResult()));
+		List<Integer> winners1T = results.stream().map(x -> x.getPet().getId())
+				.collect(Collectors.toList());
+		if(winners1T.size()<=3) {
+			res = true;
+		} else {
+			res = winners1T.subList(0, 3).contains(petId);
+		}
+		return res;
+
+	}
+
 	
 	private List<Tournament> findTournamentInAYear(List<Tournament> tournaments) {
 		List<Tournament> res = tournaments.stream()
