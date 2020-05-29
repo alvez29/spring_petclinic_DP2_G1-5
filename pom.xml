@@ -32,10 +32,13 @@
 
 		<!-- Selenium -->
 		<selenium.version>3.141.59</selenium.version>
-	</properties>
-
+		
+		<!-- Sonar Cloud -->	
+  		<sonar.projectKey>alvez29_spring_petclinic_DP2_G1-5</sonar.projectKey>
+  		<sonar.organization>alvez29</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	
-
+	</properties>
 
 	<dependencies>
 		<!-- Http client -->
@@ -51,6 +54,7 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.12</version>
 		</dependency>
+
 
 		<!-- Selenium dependencies -->
 		<dependency>
