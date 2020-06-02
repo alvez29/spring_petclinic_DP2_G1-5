@@ -51,20 +51,21 @@ public class WinnersUpdateNegativeUITest {
 	
 	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
     driver.findElement(By.xpath("//button[@type='submit']")).click();
-    driver.findElement(By.linkText("David Schroeder")).click();
+    driver.findElement(By.linkText("George Franklin")).click();
     driver.findElement(By.linkText("Add Visit")).click();
     driver.findElement(By.xpath("//body/div/div")).click();
     String freeVisit = driver.findElement(By.xpath("//h2[2]")).getText();
     assertEquals(freeVisit, "THIS IS A FREE VISIT");
     
     driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-    driver.findElement(By.linkText("First Race Test")).click();
+    driver.findElement(By.linkText("Hability ConTEST")).click();
     driver.findElement(By.linkText("Show results")).click();
-    driver.findElement(By.xpath("(//a[contains(text(),'Delete Result')])[2]")).click();
+    driver.findElement(By.xpath("(//a[contains(text(),'Delete result')])[2]")).click();
+
     
     driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
     driver.findElement(By.xpath("//button[@type='submit']")).click();
-    driver.findElement(By.linkText("David Schroeder")).click();
+    driver.findElement(By.linkText("George Franklin")).click();
     driver.findElement(By.linkText("Add Visit")).click();
     driver.findElement(By.xpath("//body/div/div")).click();
     String freeVisit2 = driver.findElement(By.xpath("//h2[2]")).getText();

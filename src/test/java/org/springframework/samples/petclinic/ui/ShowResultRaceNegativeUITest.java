@@ -49,10 +49,7 @@ public class ShowResultRaceNegativeUITest {
 		driver.findElement(By.id("password")).sendKeys("4dm1n");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-		driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[7]/td[4]")).click();
-		assertEquals("FINISHED",
-				driver.findElement(By.xpath("//table[@id='tournamentsTable']/tbody/tr[7]/td[4]")).getText());
-		driver.findElement(By.linkText("Third Race Test")).click();
+		driver.findElement(By.linkText("Second Race Test")).click();
 		driver.findElement(By.linkText("Show results")).click();
 		assertEquals("No data available", driver.findElement(By.xpath("//h3")).getText());
   }

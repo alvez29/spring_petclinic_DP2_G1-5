@@ -39,7 +39,6 @@ public class WinnersUpdatePositiveUITest {
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
-
   @org.junit.jupiter.api.Test
   public void testWinnersUpdatePositiveUI() throws Exception {
 	driver.get("http://localhost:" + this.port);
